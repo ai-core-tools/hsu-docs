@@ -17,7 +17,7 @@ This design lets you:
 
 ## Architecture Diagram
 
-![HSU Architecture](./img/hsu-arhitecture.drawio.png)
+![HSU Architecture](./img/hsu-architecture.drawio.svg)
 
 ---
 

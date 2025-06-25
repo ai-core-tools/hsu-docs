@@ -1,22 +1,38 @@
-# HSU Microservice Architecture
+# HSU Platform: Kubernetes for Native Applications
 
-## Overview
+## Problem
 
-The **Host System Unit (HSU)** architecture provides a clean, pluggable framework for composing larger applications from independent, language-agnostic microservices. This architecture enables lightweight orchestration and management of distributed services in resource-constrained environments.
+Kubernetes revolutionized container orchestration but falls short in:
+- **Edge computing environments** with limited resources and intermittent connectivity
+- **On-premises deployments** requiring native process control and legacy system integration
+- **Desktop applications** needing modular architectures without container overhead
+- **Embedded systems** where containers are impractical or impossible
+- **Development environments** requiring lightweight orchestration of diverse tooling
 
-The core architectural principle divides all services into two primary roles:
+## Solution
+
+HSU provides Kubernetes-like orchestration for native applications, offering:
+- **Automated deployment and scaling** across distributed nodes
+- **Service discovery and configuration management** for native processes
+- **Health monitoring and self-healing** without container dependencies
+- **Multi-language gRPC APIs** for deep integration and type-safe communication
+- **Resource-efficient operation** optimized for constrained environments
+
+## Key Differentiators
+
+- **Native Process Control**: Direct OS-level process management without container overhead
+- **Edge-Optimized**: Designed for resource-constrained and offline-ready environments
+- **Hybrid Integration**: Seamlessly manages existing processes alongside new deployments
+- **Multi-Language Support**: gRPC-based APIs enable implementation in any language
+- **Lightweight Architecture**: Single binary master process with minimal resource footprint
+
+## Core Architecture
+
+The **Host System Unit (HSU)** architecture divides all services into two primary roles:
 - **HSU (Host System Units)** – Standalone processes or services that implement specific functionality within the system
 - **Master Processes** – Long-running resident processes responsible for HSU discovery, orchestration, and lifecycle management
 
-The HSU architecture and design principles provides a continuum of integration: from passive observation (Unmanaged Units), to full process lifecycle control (Managed Units), to deep API orchestration (Integrated Units) — making it highly adaptable to real-world hybrid systems, especially in the areas of:
-
-- **Edge Computing and IoT**: Minimal overhead, native process management, offline-ready
-- **On-Premises Deployments**: Easily integrates with legacy or system-level processes without requiring containerization
-- **Desktop applications**: Native process management for desktop apps, enabling modular plugin architectures and background service coordination
-- **AI/ML Workflows**: Enables tight integration with Python/Go-based ML services using gRPC while maintaining process isolation
-- **Dev/Test Automation**: Lightweight orchestration of test runners, local servers, and CI agents across diverse platforms
-- **Embedded Systems**: Optimized for constrained devices where container runtimes are impractical
-- **Custom Platform Runtimes**: Scenarios requiring rich API interaction with runtime-managed services outside the container model
+The architecture provides a continuum of integration: from passive observation (Unmanaged Units), to full process lifecycle control (Managed Units), to deep API orchestration (Integrated Units) — making it highly adaptable to real-world hybrid systems.
 
 
 ### HSU Categories
@@ -81,6 +97,30 @@ This design enables microservices architectures in resource-constrained environm
 
 ---
 
+## Distributed Architecture (Planned)
+
+> **Note**: The following describes the planned distributed architecture. Current implementation focuses on single-node orchestration with multi-node capabilities planned for future releases.
+
+### Multi-Node Coordination
+- **Master Node Election**: Consensus-based leader election for high availability
+- **Node Discovery**: Automatic discovery and registration of HSU nodes across network segments
+- **Tunnel-Based Networking**: Secure, encrypted communication channels between distributed nodes
+- **Configuration Synchronization**: Distributed configuration management across the cluster
+
+### Service Mesh Integration
+- **Native Service Discovery**: gRPC-based service registry with health checking
+- **Load Balancing**: Intelligent request routing between HSU instances
+- **Circuit Breakers**: Automatic failure detection and traffic isolation
+- **Observability**: Distributed tracing and metrics collection across HSU network
+
+### Deployment Model
+- **Declarative Configuration**: YAML-based HSU deployment specifications
+- **Rolling Deployments**: Zero-downtime updates with configurable rollback policies
+- **Resource Management**: Cross-node resource allocation and constraint enforcement
+- **Secrets Distribution**: Encrypted secrets management across distributed nodes
+
+---
+
 ## Core Concepts
 
 | Concept                  | Description                                                                       |
@@ -138,11 +178,19 @@ Complex systems often combine multiple HSU types:
 |-------------------------------|--------------------------------------|------------------------------------------|-------------------------------------|-------------------------------------|
 | **Primary Abstraction**       | Host System Unit (HSU)               | Pod (Container Group)                    | Job / Task                          | Unit (Service, Timer, Socket)       |
 | **Lifecycle Control**         | OS-level & gRPC                      | Container runtime (CRI)                  | OS & container runtime              | OS-level                            |
-| **Orchestration Type**        | Local, embedded orchestration        | Cluster-wide, declarative                | Cluster-wide, imperative + config   | Local only                          |
+| **Orchestration Type**        | 🚧 Local + planned multi-node        | ✅ Cluster-wide, declarative             | ✅ Cluster-wide, imperative + config| ❌ Local only                       |
+| **Service Discovery**         | 🚧 Planned via gRPC registry         | ✅ DNS + Labels/Selectors                | ✅ Consul integration               | ❌ Manual configuration             |
+| **Auto-scaling**              | 🚧 Planned horizontal scaling        | ✅ HPA/VPA/Cluster autoscaling          | ✅ Job autoscaling                  | ❌ Not supported                   |
+| **Configuration Management**  | 🚧 Environment-based config          | ✅ ConfigMaps/Secrets                   | ✅ Templates + Variables            | ⚠️ Environment files               |
+| **Secrets Management**        | 🚧 Encrypted config files planned    | ✅ Encrypted etcd storage               | ✅ Vault integration                | ❌ Plain text files                |
+| **Multi-node Deployment**     | 🚧 Tunnel-based networking planned   | ✅ Core feature                          | ✅ Core feature                     | ❌ Single node only                |
+| **Health Management**         | ⚠️ Basic process monitoring          | ✅ Probes + Self-healing                | ✅ Health checks                    | ⚠️ Basic restart policies          |
+| **Rolling Updates**           | ❌ Not implemented                   | ✅ Core feature                          | ✅ Update strategies                | ❌ Manual process                  |
+| **Load Balancing**            | ❌ Not implemented                   | ✅ Services + Ingress                    | ✅ Via service discovery            | ❌ External required               |
 | **Custom App-Level APIs**     | ✅ Built-in via gRPC                 | ⚠️ Possible via Operator/CRD              | ⚠️ Manual integration needed        | ❌ Not supported                    |
-| **Process Management**        | ✅ Native, fine-grained control      | 🚫 Container-only                         | ✅ Mixed (exec + container)         | ✅ Full native control              |
+| **Process Management**        | ✅ Native, fine-grained control      | ⚠️ Container-focused, VM via operators   | ✅ Mixed (exec + container)         | ✅ Full native control              |
 | **Language Agnostic**         | ✅ Full (gRPC, CLI, etc.)            | ✅ via container boundary                 | ✅                                  | ✅                                  |
-| **Cross-Platform Support**    | ✅ Native (Linux, Windows, macOS)    | ⚠️ Linux-only control plane, partial Win  | ✅ (Linux/Windows/macOS via plugin) | ⚠️ Linux primary, some BSD support  |
+| **Cross-Platform Support**    | ✅ Native (Linux, Windows, macOS)    | ✅ Linux + Windows nodes                 | ✅ (Linux/Windows/macOS via plugin) | ⚠️ Linux primary, some BSD support  |
 | **Resource Constraints**      | ✅ OS primitives (ulimit, cgroups)   | ✅ Full quota support (cgroups, etc.)     | ✅ via config                       | ⚠️ Manual (`ulimit`, slices)        |
 | **Workers Scheduling**        | ✅ Built-in into the master process  | ✅ Core feature                           | ✅ Core feature                     | ❌ No scheduler                     |
 | **On-Demand Worker Start**    | ✅ Direct via API or OS process spawn  | ⚠️ Indirect (e.g., scale-to-zero via KEDA) | ✅ via job dispatching               | ⚠️ Indirect via timer/trigger units |
@@ -150,6 +198,36 @@ Complex systems often combine multiple HSU types:
 | **Ideal For**                 | Edge, ML, embedded, hybrid systems   | Cloud-native microservices, CI/CD        | General workload orchestration      | Local servers, daemons, dev setups |
 | **Complexity / Footprint**    | 🟢 Low                               | 🔴 High                                   | 🟡 Medium                           | 🟢 Very Low                         |
 
+**Legend:**
+- ✅ Fully implemented and production-ready
+- 🚧 Planned/In development  
+- ⚠️ Partial implementation or workarounds available
+- ❌ Not supported
+
+
+## Current Status & Roadmap
+
+### ✅ **Current Implementation (v0.1)**
+- **Single-node orchestration**: Master process with local HSU management
+- **gRPC integration framework**: Core API definitions and client/server helpers
+- **Process lifecycle control**: Start, stop, monitor native processes
+- **Basic health monitoring**: Process status and resource usage tracking
+- **Multi-language support**: Go, Python, Rust client stub generation
+
+### 🚧 **Planned Features (v0.2-0.3)**
+- **Multi-node coordination**: Distributed master processes with leader election
+- **Service discovery**: gRPC-based registry with automatic health checking
+- **Configuration management**: Centralized config distribution and secrets management
+- **Auto-scaling**: Horizontal scaling based on resource utilization and custom metrics
+- **Network mesh**: Inter-node communication and load balancing
+
+### 🎯 **Future Roadmap (v0.4+)**
+- **Advanced orchestration**: Rolling deployments, canary releases, A/B testing
+- **Observability platform**: Distributed tracing, metrics aggregation, log correlation
+- **Edge-specific features**: Offline operation, synchronization, bandwidth optimization
+- **Enterprise features**: RBAC, audit logging, compliance reporting
+
+---
 
 ## Repository Layout (suggested)
 
@@ -158,15 +236,15 @@ Complex systems often combine multiple HSU types:
 ├── cmd/                  # Main + sample HSUs
 ├── proto/                # gRPC contract files
 │   ├── hsu_core.proto    # Core API (required)
-│   ├── hsu_a.proto       # Feature A API (optional)
-│   └── hsu_b.proto       # Feature B API (optional)
+│   ├── hsu_a.proto       # Feature A API (optional)
+│   └── hsu_b.proto       # Feature B API (optional)
 ├── internal/             # Shared client/server helpers
 └── docs/                 # Specs & diagrams
 ```
 
 ---
 
-## Quick Start (demo)
+## Quick Start (demo)
 
 ```bash
 # 1. Generate Go client stubs (example language)
@@ -205,19 +283,19 @@ service XYZ {
 
 ## Implementing an integrated HSU
 
-### Go Example (implements Core + A)
+### Go Example (implements Core + A)
 
 ```go
 // cmd/hsu_a_service1/main.go
 // TODO: full implementation
 func main() {
     // 1. Parse flags & config
-    // 2. Register Core and Interface A servers
+    // 2. Register Core and Interface A servers
     // 3. Serve gRPC
 }
 ```
 
-### Python Example (implements Core + B)
+### Python Example (implements Core + B)
 
 ```python
 # cmd/hsu_b_service1/main.py
@@ -227,7 +305,7 @@ async def serve():
     # 2. Start aio gRPC server
 ```
 
-### Rust Example (implements Core, A & B)
+### Rust Example (implements Core, A & B)
 
 ```rust
 // cmd/hsu_abc_service/src/main.rs
@@ -259,7 +337,7 @@ graph TD
 
 ## Extending the System
 
-- **Add a language** – run that language’s gRPC code‑gen tool for all `.proto` files.
+- **Add a language** – run that language's gRPC code‑gen tool for all `.proto` files.
 - **Swap an implementation** – stop current HSU binary, launch alternative.
 - **Compose** – an HSU can expose *multiple* interfaces in one process to save IPC.
 

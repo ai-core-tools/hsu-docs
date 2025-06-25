@@ -1,25 +1,34 @@
+# HSU Microservice Framework
+
+The **Host System Unit (HSU)** framework provides a clean, pluggable framework for composing larger applications from independent, language-agnostic microservices running locally or distributed across the network. This framework enables lightweight orchestration and management of distributed services in resource-constrained environments such as edge computing or embedding systems.
+
+Unlike Kubernetes, which separates orchestration into dedicated services (API server, etcd, controllers), the HSU framework allows to integrate orchestration directly into the services typically selecting one of them as a master process. This eliminates the overhead of maintaining separate orchestration infrastructure while combining service discovery, lifecycle management, and business logic dispatch in a single, efficient process.
+
 # HSU Platform: Kubernetes for Native Applications
 
 ## Problem
 
-Kubernetes revolutionized container orchestration but falls short in:
+Kubernetes revolutionized container orchestration but while enabling horizontal scaling of orchestration components it creates significant resource overhead and imposes strict packaging requirements that limit deployment flexibility in resource-constrained environments such as:
+
 - **Edge computing environments** with limited resources and intermittent connectivity
 - **On-premises deployments** requiring native process control and legacy system integration
-- **Desktop applications** needing modular architectures without container overhead
+- **Desktop applications** needing cross-platform modular architectures without container overhead
 - **Embedded systems** where containers are impractical or impossible
 - **Development environments** requiring lightweight orchestration of diverse tooling
 
 ## Solution
 
-HSU provides Kubernetes-like orchestration for native applications, offering:
-- **Automated deployment and scaling** across distributed nodes
+The HSU framework provides Kubernetes-like orchestration for native applications, offering the following functionality with minimal hardware resources overhead:
+
+- **Automated deployment and scaling** locally or across distributed nodes
 - **Service discovery and configuration management** for native processes
 - **Health monitoring and self-healing** without container dependencies
-- **Multi-language gRPC APIs** for deep integration and type-safe communication
+- **Multi-language gRPC APIs** for deep services integration and type-safe communication
 - **Resource-efficient operation** optimized for constrained environments
 
 ## Key Differentiators
 
+- **Integrated Orchestration Layer**: HSU integrates orchestration directly into the *master* service or process
 - **Native Process Control**: Direct OS-level process management without container overhead
 - **Edge-Optimized**: Designed for resource-constrained and offline-ready environments
 - **Hybrid Integration**: Seamlessly manages existing processes alongside new deployments
@@ -29,11 +38,13 @@ HSU provides Kubernetes-like orchestration for native applications, offering:
 ## Core Architecture
 
 The **Host System Unit (HSU)** architecture divides all services into two primary roles:
-- **HSU (Host System Units)** – Standalone processes or services that implement specific functionality within the system
+- **HSU (Host System Units)** – Standalone processes or services that implement specific functionality within the microservice system
 - **Master Processes** – Long-running resident processes responsible for HSU discovery, orchestration, and lifecycle management
 
-The architecture provides a continuum of integration: from passive observation (Unmanaged Units), to full process lifecycle control (Managed Units), to deep API orchestration (Integrated Units) — making it highly adaptable to real-world hybrid systems.
-
+The architecture provides a continuum of integration making it highly adaptable to real-world hybrid systems with help of three categories of HSUs:
+- **Unmanaged Units** for passive observation
+- **Managed Units** for full process lifecycle control
+- **Integrated Units** for deep API-level integration and orchestration
 
 ### HSU Categories
 
@@ -200,32 +211,56 @@ Complex systems often combine multiple HSU types:
 
 **Legend:**
 - ✅ Fully implemented and production-ready
-- 🚧 Planned/In development  
+- 🚧 Planned/In development
 - ⚠️ Partial implementation or workarounds available
 - ❌ Not supported
 
 
-## Current Status & Roadmap
+## Features & Roadmap
 
-### ✅ **Current Implementation (v0.1)**
-- **Single-node orchestration**: Master process with local HSU management
-- **gRPC integration framework**: Core API definitions and client/server helpers
-- **Process lifecycle control**: Start, stop, monitor native processes
-- **Basic health monitoring**: Process status and resource usage tracking
-- **Multi-language support**: Go, Python, Rust client stub generation
+### Base HSUs orchestration
+- [🚧] Go-lang client for all types of HSUs - Managed, Unamanaged and Integrated units control interfaces
+- [🚧] gRPC integration framework - Core API definitions and client/server helpers
+- [🚧] Process lifecycle control - Start, stop, monitor native processes, on-demand wakeup, on-idle shutdown
+- [🚧] Basic health monitoring - Process status and hardware resource usage tracking for CPU and RAM
+- [🚧] Go-lang HSU server stubs support
+- [🚧] Python HSU server stubs support
+- [🚧] Rust HSU server stubs support
+- [🚧] Binary compiler for Python HSUs with help of Nuitka integration support
+- [🚧] Code examples and tools - Comprehensive README.md and HSU interfaces examples
+- [🚧] HSUs logs collection - HSU's execution status, stdoud and stderr collection by the master process
+- [🚧] Local gRPC based HSUs discovery with automatic health checking
+- [🚧] URL/port based HSUs discovery
+- [🚧] Configuration management - Centralized config distribution and secrets management
+- [🚧] New HSUs Scaffolding - Automatic generation of client/server stubs for new gRPC interface
+- [🚧] Inbound REST API routing - Standalone API routing HSU with on-call auth and wake-up hooks to master process
+- [🚧] Standalone HSU master process - Dedicated master process with HSUs control-only functionality
 
-### 🚧 **Planned Features (v0.2-0.3)**
-- **Multi-node coordination**: Distributed master processes with leader election
-- **Service discovery**: gRPC-based registry with automatic health checking
-- **Configuration management**: Centralized config distribution and secrets management
-- **Auto-scaling**: Horizontal scaling based on resource utilization and custom metrics
-- **Network mesh**: Inter-node communication and load balancing
+### Runtime units management:
+- [🚧] On-demand HSU installation - Unit download & signature checking
+- [🚧] On-demand HSU upgrade - Units upgrade with smart upgrade schedule
 
-### 🎯 **Future Roadmap (v0.4+)**
-- **Advanced orchestration**: Rolling deployments, canary releases, A/B testing
-- **Observability platform**: Distributed tracing, metrics aggregation, log correlation
-- **Edge-specific features**: Offline operation, synchronization, bandwidth optimization
-- **Enterprise features**: RBAC, audit logging, compliance reporting
+### Distributed system orchestration
+- [🚧] Authentication support - External IdP and API tokens support
+- [🚧] Multi-node coordination - Distributed master processes with leader election
+- [🚧] Network mesh - Inter-node communication and load balancing
+- [🚧] Centralized HSU units config update - Mass-management and update of the configurations in runtime
+- [🚧] Peer-to-peer HSUs binary cache - Optimization for mass HSUs update within a network
+- [🚧] HSU crash reports collection - Crash reports upload
+- [🚧] System information report collection - Collection of system information for centralized management
+
+### Advanced system orchestration
+- [🚧] Auto-scaling - Horizontal scaling based on resource utilization and custom metrics
+- [🚧] Advanced orchestration - Rolling deployments, canary releases, A/B testing
+- [🚧] Observability platform - Distributed tracing, metrics aggregation, log correlation
+- [🚧] Edge-specific features - Offline operation, synchronization, bandwidth optimization
+- [🚧] Enterprise features - RBAC, audit logging, compliance reporting
+
+**Legend:**
+- ✅ Fully implemented and production-ready
+- 🚧 Planned/In development
+- ⚠️ Partial implementation
+- ❌ Not planned
 
 ---
 

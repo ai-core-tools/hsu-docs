@@ -264,125 +264,65 @@ Complex systems often combine multiple HSU types:
 
 ---
 
-## Repository Layout (suggested)
+## Developer Documentation
 
-```
-.
-├── cmd/                  # Main + sample HSUs
-├── proto/                # gRPC contract files
-│   ├── hsu_core.proto    # Core API (required)
-│   ├── hsu_a.proto       # Feature A API (optional)
-│   └── hsu_b.proto       # Feature B API (optional)
-├── internal/             # Shared client/server helpers
-└── docs/                 # Specs & diagrams
-```
+Ready to start building with HSU? Check out our comprehensive developer guides:
+
+### 🚀 Getting Started
+- **[Developer Guide](DEVELOPER_GUIDE.md)** - Main navigation and platform overview
+- **[Development Setup](DEVELOPMENT_SETUP.md)** - Setting up your development environment
+
+### 📖 Implementation Guides
+- **[Creating an HSU Master Process](CREATING_HSU_MASTER.md)** - Build orchestration and management processes
+- **[Creating an Integrated HSU](CREATING_INTEGRATED_HSU.md)** - Build business logic services
+- **[Working with gRPC Services](GRPC_SERVICES.md)** - Advanced gRPC patterns and best practices
+
+### 📚 Reference Documentation
+- **[Platform API Reference](API_REFERENCE.md)** - Complete API documentation
+- **[Configuration Guide](CONFIGURATION.md)** - Configuration management and deployment
+- **[Examples and Patterns](EXAMPLES.md)** - Code examples and common patterns
+
+### 🔧 Advanced Topics
+- **[Multi-Language Support](MULTI_LANGUAGE.md)** - Implementing HSUs in different languages
+- **[Process Management](PROCESS_MANAGEMENT.md)** - Advanced process lifecycle control
+- **[Testing and Debugging](TESTING_DEBUGGING.md)** - Testing strategies and debugging techniques
 
 ---
 
-## Quick Start (demo)
+## Quick Start
+
+Want to see HSU in action? Try our working examples:
 
 ```bash
-# 1. Generate Go client stubs (example language)
-make gen-go
+# Clone the repository
+git clone https://github.com/core-tools/hsu-platform.git
+cd hsu-platform
 
-# 2. Build example HSUs
-make build‑example
+# Run the echo example (Go server)
+cd hsu-echo-super-srv-go
+make build && make run
 
-# 3. Run the main process (will auto‑spawn HSUs on demand)
-./bin/main
+# In another terminal, test with the client
+cd ../hsu-echo-cli-go
+make build && ./bin/echogrpccli --port 50055
 ```
-
----
-
-## Defining a New Interface for integrated HSUs
-
-1. Drop a new proto in ``.
-2. Run `make gen‑all` to regenerate stubs for every target language.
-3. Implement an HSU that registers `hsu_xyz`.
-4. Add the new client stub to the main process dependency list.
-
-### 📄 Placeholder – gRPC Proto Definition
-
-```proto
-// proto/hsu_xyz.proto
-syntax = "proto3";
-package hsu.xyz;
-
-// TODO: replace with real service definition
-service XYZ {
-    rpc DoSomething (XYZRequest) returns (XYZResponse);
-}
-```
-
----
-
-## Implementing an integrated HSU
-
-### Go Example (implements Core + A)
-
-```go
-// cmd/hsu_a_service1/main.go
-// TODO: full implementation
-func main() {
-    // 1. Parse flags & config
-    // 2. Register Core and Interface A servers
-    // 3. Serve gRPC
-}
-```
-
-### Python Example (implements Core + B)
-
-```python
-# cmd/hsu_b_service1/main.py
-# TODO: full implementation
-async def serve():
-    # 1. Instantiate Core & B servicers
-    # 2. Start aio gRPC server
-```
-
-### Rust Example (implements Core, A & B)
-
-```rust
-// cmd/hsu_abc_service/src/main.rs
-// TODO: full implementation using tonic
-#[tokio::main]
-async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    // register services and serve
-}
-```
-
----
-
-## Runtime Lifecycle
-
-```mermaid
-graph TD
-    A[Main process] -- ping/start --> B[HSU process]
-    B -- register --> A
-    A -- RPC calls --> B
-    A -- stop --> B
-```
-
-1. **Discovery** – main process checks if an HSU is running, or spawns it.
-2. **Handshake** – HSU registers active interfaces via Core API.
-3. **Workload** – main invokes RPCs.
-4. **Shutdown** – idle HSUs are stopped to free resources.
-
----
-
-## Extending the System
-
-- **Add a language** – run that language's gRPC code‑gen tool for all `.proto` files.
-- **Swap an implementation** – stop current HSU binary, launch alternative.
-- **Compose** – an HSU can expose *multiple* interfaces in one process to save IPC.
 
 ---
 
 ## Contributing
 
-1. Fork → feature branch → PR.
-2. Run `make lint test` before opening a pull request.
-3. Describe which interfaces your code changes touch.
+We welcome contributions! Here's how to get started:
+
+1. **Read the Developer Guide**: Start with [DEVELOPER_GUIDE.md](DEVELOPER_GUIDE.md)
+2. **Set up your environment**: Follow [DEVELOPMENT_SETUP.md](DEVELOPMENT_SETUP.md)
+3. **Pick an area**: Check our [roadmap](#features--roadmap) for areas needing work
+4. **Submit a PR**: Fork → feature branch → pull request
+
+Please ensure your code:
+- Follows the existing patterns in the codebase
+- Includes appropriate tests
+- Updates documentation where needed
+- Passes `make lint test` (once available)
 
 ---
 

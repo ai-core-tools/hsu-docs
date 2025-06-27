@@ -37,48 +37,23 @@ hsu-echo/
 └── README.md
 ```
 
-### Protocol Buffer Definition
+### Protocol Buffer Setup
 
-Create `api/proto/echoservice.proto`:
+Before implementing the Go server, you need to define your gRPC service contract using Protocol Buffers. This includes:
 
-```proto
-syntax = "proto3";
+- Creating `.proto` service definitions
+- Setting up code generation scripts
+- Generating Go gRPC code
 
-option go_package = "github.com/core-tools/hsu-echo/api/proto";
+**📋 Complete Setup Guide:** [Protocol Buffer Definition Guide](HSU_PROTOCOL_BUFFERS.md)
 
-package proto;
+The Protocol Buffer guide covers:
+- Service and message definitions
+- Code generation for both Go and Python
+- Best practices for gRPC API design
+- Directory structure and file organization
 
-service EchoService {
-  rpc Echo(EchoRequest) returns (EchoResponse) {}
-}
-
-message EchoRequest {
-  string message = 1;
-}
-
-message EchoResponse {
-  string message = 1;
-}
-```
-
-### Code Generation
-
-Create `api/proto/generate-go.sh`:
-
-```bash
-#!/bin/bash
-protoc --go_out=../../go/api/proto --go_opt=paths=source_relative \
-       --go-grpc_out=../../go/api/proto --go-grpc_opt=paths=source_relative \
-       echoservice.proto
-```
-
-Run the generator:
-
-```bash
-cd api/proto
-chmod +x generate-go.sh
-./generate-go.sh
-```
+Once you've completed the Protocol Buffer setup, continue with the Go implementation below.
 
 ## Step 2: Define Domain Contract
 

@@ -263,6 +263,6 @@ The common domain repository structure remains stable, enabling smooth migration
 
 ## Next Steps
 
-- [Go Implementation Guide](HSU_GO_IMPLEMENTATION.md) - Create Go servers
-- [Python Implementation Guide](HSU_PYTHON_IMPLEMENTATION.md) - Create Python servers
+- [Go Implementation Guide](INTEGRATED_HSU_MULTI_REPO_GO_GUIDE.md) - Create Go servers
+- [Python Implementation Guide](INTEGRATED_HSU_MULTI_REPO_PYTHON_GUIDE.md) - Create Python servers
 - [Testing and Deployment](HSU_TESTING_DEPLOYMENT.md) - Test your implementations 

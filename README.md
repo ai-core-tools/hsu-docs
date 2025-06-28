@@ -273,8 +273,8 @@ Ready to start building with HSU? Check out our comprehensive developer guides:
 - **[Development Setup](DEVELOPMENT_SETUP.md)** - Setting up your development environment
 
 ### 📖 Implementation Guides
-- **[Creating an HSU Master Process](CREATING_HSU_MASTER.md)** - Build orchestration and management processes
-- **[Creating an Integrated HSU](CREATING_INTEGRATED_HSU.md)** - Build business logic services
+- **[Creating an HSU Master Process](HSU_MASTER_GUIDE.md)** - Build orchestration and management processes
+- **[Creating an Integrated HSU](INTEGRATED_HSU_GUIDE.md)** - Build business logic services
 - **[Working with gRPC Services](GRPC_SERVICES.md)** - Advanced gRPC patterns and best practices
 
 ### 📚 Reference Documentation

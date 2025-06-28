@@ -1,10 +1,10 @@
-# Simple HSU Go Implementation Guide
+# Single-Repository HSU Go Implementation Guide
 
-This guide walks you through creating a simple, self-contained Go-based HSU server in a single repository. This approach is perfect for getting started quickly or when you only need one server implementation.
+This guide walks you through creating a single-repository, self-contained Go-based HSU server in a single repository. This approach is perfect for getting started quickly or when you only need one server implementation.
 
 ## Overview
 
-A simple HSU Go implementation includes everything in one repository:
+A single-repository HSU Go implementation includes everything in one repository:
 - Protocol Buffer definitions
 - Generated gRPC code
 - Domain contracts and business logic
@@ -430,7 +430,7 @@ Expected output:
 
 ## Key Advantages
 
-### Simple Structure
+### Single-Repository Structure
 - Everything in one repository
 - No git submodules or complex dependencies
 - Easy to understand and modify
@@ -438,23 +438,23 @@ Expected output:
 ### Self-Contained
 - All code is visible and editable
 - Direct control over all components
-- Simple build and deployment
+- Single-repository build and deployment
 
 ### Perfect for Learning
 - Clear separation of concerns
 - Easy to trace code flow
 - All patterns visible in one place
 
-## When to Use Simple vs Full Structure
+## When to Use Single-Repository vs Multi-Repository Structure
 
-### Use Simple Structure When:
+### Use Single-Repository Structure When:
 - Learning the HSU platform
 - Building a single server implementation
 - Rapid prototyping
 - Small teams or individual development
 - Don't need multiple language implementations
 
-### Consider Full Structure When:
+### Consider Multi-Repository Structure When:
 - Need multiple server implementations (Go + Python)
 - Want to share common components across teams
 - Building production systems with multiple variants
@@ -463,5 +463,5 @@ Expected output:
 ## Next Steps
 
 - Study the [Protocol Buffer Definition Guide](HSU_PROTOCOL_BUFFERS.md) to understand gRPC contracts
-- Explore the [Full Implementation Guides](HSU_GO_IMPLEMENTATION.md) when you need multi-repository structure
+- Explore the [Multi-Repository Implementation Guides](INTEGRATED_HSU_MULTI_REPO_GO_GUIDE.md) when you need multi-repository structure
 - Check [Best Practices](HSU_BEST_PRACTICES.md) for production deployment 

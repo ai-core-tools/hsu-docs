@@ -121,8 +121,8 @@ We need more real-world examples! Here's how you can contribute:
 
 ## See Also
 
-- [Creating an HSU Master Process](CREATING_HSU_MASTER.md)
-- [Creating an Integrated HSU](CREATING_INTEGRATED_HSU.md)
+- [Creating an HSU Master Process](HSU_MASTER_GUIDE.md)
+- [Creating an Integrated HSU](INTEGRATED_HSU_GUIDE.md)
 - [Working with gRPC Services](GRPC_SERVICES.md)
 - [Configuration Guide](CONFIGURATION.md) (planned)
 - [Testing and Debugging](TESTING_DEBUGGING.md) (planned)

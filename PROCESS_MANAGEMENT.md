@@ -259,7 +259,7 @@ See [ROADMAP.md](ROADMAP.md) for more details on process management development 
 
 ## See Also
 
-- [Creating an HSU Master Process](CREATING_HSU_MASTER.md) - Basic process management
+- [Creating an HSU Master Process](HSU_MASTER_GUIDE.md) - Basic process management
 - [API Reference](API_REFERENCE.md) - Current process control API
 - [Configuration Guide](CONFIGURATION.md) (planned) - Process configuration
 - [Testing and Debugging](TESTING_DEBUGGING.md) (planned) - Testing process management 

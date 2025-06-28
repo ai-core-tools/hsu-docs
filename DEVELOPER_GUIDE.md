@@ -9,8 +9,8 @@ This guide helps developers create HSU master processes and integrated HSU units
 - [Development Setup](DEVELOPMENT_SETUP.md) - Setting up your development environment
 
 ### Implementation Guides
-- [Creating an HSU Master Process](CREATING_HSU_MASTER.md) - Step-by-step guide for building master processes
-- [Creating an Integrated HSU](CREATING_INTEGRATED_HSU.md) - Step-by-step guide for building HSU units
+- [Creating an HSU Master Process](HSU_MASTER_GUIDE.md) - Step-by-step guide for building master processes
+- [Creating an Integrated HSU](INTEGRATED_HSU_GUIDE.md) - Step-by-step guide for building HSU units
 - [Working with gRPC Services](GRPC_SERVICES.md) - Defining and implementing gRPC interfaces
 
 ### Reference Documentation
@@ -95,8 +95,8 @@ The platform includes several working examples:
 
 ## Next Steps
 
-1. **For Platform Users**: Start with [Creating an HSU Master Process](CREATING_HSU_MASTER.md)
-2. **For Service Developers**: Begin with [Creating an Integrated HSU](CREATING_INTEGRATED_HSU.md)
+1. **For Platform Users**: Start with [Creating an HSU Master Process](HSU_MASTER_GUIDE.md)
+2. **For Service Developers**: Begin with [Creating an Integrated HSU](INTEGRATED_HSU_GUIDE.md)
 3. **For Contributors**: Review [Development Setup](DEVELOPMENT_SETUP.md) and the platform source code
 
 ## Need Help?

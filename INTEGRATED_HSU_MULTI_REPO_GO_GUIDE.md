@@ -399,6 +399,6 @@ Convert between gRPC types and domain types in the control layer, keeping domain
 
 ## Next Steps
 
-- [Python Implementation Guide](HSU_PYTHON_IMPLEMENTATION.md) - Create Python servers
+- [Python Implementation Guide](INTEGRATED_HSU_MULTI_REPO_PYTHON_GUIDE.md) - Create Python servers
 - [Testing and Deployment](HSU_TESTING_DEPLOYMENT.md) - Test and deploy your servers
 - [Best Practices](HSU_BEST_PRACTICES.md) - Follow platform conventions 

@@ -14,7 +14,7 @@ An Integrated HSU is a process that:
 
 Choose your implementation approach based on your needs:
 
-### 🚀 Simple Implementation (Recommended for Getting Started)
+### 🚀 Single-Repository Implementation (Recommended for Getting Started)
 
 **Best for:**
 - Learning the HSU platform
@@ -28,7 +28,7 @@ Choose your implementation approach based on your needs:
 - No complex dependencies
 - Perfect for understanding HSU patterns
 
-### 🏢 Full Implementation (Multi-Repository Structure)
+### 🏢 Multi-Repository Implementation (Multi-Repository Structure)
 
 **Best for:**
 - Production systems
@@ -44,7 +44,7 @@ Choose your implementation approach based on your needs:
 
 ---
 
-## 🚀 Simple Implementation Path
+## 🚀 Single-Repository Implementation Path
 
 ### Prerequisites
 - Choose your language: Go 1.22+ or Python 3.8+
@@ -53,10 +53,10 @@ Choose your implementation approach based on your needs:
 
 ### Quick Start Options
 
-#### Option A: Simple Go Implementation
+#### Option A: Single-Repository Go Implementation
 **Perfect for Go developers or teams**
 
-**📋 Follow this guide:** [Simple HSU Go Implementation](INTEGRATED_HSU_SIMPLE_GO_IMPLEMENTATION.md)
+**📋 Follow this guide:** [Single-Repository HSU Go Implementation](INTEGRATED_HSU_SINGLE_REPO_GO_GUIDE.md)
 
 **What you'll build:**
 - Single-repository Go server
@@ -66,22 +66,22 @@ Choose your implementation approach based on your needs:
 
 **Time to complete:** ~30-45 minutes
 
-#### Option B: Simple Python Implementation  
+#### Option B: Single-Repository Python Implementation  
 **Perfect for Python developers or teams**
 
-**📋 Follow this guide:** [Simple HSU Python Implementation](INTEGRATED_HSU_SIMPLE_PYTHON_IMPLEMENTATION.md)
+**📋 Follow this guide:** [Single-Repository HSU Python Implementation](INTEGRATED_HSU_SINGLE_REPO_PYTHON_GUIDE.md)
 
 **What you'll build:**
 - Single-repository Python server
 - Git submodules for dependencies
 - Python client and server examples
-- Simple business logic implementation
+- Single-repository business logic implementation
 
 **Time to complete:** ~30-45 minutes
 
 ---
 
-## 🏢 Full Implementation Path
+## 🏢 Multi-Repository Implementation Path
 
 ### Prerequisites
 - Go 1.22+ and/or Python 3.8+
@@ -116,7 +116,7 @@ Setup includes:
 #### Step 3: Choose Your Implementation Language(s)
 
 ##### Option A: Go Implementation
-**📋 Follow this guide:** [HSU Go Implementation Guide](HSU_GO_IMPLEMENTATION.md)
+**📋 Follow this guide:** [HSU Go Implementation Guide](INTEGRATED_HSU_MULTI_REPO_GO_GUIDE.md)
 
 Create:
 - Common domain repository with Go support
@@ -127,7 +127,7 @@ Create:
 **Time to complete:** ~60-90 minutes
 
 ##### Option B: Python Implementation
-**📋 Follow this guide:** [HSU Python Implementation Guide](HSU_PYTHON_IMPLEMENTATION.md)
+**📋 Follow this guide:** [HSU Python Implementation Guide](INTEGRATED_HSU_MULTI_REPO_PYTHON_GUIDE.md)
 
 Create:
 - Python support in common domain repository
@@ -170,22 +170,22 @@ Learn:
 
 The **`hsu-echo`** domain serves as the complete reference implementation:
 
-### Simple Implementations
+### Single-Repository Implementations
 - **[`hsu-echo-simple-go/`](../hsu-echo-simple-go/)** - Self-contained Go server
 - **[`hsu-echo-simple-py/`](../hsu-echo-simple-py/)** - Self-contained Python server
 
-### Full Implementation Structure
+### Multi-Repository Implementation Structure
 - **[`hsu-echo/`](../hsu-echo/)** - Common domain repository
 - **[`hsu-echo-super-srv-go/`](../hsu-echo-super-srv-go/)** - Go server implementation
 - **[`hsu-echo-super-srv-py/`](../hsu-echo-super-srv-py/)** - Python server implementation
 
 ## 🔄 Migration Path
 
-You can start simple and evolve:
+You can start with single-repository and evolve:
 
-1. **Start Simple**: Begin with a simple implementation to learn the patterns
+1. **Start Single-Repository**: Begin with a single-repository implementation to learn the patterns
 2. **Extract Common**: When you need multiple implementations, extract shared components
-3. **Scale Architecture**: Move to full multi-repository structure for production systems
+3. **Scale Architecture**: Move to multi-repository structure for production systems
 
 The HSU platform supports this evolution without breaking existing functionality.
 
@@ -196,19 +196,19 @@ Once you've created your HSU implementation, explore these topics:
 - **[Working with gRPC Services](GRPC_SERVICES.md)** - Advanced gRPC patterns
 - **[Multi-Language Support](MULTI_LANGUAGE.md)** - Language-specific considerations  
 - **[Process Management](PROCESS_MANAGEMENT.md)** - Managing HSU processes
-- **[Creating HSU Masters](CREATING_HSU_MASTER.md)** - Building master processes
+- **[Creating HSU Masters](HSU_MASTER_GUIDE.md)** - Building master processes
 
 ## 🆘 Getting Help
 
-- **Simple Implementation Issues**: Check the troubleshooting sections in the simple implementation guides
-- **Full Implementation Issues**: Review the [Best Practices troubleshooting](HSU_BEST_PRACTICES.md#troubleshooting)
+- **Single-Repository Implementation Issues**: Check the troubleshooting sections in the single-repository implementation guides
+- **Multi-Repository Implementation Issues**: Review the [Best Practices troubleshooting](HSU_BEST_PRACTICES.md#troubleshooting)
 - **Architecture Questions**: Study the reference implementation in `hsu-echo/`
 - **Platform Concepts**: Consult the [Developer Guide](DEVELOPER_GUIDE.md)
 
 ## 🎯 Recommended Learning Sequence
 
 ### For Beginners
-1. Choose **Simple Implementation** (Go or Python)
+1. Choose **Single-Repository Implementation** (Go or Python)
 2. Complete the implementation following the guide
 3. Experiment with the business logic
 4. Study the reference implementation patterns

@@ -1,10 +1,10 @@
-# Simple HSU Python Implementation Guide
+# Single-Repository HSU Python Implementation Guide
 
-This guide walks you through creating a simple, self-contained Python-based HSU server. This approach uses git submodules for dependencies and includes both server and client implementations.
+This guide walks you through creating a single-repository, self-contained Python-based HSU server. This approach uses git submodules for dependencies and includes both server and client implementations.
 
 ## Overview
 
-A simple HSU Python implementation includes:
+A single-repository HSU Python implementation includes:
 - Protocol Buffer definitions and generated code
 - Domain contracts and business logic  
 - Server setup and entry point
@@ -422,7 +422,7 @@ git submodule update --init hsu_core
 
 ## Key Advantages
 
-### Simple Setup
+### Single-Repository Setup
 - Single repository with everything needed
 - Git submodules handle dependencies reliably
 - Make commands automate common tasks
@@ -437,16 +437,16 @@ git submodule update --init hsu_core
 - Easy to trace execution flow
 - Complete working example
 
-## When to Use Simple vs Full Structure
+## When to Use Single-Repository vs Multi-Repository Structure
 
-### Use Simple Structure When:
+### Use Single-Repository Structure When:
 - Learning the HSU platform with Python
 - Building a single Python server implementation  
 - Rapid prototyping with Python
 - Small teams or individual development
 - Don't need multiple language implementations
 
-### Consider Full Structure When:
+### Consider Multi-Repository Structure When:
 - Need both Go and Python implementations
 - Want to share common components across teams
 - Building production systems with multiple variants
@@ -454,7 +454,7 @@ git submodule update --init hsu_core
 
 ## Migration Path
 
-This simple structure can easily evolve:
+This single-repository structure can easily evolve:
 
 1. **Current**: Everything in one repository with submodules
 2. **Future**: Extract to multi-repository structure when needed
@@ -463,5 +463,5 @@ This simple structure can easily evolve:
 ## Next Steps
 
 - Study the [Protocol Buffer Definition Guide](HSU_PROTOCOL_BUFFERS.md) to understand gRPC contracts
-- Explore the [Full Implementation Guides](HSU_PYTHON_IMPLEMENTATION.md) when you need multi-repository structure
+- Explore the [Multi-Repository Implementation Guides](INTEGRATED_HSU_MULTI_REPO_PYTHON_GUIDE.md) when you need multi-repository structure
 - Check [Best Practices](HSU_BEST_PRACTICES.md) for production deployment 

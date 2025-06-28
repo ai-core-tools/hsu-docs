@@ -187,6 +187,6 @@ your-hsu-domain/
 
 ## Next Steps
 
-- [Go Implementation Guide](HSU_GO_IMPLEMENTATION.md) - Implement Go servers
-- [Python Implementation Guide](HSU_PYTHON_IMPLEMENTATION.md) - Implement Python servers
+- [Go Implementation Guide](INTEGRATED_HSU_MULTI_REPO_GO_GUIDE.md) - Implement Go servers
+- [Python Implementation Guide](INTEGRATED_HSU_MULTI_REPO_PYTHON_GUIDE.md) - Implement Python servers
 - [gRPC Services Documentation](GRPC_SERVICES.md) - Advanced gRPC patterns 

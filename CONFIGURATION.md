@@ -37,8 +37,8 @@ The HSU platform currently supports basic configuration through:
 - Hardcoded server options (port numbers, timeouts)
 
 For working examples, see:
-- [Creating an HSU Master Process](CREATING_HSU_MASTER.md) - Basic flag handling
-- [Creating an Integrated HSU](CREATING_INTEGRATED_HSU.md) - Server configuration
+- [Creating an HSU Master Process](HSU_MASTER_GUIDE.md) - Basic flag handling
+- [Creating an Integrated HSU](INTEGRATED_HSU_GUIDE.md) - Server configuration
 
 ## Contributing
 

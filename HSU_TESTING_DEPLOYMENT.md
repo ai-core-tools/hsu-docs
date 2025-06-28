@@ -175,6 +175,6 @@ grpcurl -plaintext -d '{"message": "hello"}' localhost:50055 proto.EchoService/E
 
 ## Next Steps
 
-- [Go Implementation Guide](HSU_GO_IMPLEMENTATION.md) - Learn Go patterns
-- [Python Implementation Guide](HSU_PYTHON_IMPLEMENTATION.md) - Learn Python patterns
+- [Go Implementation Guide](INTEGRATED_HSU_MULTI_REPO_GO_GUIDE.md) - Learn Go patterns
+- [Python Implementation Guide](INTEGRATED_HSU_MULTI_REPO_PYTHON_GUIDE.md) - Learn Python patterns
 - [Best Practices](HSU_BEST_PRACTICES.md) - Follow platform conventions 

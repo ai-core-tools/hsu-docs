@@ -15,31 +15,49 @@ The **HSU Universal Makefile System** provides a standardized, cross-platform bu
 ## Key Features
 
 🎯 **Auto-Detection**: Automatically detects repository structure and enables appropriate languages  
-🌐 **Cross-Platform**: Works on Windows, macOS, and Linux with proper shell detection  
+🌐 **Cross-Platform**: Works on Windows-MSYS, PowerShell, macOS, and Linux with intelligent shell detection  
 🔧 **Modular Design**: Language-specific functionality in separate, includable files  
-⚙️ **Configurable**: Project-specific settings via configuration files  
+⚙️ **Configuration-Driven**: Include paths and project settings via configuration files  
+🔄 **Master → Replica Architecture**: Clean deployment with true file replication  
 🚀 **Comprehensive**: Covers build, test, lint, format, clean, and development workflows  
+🛠️ **Windows-MSYS Compatible**: Handles Windows PowerShell vs MSYS context correctly  
 
 ## Quick Start
 
-### 1. Install the System
+### 1. Install the System (Master → Rollout Process)
 
-Copy these files to your project root or `/docs/` directory:
+**Step 1**: Copy master files to your project (true replication):
 
 ```bash
-# Core system files
-HSU_MAKEFILE_ROOT.mk      # Main coordinator
-HSU_MAKEFILE_CONFIG.mk    # Configuration template
-HSU_MAKEFILE_GO.mk        # Go-specific operations
-HSU_MAKEFILE_PYTHON.mk    # Python-specific operations
+# Copy all HSU system files from master location
+cp /path/to/master/HSU_MAKEFILE_*.mk project/make/
+
+# Core system files deployed:
+# HSU_MAKEFILE_ROOT.mk      - Main coordinator
+# HSU_MAKEFILE_CONFIG.mk    - Configuration template  
+# HSU_MAKEFILE_GO.mk        - Go-specific operations
+# HSU_MAKEFILE_PYTHON.mk    - Python-specific operations
+```
+
+**Step 2**: Configure include path in `Makefile.config`:
+
+```make
+# Project Configuration
+PROJECT_NAME := my-hsu-project
+PROJECT_DOMAIN := my-domain
+
+# Include Path Configuration (NEW!)
+INCLUDE_PREFIX := make/    # Folder where HSU files are located
+# OR: INCLUDE_PREFIX := build/
+# OR: INCLUDE_PREFIX :=     # (root level)
 ```
 
 ### 2. Create Your Project Makefile
 
 ```make
 # Include the HSU Universal Makefile system
-include docs/HSU_MAKEFILE_ROOT.mk
-# OR include HSU_MAKEFILE_ROOT.mk (if in same directory)
+include make/HSU_MAKEFILE_ROOT.mk
+# System will automatically use INCLUDE_PREFIX from config
 ```
 
 ### 3. Configure Your Project (Optional)
@@ -90,17 +108,18 @@ make py-test
 
 ```
 my-hsu-project-go/
-├── Makefile                 # include docs/HSU_MAKEFILE_ROOT.mk
-├── Makefile.config          # Optional project config
+├── Makefile                 # include make/HSU_MAKEFILE_ROOT.mk
+├── Makefile.config          # INCLUDE_PREFIX := make/
 ├── go.mod                   # ← Auto-detected
 ├── api/proto/               # API definitions
 ├── pkg/                     # Shared libraries
 ├── cmd/
 │   ├── cli/echogrpccli/
 │   └── srv/echogrpcsrv/
-└── docs/
-    ├── HSU_MAKEFILE_ROOT.mk    # ← System files
+└── make/
+    ├── HSU_MAKEFILE_ROOT.mk    # ← System files (true replicas)
     ├── HSU_MAKEFILE_GO.mk
+    ├── HSU_MAKEFILE_PYTHON.mk
     └── HSU_MAKEFILE_CONFIG.mk
 ```
 
@@ -110,8 +129,8 @@ my-hsu-project-go/
 
 ```
 my-hsu-project/
-├── Makefile                 # include docs/HSU_MAKEFILE_ROOT.mk  
-├── Makefile.config          # Optional project config
+├── Makefile                 # include make/HSU_MAKEFILE_ROOT.mk  
+├── Makefile.config          # INCLUDE_PREFIX := make/
 ├── api/proto/               # Shared API definitions
 ├── go/                      # ← Auto-detected
 │   ├── go.mod
@@ -120,8 +139,8 @@ my-hsu-project/
 ├── python/                  # ← Auto-detected
 │   ├── pyproject.toml
 │   ├── lib/ srv/ cli/
-└── docs/
-    ├── HSU_MAKEFILE_ROOT.mk    # ← System files
+└── make/
+    ├── HSU_MAKEFILE_ROOT.mk    # ← System files (true replicas)
     ├── HSU_MAKEFILE_GO.mk
     ├── HSU_MAKEFILE_PYTHON.mk
     └── HSU_MAKEFILE_CONFIG.mk
@@ -133,20 +152,22 @@ my-hsu-project/
 
 ```
 my-hsu-project-common/
-├── Makefile                 # include docs/HSU_MAKEFILE_ROOT.mk
+├── Makefile                 # include make/HSU_MAKEFILE_ROOT.mk
+├── Makefile.config          # INCLUDE_PREFIX := make/
 ├── api/proto/               # Shared APIs
 ├── go/ python/              # Shared libraries only
-└── docs/HSU_MAKEFILE_*.mk   # System files
+└── make/HSU_MAKEFILE_*.mk   # System files (true replicas)
 ```
 
 ### Approach 3: Multi-Repository (Implementation)
 
 ```
 my-hsu-project-srv-go/
-├── Makefile                 # include docs/HSU_MAKEFILE_ROOT.mk
+├── Makefile                 # include make/HSU_MAKEFILE_ROOT.mk
+├── Makefile.config          # INCLUDE_PREFIX := make/
 ├── go.mod                   # ← Auto-detected
 ├── srv/                     # Server implementation
-└── docs/HSU_MAKEFILE_*.mk   # System files
+└── make/HSU_MAKEFILE_*.mk   # System files (true replicas)
 ```
 
 ## Configuration Options
@@ -158,6 +179,10 @@ my-hsu-project-srv-go/
 PROJECT_NAME := hsu-example-project
 PROJECT_DOMAIN := example  
 PROJECT_VERSION := 1.0.0
+
+# Include Path Configuration (NEW!)
+INCLUDE_PREFIX := make/      # Where HSU system files are located
+                            # Common: make/ build/ scripts/ or empty
 
 # Build Configuration
 DEFAULT_PORT := 50055
@@ -324,8 +349,14 @@ jobs:
 **Issue**: Build artifacts in wrong directory  
 **Solution**: Check auto-detection with `make info`
 
+**Issue**: "No CLI targets found" on Windows  
+**Solution**: Fixed in v1.0+ with cross-platform auto-detection. System automatically detects Windows-MSYS and uses `bash -c` for find commands.
+
 **Issue**: Cross-platform path issues  
 **Solution**: System handles this automatically, but verify with `make info`
+
+**Issue**: `include HSU_MAKEFILE_GO.mk: No such file or directory`  
+**Solution**: Configure `INCLUDE_PREFIX` in `Makefile.config` to point to your HSU files location
 
 ### Diagnostics
 
@@ -351,15 +382,68 @@ make go-lint-diag
 make go-lint-fix
 ```
 
+## Master → Rollout Architecture
+
+The HSU Universal Makefile System uses a **Master → Replica deployment model** for maximum maintainability and consistency.
+
+### Architecture Overview
+
+```
+📁 /master/location/ (SOURCE OF TRUTH)
+├── HSU_MAKEFILE_ROOT.mk      # Generic includes: $(INCLUDE_PREFIX)HSU_MAKEFILE_GO.mk
+├── HSU_MAKEFILE_CONFIG.mk    # Template with INCLUDE_PREFIX := 
+├── HSU_MAKEFILE_GO.mk        # Language-specific logic
+└── HSU_MAKEFILE_PYTHON.mk    # Language-specific logic
+
+                    ⬇️ TRUE REPLICATION ⬇️
+
+📁 project/make/ (ROLLOUT REPLICAS)
+├── HSU_MAKEFILE_ROOT.mk      # Identical to master
+├── HSU_MAKEFILE_CONFIG.mk    # Identical to master  
+├── HSU_MAKEFILE_GO.mk        # Identical to master
+└── HSU_MAKEFILE_PYTHON.mk    # Identical to master
+
+📁 project/ (PROJECT CUSTOMIZATION)
+├── Makefile                  # include make/HSU_MAKEFILE_ROOT.mk
+└── Makefile.config           # INCLUDE_PREFIX := make/
+```
+
+### Rollout Process
+
+1. **Deploy Master Files** (true replication - no modifications):
+   ```bash
+   cp /master/HSU_MAKEFILE_*.mk project/make/
+   ```
+
+2. **Configure Include Path** in `project/Makefile.config`:
+   ```make
+   INCLUDE_PREFIX := make/   # Point to rollout location
+   ```
+
+3. **Test Deployment**:
+   ```bash
+   make help    # Verify system loads
+   make info    # Verify configuration
+   ```
+
+### Benefits
+
+- ✅ **Master files remain pure** and reusable across all projects
+- ✅ **No file modifications** during rollout (true replicas)
+- ✅ **All customization** through configuration files
+- ✅ **Easy updates** - just replace replica files from master
+- ✅ **Flexible folder structure** - use any `INCLUDE_PREFIX`
+
 ## Migration Guide
 
 ### From Existing Makefile
 
 1. **Backup** your current Makefile
-2. **Install** HSU system files
-3. **Replace** Makefile content with: `include docs/HSU_MAKEFILE_ROOT.mk`
-4. **Configure** project-specific settings in `Makefile.config`
-5. **Test** with `make info` and `make help`
+2. **Deploy** HSU system files: `cp /master/HSU_MAKEFILE_*.mk project/make/`
+3. **Replace** Makefile content with: `include make/HSU_MAKEFILE_ROOT.mk`
+4. **Configure** `INCLUDE_PREFIX := make/` in `Makefile.config`
+5. **Configure** project-specific settings in `Makefile.config`
+6. **Test** with `make info` and `make help`
 
 ### From Manual Scripts
 
@@ -375,7 +459,7 @@ make go-lint-fix
 
 ```make
 # Makefile
-include docs/HSU_MAKEFILE_ROOT.mk
+include make/HSU_MAKEFILE_ROOT.mk
 
 # Custom targets
 .PHONY: run-integration-test
@@ -386,21 +470,35 @@ run-integration-test: build
 	pkill echogrpcsrv
 ```
 
-### hsu-example4 (Approach 2)
+```make
+# Makefile.config
+PROJECT_NAME := hsu-example1-go
+PROJECT_DOMAIN := echo
+INCLUDE_PREFIX := make/
+```
+
+### hsu-example2 (Approach 2)
 
 ```make
 # Makefile  
-include docs/HSU_MAKEFILE_ROOT.mk
+include make/HSU_MAKEFILE_ROOT.mk
 
 # The system auto-detects multi-language structure
 # No additional configuration needed!
+```
+
+```make
+# Makefile.config
+PROJECT_NAME := hsu-example2
+PROJECT_DOMAIN := echo
+INCLUDE_PREFIX := make/
 ```
 
 ### hsu-echo-common (Approach 3)
 
 ```make
 # Makefile
-include docs/HSU_MAKEFILE_ROOT.mk
+include make/HSU_MAKEFILE_ROOT.mk
 
 # Custom protobuf generation
 .PHONY: proto
@@ -408,6 +506,13 @@ proto:
 	cd api/proto && ./generate-go.sh && ./generate-py.sh
 
 build: proto go-build py-build
+```
+
+```make
+# Makefile.config
+PROJECT_NAME := hsu-echo-common
+PROJECT_DOMAIN := echo
+INCLUDE_PREFIX := make/
 ```
 
 ## Best Practices
@@ -435,6 +540,12 @@ build: proto go-build py-build
 - ✅ Share APIs and documentation
 - ✅ Use consistent port numbers and conventions
 - ❌ Don't tightly couple language implementations
+
+### 5. Cross-Platform Development
+- ✅ System automatically detects Windows-MSYS vs PowerShell context
+- ✅ Use `make info` to verify environment detection
+- ✅ Configure `INCLUDE_PREFIX` for flexible folder structures
+- ❌ Don't hardcode shell-specific commands in custom targets
 
 ## Extensibility
 
@@ -466,8 +577,16 @@ The HSU Universal Makefile System provides a **production-ready, extensible foun
 
 Key benefits:
 - 🎯 **Zero configuration** for standard layouts
-- 🔧 **Full customization** when needed  
-- 🚀 **Cross-platform compatibility**
-- 📈 **Consistent developer experience**
+- 🔧 **Configuration-driven customization** via `INCLUDE_PREFIX` and `Makefile.config`
+- 🚀 **True cross-platform compatibility** (Windows-MSYS, macOS, Linux)
+- 🔄 **Master → Replica architecture** for clean deployments
+- 📈 **Consistent developer experience** across all 3 HSU approaches
+- 🛠️ **Intelligent auto-detection** of repository structure and build targets
+
+**Recent Improvements (v1.0+)**:
+- ✅ **Cross-platform auto-detection** fixes for Windows-MSYS environments
+- ✅ **Configuration-driven include paths** with `INCLUDE_PREFIX`
+- ✅ **True replica deployment** without file modifications
+- ✅ **Enhanced CLI/SRV target detection** using conditional shell commands
 
 This system serves as the **canonical build foundation** for all HSU projects, enabling developers to focus on domain logic rather than build infrastructure. 

@@ -113,16 +113,16 @@ ifndef ENABLE_PYTHON
     endif
 endif
 
-# Language-specific includes
+# Language-specific includes  
 ifeq ($(ENABLE_GO),yes)
     ifneq ($(GO_DIR),)
-        include HSU_MAKEFILE_GO.mk
+        include $(INCLUDE_PREFIX)HSU_MAKEFILE_GO.mk
     endif
 endif
 
 ifeq ($(ENABLE_PYTHON),yes)
     ifneq ($(PYTHON_DIR),)
-        include HSU_MAKEFILE_PYTHON.mk
+        include $(INCLUDE_PREFIX)HSU_MAKEFILE_PYTHON.mk
     endif
 endif
 
@@ -202,85 +202,45 @@ endif
 	@echo "Build Configuration:"
 	@echo "  Default Port: $(DEFAULT_PORT)"
 	@echo "  Build CLI: $(BUILD_CLI)"
-	@echo "  Build Server: $(BUILD_SRV)"
-	@echo "  Build Library: $(BUILD_LIB)"
+	@echo "  Build SRV: $(BUILD_SRV)"
+	@echo "  Build LIB: $(BUILD_LIB)"
 
-## Setup - Initialize development environment
-setup:
-	@echo "=== Setting up development environment ==="
-ifeq ($(ENABLE_GO),yes)
-	@$(MAKE) go-setup
-endif
-ifeq ($(ENABLE_PYTHON),yes)
-	@$(MAKE) py-setup
-endif
-	@echo "✓ Development environment setup complete"
-
-## Clean - Clean all build artifacts
-clean:
-	@echo "=== Cleaning all build artifacts ==="
-ifeq ($(ENABLE_GO),yes)
-	@$(MAKE) go-clean
-endif
-ifeq ($(ENABLE_PYTHON),yes)
-	@$(MAKE) py-clean
-endif
-	@echo "✓ Clean complete"
-
-## Build - Build all enabled components
-build:
-	@echo "=== Building all components ==="
-ifeq ($(ENABLE_GO),yes)
-	@$(MAKE) go-build
-endif
-ifeq ($(ENABLE_PYTHON),yes)
-	@$(MAKE) py-build
-endif
-	@echo "✓ Build complete"
-
-## Test - Run tests for all enabled languages
-test:
-	@echo "=== Running tests for all languages ==="
-ifeq ($(ENABLE_GO),yes)
-	@$(MAKE) go-test
-endif
-ifeq ($(ENABLE_PYTHON),yes)
-	@$(MAKE) py-test
-endif
-	@echo "✓ Tests complete"
-
-## Lint - Run linting for all enabled languages
-lint:
-	@echo "=== Running linting for all languages ==="
-ifeq ($(ENABLE_GO),yes)
-	@$(MAKE) go-lint
-endif
-ifeq ($(ENABLE_PYTHON),yes)
-	@$(MAKE) py-lint
-endif
-	@echo "✓ Linting complete"
-
-## Format - Format code for all enabled languages
-format:
-	@echo "=== Formatting code for all languages ==="
-ifeq ($(ENABLE_GO),yes)
-	@$(MAKE) go-format
-endif
-ifeq ($(ENABLE_PYTHON),yes)
-	@$(MAKE) py-format
-endif
-	@echo "✓ Formatting complete"
-
-## Check - Run all checks for all enabled languages
+# Universal build targets
+build: $(if $(filter yes,$(ENABLE_GO)),go-build) $(if $(filter yes,$(ENABLE_PYTHON)),py-build)
+test: $(if $(filter yes,$(ENABLE_GO)),go-test) $(if $(filter yes,$(ENABLE_PYTHON)),py-test)  
+lint: $(if $(filter yes,$(ENABLE_GO)),go-lint) $(if $(filter yes,$(ENABLE_PYTHON)),py-lint)
+format: $(if $(filter yes,$(ENABLE_GO)),go-format) $(if $(filter yes,$(ENABLE_PYTHON)),py-format)
+clean: $(if $(filter yes,$(ENABLE_GO)),go-clean) $(if $(filter yes,$(ENABLE_PYTHON)),py-clean)
 check: lint test
-	@echo "✓ All checks complete"
+setup: $(if $(filter yes,$(ENABLE_GO)),go-setup) $(if $(filter yes,$(ENABLE_PYTHON)),py-setup)
 
-## All - Build, test, and check everything
-all: setup build check
-	@echo "✓ Full build and validation complete"
+# Universal aliases for backward compatibility
+all: build
+tidy: $(if $(filter yes,$(ENABLE_GO)),go-tidy)
+deps: $(if $(filter yes,$(ENABLE_GO)),go-deps) $(if $(filter yes,$(ENABLE_PYTHON)),py-deps)
 
-# Version information
-version:
-	@echo "HSU Universal Makefile v1.0.0"
-	@echo "Repository Type: $(REPO_TYPE)"
-	@echo "Project: $(PROJECT_NAME) v$(PROJECT_VERSION)" 
+# Running targets (Go-specific for now, extend for other languages)
+ifeq ($(ENABLE_GO),yes)
+.PHONY: run-srv run-cli run-cli-port run-cli-srvpath
+
+## Run Server - Start the server on default port
+run-srv: go-build-srv
+	@echo "Starting server on port $(DEFAULT_PORT)..."
+	./cmd/srv/echogrpcsrv/echogrpcsrv$(EXECUTABLE_EXT) --port $(DEFAULT_PORT)
+
+## Run CLI - Run CLI client (connects to localhost:DEFAULT_PORT)
+run-cli: go-build-cli
+	@echo "Running CLI client (connecting to localhost:$(DEFAULT_PORT))..."
+	./cmd/cli/echogrpccli/echogrpccli$(EXECUTABLE_EXT) --port $(DEFAULT_PORT)
+
+## Run CLI Port - Run CLI client with custom port (use PORT=xxxx)
+run-cli-port: go-build-cli
+	@echo "Running CLI client (connecting to localhost:$(or $(PORT),$(DEFAULT_PORT)))..."
+	./cmd/cli/echogrpccli/echogrpccli$(EXECUTABLE_EXT) --port $(or $(PORT),$(DEFAULT_PORT))
+
+## Run CLI Server Path - Run CLI client with server executable path
+run-cli-srvpath: build
+	@echo "Running CLI client with server path..."
+	./cmd/cli/echogrpccli/echogrpccli$(EXECUTABLE_EXT) --server "./cmd/srv/echogrpcsrv/echogrpcsrv$(EXECUTABLE_EXT)"
+
+endif 

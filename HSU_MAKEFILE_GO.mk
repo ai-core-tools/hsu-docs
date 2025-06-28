@@ -199,62 +199,17 @@ go-lint-diag:
 	@echo "   - Try: make go-lint-fix"
 	@echo "   - For VSCode: restart Go language server"
 
-## Go Lint Fix - Attempt fixes for common domain import issues
+## Go Lint Fix - Attempt common fixes for linter issues
 go-lint-fix:
-	@echo "=== Attempting Go Lint Fixes ==="
+	@echo "=== Attempting Go Linter Fixes ==="
 	@echo "1. Cleaning module cache..."
 	$(GO_CMD) go clean -modcache
 	@echo "2. Tidying modules..."
 	$(GO_CMD) go mod tidy
-	@echo "3. Re-downloading dependencies..."
+	@echo "3. Downloading fresh dependencies..."
 	$(GO_CMD) go mod download
 	@echo "4. Verifying modules..."
 	$(GO_CMD) go mod verify
-	@echo "5. Building to verify imports..."
-	$(GO_CMD) go build ./... || echo "Build still has issues - check go-lint-diag output"
-	@echo "✓ Go lint fix attempt complete"
-
-# Run targets (if executables exist)
-.PHONY: go-run-cli go-run-srv
-
-## Go Run CLI - Run the first CLI found
-go-run-cli:
-ifneq ($(word 1,$(GO_CLI_BINARIES)),)
-	@echo "Running CLI: $(word 1,$(GO_CLI_BINARIES))"
-	@./$(word 1,$(GO_CLI_BINARIES)) --help || ./$(word 1,$(GO_CLI_BINARIES))
-else
-	@echo "No CLI binaries found. Run 'make go-build-cli' first."
-endif
-
-## Go Run Server - Run the first server found  
-go-run-srv:
-ifneq ($(word 1,$(GO_SRV_BINARIES)),)
-	@echo "Running server: $(word 1,$(GO_SRV_BINARIES))"
-	@./$(word 1,$(GO_SRV_BINARIES)) --port $(DEFAULT_PORT)
-else
-	@echo "No server binaries found. Run 'make go-build-srv' first."
-endif
-
-# Development helpers
-.PHONY: go-watch go-bench go-cover
-
-## Go Watch - Watch for changes and rebuild (requires entr)
-go-watch:
-ifeq ($(shell which entr 2>$(NULL_DEV)),)
-	@echo "entr not found. Install with: apt install entr (Ubuntu) or brew install entr (macOS)"
-else
-	@echo "Watching Go files for changes..."
-	@find $(GO_DIR) -name "*.go" | entr -r make go-build
-endif
-
-## Go Benchmark - Run Go benchmarks
-go-bench:
-	@echo "Running Go benchmarks..."
-	$(GO_CMD) go test -bench=. -benchmem ./...
-
-## Go Coverage - Generate test coverage report
-go-cover:
-	@echo "Generating Go coverage report..."
-	$(GO_CMD) go test -coverprofile=coverage.out ./...
-	$(GO_CMD) go tool cover -html=coverage.out -o coverage.html
-	@echo "Coverage report: coverage.html" 
+	@echo ""
+	@echo "✓ Basic fixes applied. Try running your editor/linter again."
+	@echo "  For persistent issues, check domain import configuration." 

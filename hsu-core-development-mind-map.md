@@ -691,7 +691,7 @@ This would dramatically reduce boilerplate code and provide battle-tested, reusa
 ### 🏆 **Top Technical Strengths**
 
 #### **1. Excellent Separation of Concerns**
-- **Clean Architecture**: Clear separation between `hsu-core` (platform), `hsu-echo` (example), and applications
+- **Clean Architecture**: Clear separation between `hsu-core` (platform), `hsu-example3-common` (example), and applications
 - **Language Agnostic**: gRPC enables polyglot development while maintaining type safety
 - **Layered Design**: Control, Domain, and API layers are well-separated
 - **Interface-Driven**: `domain.Contract` interface enables clean abstraction

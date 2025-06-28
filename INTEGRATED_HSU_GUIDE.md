@@ -168,16 +168,16 @@ Learn:
 
 ## 📚 Reference Implementation
 
-The **`hsu-echo`** domain serves as the complete reference implementation:
+The **`hsu-example3-common`** domain serves as the complete reference implementation:
 
 ### Single-Repository Implementations
-- **[`hsu-echo-simple-go/`](../hsu-echo-simple-go/)** - Self-contained Go server
-- **[`hsu-echo-simple-py/`](../hsu-echo-simple-py/)** - Self-contained Python server
+- **[`hsu-example1-go/`](../hsu-example1-go/)** - Self-contained Go server
+- **[`hsu-example2-py/`](../hsu-example2-py/)** - Self-contained Python server
 
 ### Multi-Repository Implementation Structure
-- **[`hsu-echo/`](../hsu-echo/)** - Common domain repository
-- **[`hsu-echo-super-srv-go/`](../hsu-echo-super-srv-go/)** - Go server implementation
-- **[`hsu-echo-super-srv-py/`](../hsu-echo-super-srv-py/)** - Python server implementation
+- **[`hsu-example3-common/`](../hsu-example3-common/)** - Common domain repository
+- **[`hsu-example3-srv-go/`](../hsu-example3-srv-go/)** - Go server implementation
+- **[`hsu-example3-srv-py/`](../hsu-example3-srv-py/)** - Python server implementation
 
 ## 🔄 Migration Path
 
@@ -202,7 +202,7 @@ Once you've created your HSU implementation, explore these topics:
 
 - **Single-Repository Implementation Issues**: Check the troubleshooting sections in the single-repository implementation guides
 - **Multi-Repository Implementation Issues**: Review the [Best Practices troubleshooting](HSU_BEST_PRACTICES.md#troubleshooting)
-- **Architecture Questions**: Study the reference implementation in `hsu-echo/`
+- **Architecture Questions**: Study the reference implementation in `hsu-example3-common/`
 - **Platform Concepts**: Consult the [Developer Guide](DEVELOPER_GUIDE.md)
 
 ## 🎯 Recommended Learning Sequence

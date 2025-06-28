@@ -56,7 +56,7 @@ go mod tidy
 go test ./...
 
 # Build example servers
-cd ../hsu-echo-super-srv-go
+cd ../hsu-example3-srv-go
 go build -o bin/server cmd/echogrpcsrv/main.go
 
 # Build example client
@@ -70,7 +70,7 @@ Run the echo example to verify everything works:
 
 ```bash
 # Terminal 1: Start the server
-cd hsu-echo-super-srv-go
+cd hsu-example3-srv-go
 ./bin/server --port 50055
 
 # Terminal 2: Run the client

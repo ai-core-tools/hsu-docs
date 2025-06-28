@@ -88,10 +88,11 @@ The HSU platform currently supports:
 The platform includes several working examples:
 
 - **hsu-core** - Core platform libraries for Go and Python
-- **hsu-echo** - Simple echo service demonstrating gRPC integration
-- **hsu-echo-cli-go** - Go client demonstrating master-to-HSU communication
-- **hsu-echo-super-srv-go** - Go server implementing integrated HSU pattern
-- **hsu-echo-super-srv-py** - Python server demonstrating cross-language support
+- **hsu-example3-common** - Echo service demonstrating gRPC integration
+- **hsu-example1-go** - Single-repository Go implementation
+- **hsu-example2-py** - Single-repository Python implementation  
+- **hsu-example3-srv-go** - Go server implementing integrated HSU pattern
+- **hsu-example3-srv-py** - Python server demonstrating cross-language support
 
 ## Next Steps
 

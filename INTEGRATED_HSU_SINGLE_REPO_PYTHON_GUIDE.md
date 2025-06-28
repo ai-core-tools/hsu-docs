@@ -27,15 +27,15 @@ This is ideal for:
 ## Step 1: Create Project Structure
 
 ```bash
-mkdir hsu-echo-simple-py
-cd hsu-echo-simple-py
+mkdir hsu-example2-py
+cd hsu-example2-py
 git init
 ```
 
 Create the directory structure:
 
 ```
-hsu-echo-simple-py/
+hsu-example2-py/
 ├── api/
 │   └── proto/
 │       ├── echoservice.proto
@@ -75,7 +75,7 @@ Create `api/proto/echoservice.proto`:
 ```proto
 syntax = "proto3";
 
-option go_package = "github.com/your-org/hsu-echo-simple-py/api/proto";
+option go_package = "github.com/your-org/hsu-example2-py/api/proto";
 
 package proto;
 

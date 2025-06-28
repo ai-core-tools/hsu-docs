@@ -14,7 +14,7 @@ This separation enables multiple server implementations in different languages w
 
 ### 1. Common Domain Repository
 
-A common domain repository (e.g., `hsu-echo`, `hsu-llm`, `hsu-data-processor`) contains all shared components for a specific domain:
+A common domain repository (e.g., `hsu-example3-common`, `hsu-llm`, `hsu-data-processor`) contains all shared components for a specific domain:
 
 **Structure:**
 ```
@@ -131,14 +131,14 @@ The platform will migrate to Python package-based distribution later, but submod
 
 ## Example: Echo Domain
 
-The `hsu-echo` domain demonstrates this structure:
+The `hsu-example3-common` domain demonstrates this structure:
 
-### Common Repository: `hsu-echo/`
+### Common Repository: `hsu-example3-common/`
 
 **Protocol Buffer Definition** (`api/proto/echoservice.proto`):
 ```proto
 syntax = "proto3";
-option go_package = "github.com/core-tools/hsu-echo/api/proto";
+option go_package = "github.com/core-tools/hsu-example3-common/api/proto";
 package proto;
 
 service EchoService {
@@ -177,12 +177,12 @@ class Contract(ABC):
 
 ### Server Implementations
 
-**Go Server**: `hsu-echo-super-srv-go/`
+**Go Server**: `hsu-example3-srv-go/`
 - Minimal structure with just business logic
 - Uses the common domain's `MainEcho()` helper function
 - Entry point: `main()` calls `echoControl.MainEcho(domain.NewSuperHandler)`
 
-**Python Server**: `hsu-echo-super-srv-py/`
+**Python Server**: `hsu-example3-srv-py/`
 - Uses git submodules for dependencies
 - Uses the common domain's `serve_echo()` helper function
 - Entry point: `serve_echo(SuperHandler())`
@@ -194,7 +194,7 @@ class Contract(ABC):
 - **Update submodules** when upgrading dependencies
 - **Use replace directives** in Go during development:
   ```bash
-  go mod edit -replace github.com/core-tools/hsu-echo=../hsu-echo
+  go mod edit -replace github.com/core-tools/hsu-example3-common=../hsu-example3-common
   ```
 
 ### Development Workflow
@@ -206,7 +206,7 @@ class Contract(ABC):
 6. **Build implementations** - Create specific server variants
 
 ### Repository Naming
-- **Domain repos**: `hsu-{domain}` (e.g., `hsu-echo`, `hsu-llm`)
+- **Domain repos**: `hsu-{domain}` (e.g., `hsu-example3-common`, `hsu-llm`)
 - **Go servers**: `hsu-{domain}-{variant}-srv-go`
 - **Python servers**: `hsu-{domain}-{variant}-srv-py`
 
@@ -215,10 +215,10 @@ class Contract(ABC):
 **Go Servers:**
 ```go
 // go.mod
-module github.com/yourorg/hsu-echo-super-srv-go
+module github.com/yourorg/hsu-example3-srv-go
 
 require (
-    github.com/core-tools/hsu-echo v0.1.0
+    github.com/core-tools/hsu-example3-common v0.1.0
 )
 ```
 

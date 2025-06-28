@@ -28,7 +28,7 @@ Keep distinct layers separate:
 
 ```bash
 # In server implementation repository
-go mod edit -replace github.com/core-tools/hsu-echo=../hsu-echo
+go mod edit -replace github.com/core-tools/hsu-example3-common=../hsu-example3-common
 go mod tidy
 
 # Remove when ready for production
@@ -41,11 +41,11 @@ go mod tidy
 ```go
 // Use specific versions in production
 require (
-    github.com/core-tools/hsu-echo v1.2.3
+    github.com/core-tools/hsu-example3-common v1.2.3
 )
 
 // Use development versions with replace
-replace github.com/core-tools/hsu-echo => ../hsu-echo
+replace github.com/core-tools/hsu-example3-common => ../hsu-example3-common
 ```
 
 ### Python Development
@@ -55,7 +55,7 @@ replace github.com/core-tools/hsu-echo => ../hsu-echo
 ```bash
 # Initial setup
 git submodule add https://github.com/core-tools/hsu-core.git hsu_core
-git submodule add https://github.com/core-tools/hsu-echo.git hsu_echo
+git submodule add https://github.com/core-tools/hsu-example3-common.git hsu_echo
 
 # Regular updates
 git submodule update --init --recursive
@@ -529,7 +529,7 @@ Prepare by:
 
 ```bash
 # Go version upgrades
-go get -u github.com/core-tools/hsu-echo@v1.3.0
+go get -u github.com/core-tools/hsu-example3-common@v1.3.0
 go mod tidy
 
 # Python submodule upgrades

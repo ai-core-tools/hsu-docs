@@ -1,6 +1,6 @@
 # HSU Go Implementation Guide
 
-This guide walks you through creating Go-based HSU servers using the established patterns from the `hsu-echo` reference implementation.
+This guide walks you through creating Go-based HSU servers using the established patterns from the `hsu-example3-common` reference implementation.
 
 ## Overview
 
@@ -16,16 +16,16 @@ Creating a Go-based HSU server involves:
 ### Project Setup
 
 ```bash
-mkdir hsu-echo
-cd hsu-echo
+mkdir hsu-example3-common
+cd hsu-example3-common
 git init
-go mod init github.com/core-tools/hsu-echo
+go mod init github.com/core-tools/hsu-example3-common
 ```
 
 ### Directory Structure
 
 ```
-hsu-echo/
+hsu-example3-common/
 ├── api/proto/
 │   ├── api/proto/
 │   ├── control/
@@ -81,9 +81,9 @@ package control
 import (
     "context"
 
-    "github.com/core-tools/hsu-echo/go/api/proto"
-    "github.com/core-tools/hsu-echo/go/domain"
-    "github.com/core-tools/hsu-echo/go/logging"
+    "github.com/core-tools/hsu-example3-common/go/api/proto"
+    "github.com/core-tools/hsu-example3-common/go/domain"
+    "github.com/core-tools/hsu-example3-common/go/logging"
 
     "google.golang.org/grpc"
 )
@@ -126,9 +126,9 @@ import (
     coreControl "github.com/core-tools/hsu-core/go/control"
     coreDomain "github.com/core-tools/hsu-core/go/domain"
     coreLogging "github.com/core-tools/hsu-core/go/logging"
-    echoDomain "github.com/core-tools/hsu-echo/go/domain"
-    echoLogging "github.com/core-tools/hsu-echo/go/logging"
-    "github.com/core-tools/hsu-echo/internal/logging"
+    echoDomain "github.com/core-tools/hsu-example3-common/go/domain"
+    echoLogging "github.com/core-tools/hsu-example3-common/go/logging"
+    "github.com/core-tools/hsu-example3-common/internal/logging"
 
     flags "github.com/jessevdk/go-flags"
 )
@@ -171,7 +171,7 @@ func MainEcho(echoServerHandlerFactoryFunc func(echoLogger echoLogging.Logger) e
             Errorf: logger.Errorf,
         })
     echoLogger := echoLogging.NewLogger(
-        logPrefix("hsu-echo"), echoLogging.LogFuncs{
+        logPrefix("hsu-example3-common"), echoLogging.LogFuncs{
             Debugf: logger.Debugf,
             Infof:  logger.Infof,
             Warnf:  logger.Warnf,
@@ -202,16 +202,16 @@ func MainEcho(echoServerHandlerFactoryFunc func(echoLogger echoLogging.Logger) e
 ### Create New Repository
 
 ```bash
-mkdir hsu-echo-super-srv-go
-cd hsu-echo-super-srv-go
+mkdir hsu-example3-srv-go
+cd hsu-example3-srv-go
 git init
-go mod init github.com/core-tools/hsu-echo-super-srv-go
+go mod init github.com/core-tools/hsu-example3-srv-go
 ```
 
 ### Directory Structure
 
 ```
-hsu-echo-super-srv-go/
+hsu-example3-srv-go/
 ├── cmd/
 │   └── echogrpcsrv/
 │       └── main.go
@@ -233,8 +233,8 @@ package domain
 import (
     "context"
 
-    "github.com/core-tools/hsu-echo/go/domain"
-    "github.com/core-tools/hsu-echo/go/logging"
+    "github.com/core-tools/hsu-example3-common/go/domain"
+    "github.com/core-tools/hsu-example3-common/go/logging"
 )
 
 func NewSuperHandler(logger logging.Logger) domain.Contract {
@@ -263,8 +263,8 @@ Create `cmd/echogrpcsrv/main.go`:
 package main
 
 import (
-    "github.com/core-tools/hsu-echo-super-srv-go/internal/domain"
-    echoControl "github.com/core-tools/hsu-echo/go/control"
+    "github.com/core-tools/hsu-example3-srv-go/internal/domain"
+    echoControl "github.com/core-tools/hsu-example3-common/go/control"
 )
 
 func main() {
@@ -277,12 +277,12 @@ func main() {
 Update `go.mod`:
 
 ```go
-module github.com/core-tools/hsu-echo-super-srv-go
+module github.com/core-tools/hsu-example3-srv-go
 
 go 1.22
 
 require (
-    github.com/core-tools/hsu-echo v0.0.0
+    github.com/core-tools/hsu-example3-common v0.0.0
 )
 ```
 
@@ -314,7 +314,7 @@ import (
     "log"
     "time"
 
-    "github.com/core-tools/hsu-echo/go/api/proto"
+    "github.com/core-tools/hsu-example3-common/go/api/proto"
     coreProto "github.com/core-tools/hsu-core/go/api/proto"
     "google.golang.org/grpc"
     "google.golang.org/grpc/credentials/insecure"

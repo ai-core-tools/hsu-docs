@@ -1,6 +1,6 @@
 # HSU Python Implementation Guide
 
-This guide walks you through creating Python-based HSU servers using the established patterns from the `hsu-echo` reference implementation.
+This guide walks you through creating Python-based HSU servers using the established patterns from the `hsu-example3-common` reference implementation.
 
 ## Overview
 
@@ -17,7 +17,7 @@ Creating a Python-based HSU server involves:
 Add to your common domain repository:
 
 ```
-hsu-echo/
+hsu-example3-common/
 ├── py/
 │   ├── api/proto/          # Generated Python gRPC code
 │   ├── control/
@@ -125,8 +125,8 @@ def serve_echo(handler):
 ### Create New Repository
 
 ```bash
-mkdir hsu-echo-super-srv-py
-cd hsu-echo-super-srv-py
+mkdir hsu-example3-srv-py
+cd hsu-example3-srv-py
 git init
 ```
 
@@ -135,13 +135,13 @@ git init
 ```bash
 # Add submodules for dependencies
 git submodule add https://github.com/core-tools/hsu-core.git hsu_core
-git submodule add https://github.com/core-tools/hsu-echo.git hsu_echo
+git submodule add https://github.com/core-tools/hsu-example3-common.git hsu_echo
 ```
 
 ### Directory Structure
 
 ```
-hsu-echo-super-srv-py/
+hsu-example3-srv-py/
 ├── hsu_core/              # Git submodule to hsu-core
 ├── hsu_echo/              # Git submodule to common domain repo
 ├── super_handler.py       # Business logic implementation
@@ -238,7 +238,7 @@ make run
 The Python server can be tested with the same Go client from the common domain repository:
 
 ```bash
-# In hsu-echo/cmd/echogrpccli/
+# In hsu-example3-common/cmd/echogrpccli/
 go run main.go --address localhost:50055
 ```
 
@@ -254,7 +254,7 @@ Expected output:
 ### Git Submodules for Dependencies
 Python servers use git submodules to include common domain repositories:
 ```bash
-git submodule add https://github.com/core-tools/hsu-echo.git hsu_echo
+git submodule add https://github.com/core-tools/hsu-example3-common.git hsu_echo
 ```
 
 ### Helper Function Usage

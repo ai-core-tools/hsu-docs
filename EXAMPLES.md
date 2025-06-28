@@ -38,7 +38,7 @@ This guide will provide comprehensive code examples and common patterns for HSU 
 The HSU platform currently includes these working examples:
 
 ### Echo Service
-- **Location**: `hsu-echo/` directory
+- **Location**: `hsu-example3-common/` directory
 - **Purpose**: Basic gRPC service demonstration
 - **Languages**: Go and Python implementations
 - **Features**: Simple request/response pattern
@@ -49,8 +49,8 @@ The HSU platform currently includes these working examples:
 - **Features**: Connection management, health checking, concurrent requests
 
 ### Echo Servers
-- **Go Server**: `hsu-echo-super-srv-go/` - Demonstrates integrated HSU pattern
-- **Python Server**: `hsu-echo-super-srv-py/` - Cross-language implementation
+- **Go Server**: `hsu-example3-srv-go/` - Demonstrates integrated HSU pattern
+- **Python Server**: `hsu-example3-srv-py/` - Cross-language implementation
 
 ## Quick Start
 
@@ -58,7 +58,7 @@ Try the existing examples:
 
 ```bash
 # Start Go server
-cd hsu-echo-super-srv-go
+cd hsu-example3-srv-go
 make build && make run
 
 # In another terminal, run client

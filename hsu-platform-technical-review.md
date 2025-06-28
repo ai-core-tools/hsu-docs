@@ -5,7 +5,7 @@ This document provides a comprehensive technical assessment of the HSU (Host Sys
 ## 🏆 **Top Technical Strengths**
 
 ### **1. Sophisticated Multi-Repository Architecture**
-- **Repository Pattern**: Brilliant separation between common domain repositories (e.g., `hsu-echo/`) and server implementation repositories (e.g., `hsu-echo-super-srv-go/`, `hsu-echo-super-srv-py/`)
+- **Repository Pattern**: Brilliant separation between common domain repositories (e.g., `hsu-example3-common/`) and server implementation repositories (e.g., `hsu-example3-srv-go/`, `hsu-example3-srv-py/`)
 - **Language Flexibility**: Supports multiple implementations per domain (llama.cpp/ONNX for Go, MLX/Transformers for Python) while sharing protocol definitions
 - **Dependency Management**: Go uses replace directives for development, Python uses git submodules as transition strategy before Python packages
 - **Code Reuse**: Shared protocol buffers, domain contracts, gRPC adapters, helper functions, and client applications across implementations
@@ -103,12 +103,12 @@ This document provides a comprehensive technical assessment of the HSU (Host Sys
 - Clear extension points in all layers (control, domain, api)
 - Helper function pattern reduces implementation overhead
 
-**Evidence**: The `hsu-echo` example demonstrates how new domains can be created with minimal boilerplate. The separation between core platform (`hsu-core`) and domain implementations (`hsu-echo`) provides perfect extension boundaries.
+**Evidence**: The `hsu-example3-common` example demonstrates how new domains can be created with minimal boilerplate. The separation between core platform (`hsu-core`) and domain implementations (`hsu-example3-common`) provides perfect extension boundaries.
 
 ### **Developer Experience: 8/10** ✅ (New Category)
 
 **Strengths**:
-- Excellent reference implementation with `hsu-echo`
+- Excellent reference implementation with `hsu-example3-common`
 - Comprehensive build automation
 - Multi-language support with language-appropriate patterns
 - Clear development workflow with proper tooling

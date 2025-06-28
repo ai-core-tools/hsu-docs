@@ -70,24 +70,24 @@ if __name__ == '__main__':
 
 ### Using the Test Client
 
-Use the common domain client from `hsu-echo/cmd/echogrpccli/` to test both Go and Python implementations:
+Use the common domain client from `hsu-example3-common/cmd/echogrpccli/` to test both Go and Python implementations:
 
 ```bash
 # Test Go server
-cd hsu-echo-super-srv-go
+cd hsu-example3-srv-go
 go build -o bin/echogrpcsrv cmd/echogrpcsrv/*.go
 ./bin/echogrpcsrv --port 50055 &
 
 # In another terminal
-cd hsu-echo/cmd/echogrpccli
+cd hsu-example3-common/cmd/echogrpccli
 go run main.go --address localhost:50055
 
 # Test Python server
-cd hsu-echo-super-srv-py
+cd hsu-example3-srv-py
 make run &
 
 # Test with same client
-cd hsu-echo/cmd/echogrpccli
+cd hsu-example3-common/cmd/echogrpccli
 go run main.go --address localhost:50055
 ```
 

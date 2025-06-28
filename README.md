@@ -299,7 +299,7 @@ git clone https://github.com/core-tools/hsu-platform.git
 cd hsu-platform
 
 # Run the echo example (Go server)
-cd hsu-echo-super-srv-go
+cd hsu-example3-srv-go
 make build && make run
 
 # In another terminal, test with the client

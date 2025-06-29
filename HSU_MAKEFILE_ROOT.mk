@@ -163,6 +163,12 @@ ifeq ($(ENABLE_PYTHON),yes)
 	@echo "  py-lint      - Lint Python code"
 	@echo "  py-format    - Format Python code"
 	@echo "  py-clean     - Clean Python artifacts"
+ifeq ($(ENABLE_NUITKA),yes)
+	@echo "  py-nuitka    - Build Python binary with Nuitka"
+	@echo "  nuitka       - Alias for py-nuitka"
+	@echo "  nuitka-info  - Show Nuitka configuration"
+	@echo "  nuitka-clean - Clean Nuitka artifacts"
+endif
 	@echo ""
 endif
 	@echo "Examples:"
@@ -218,6 +224,14 @@ setup: $(if $(filter yes,$(ENABLE_GO)),go-setup) $(if $(filter yes,$(ENABLE_PYTH
 all: build
 tidy: $(if $(filter yes,$(ENABLE_GO)),go-tidy)
 deps: $(if $(filter yes,$(ENABLE_GO)),go-deps) $(if $(filter yes,$(ENABLE_PYTHON)),py-deps)
+
+# Nuitka universal targets
+ifeq ($(ENABLE_NUITKA),yes)
+.PHONY: nuitka nuitka-clean nuitka-info
+nuitka: py-nuitka
+nuitka-clean: py-nuitka-clean
+nuitka-info: py-nuitka-info
+endif
 
 # Running targets (Go-specific for now, extend for other languages)
 ifeq ($(ENABLE_GO),yes)

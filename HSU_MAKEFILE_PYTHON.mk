@@ -219,12 +219,170 @@ ifeq ($(PYTHON_BUILD_TOOL),uv)
 else
 	@echo "Pip Version: $$($(PY_CMD) pip --version 2>$(NULL_DEV) || echo 'Not available')"
 endif
+ifeq ($(ENABLE_NUITKA),yes)
+	@echo "Nuitka Version: $$($(PY_CMD) python -m nuitka --version 2>$(NULL_DEV) || echo 'Not available')"
+endif
 	@echo ""
 	@echo "Build Configuration:"
 	@echo "Python Package: $(PYTHON_PACKAGE_NAME)"
 	@echo "Build Tool: $(PYTHON_BUILD_TOOL)"
 	@echo "Virtual Environment: $(PYTHON_VENV)"
+ifeq ($(ENABLE_NUITKA),yes)
+	@echo "Nuitka Enabled: $(ENABLE_NUITKA)"
+	@echo "Nuitka Output: $(NUITKA_OUTPUT_NAME)"
+	@echo "Nuitka Source: $(NUITKA_SOURCE_FILE)"
+endif
 	@echo ""
 	@echo "Detected Targets:"
 	@echo "CLI Targets: $(PY_CLI_TARGETS)"
-	@echo "Server Targets: $(PY_SRV_TARGETS)" 
+	@echo "Server Targets: $(PY_SRV_TARGETS)"
+
+# =============================================================================
+# Nuitka Binary Compilation Support
+# =============================================================================
+
+ifeq ($(ENABLE_NUITKA),yes)
+
+# Nuitka Configuration
+NUITKA_BUILD_DIR := build/$(NUITKA_OUTPUT_NAME)
+NUITKA_LOG_FILE := build-$(NUITKA_OUTPUT_NAME).log
+NUITKA_EXECUTABLE := $(NUITKA_BUILD_DIR)/$(NUITKA_OUTPUT_NAME)$(EXECUTABLE_EXT)
+
+# Dynamic patch_meta module name based on INCLUDE_PREFIX
+ifneq ($(INCLUDE_PREFIX),)
+    # Strip trailing slash and create module name (e.g., make/ → make.patch_meta)
+    NUITKA_PATCH_META_MODULE := $(patsubst %/,%,$(INCLUDE_PREFIX)).patch_meta
+else
+    # Root directory case (INCLUDE_PREFIX := ) → patch_meta
+    NUITKA_PATCH_META_MODULE := patch_meta
+endif
+
+# Read excluded packages from file
+ifneq ($(wildcard $(PYTHON_DIR)/$(NUITKA_EXCLUDES_FILE)),)
+    NUITKA_EXCLUDE_PACKAGES := $(shell grep -v '^\#' $(PYTHON_DIR)/$(NUITKA_EXCLUDES_FILE) | grep -v '^$$' | tr '\n' ' ')
+    NUITKA_NOFOLLOW_OPTS := $(foreach pkg,$(NUITKA_EXCLUDE_PACKAGES),--nofollow-import-to=$(pkg))
+else
+    NUITKA_EXCLUDE_PACKAGES := 
+    NUITKA_NOFOLLOW_OPTS := 
+endif
+
+# Core Nuitka options
+NUITKA_COMMON_OPTS := \
+    --assume-yes-for-downloads \
+    --disable-ccache \
+    --standalone \
+    --show-progress \
+    --show-memory \
+    --include-package=grpc \
+    --include-module=$(NUITKA_PATCH_META_MODULE) \
+    --follow-import-to=hsu_core \
+    --include-module=jaraco.text \
+    --include-package=tqdm \
+    --include-package=yaml \
+    $(NUITKA_NOFOLLOW_OPTS) \
+    --include-module=importlib.metadata \
+    --remove-output \
+    --follow-imports
+
+# Add project-specific modules
+ifneq ($(NUITKA_EXTRA_MODULES),)
+    NUITKA_COMMON_OPTS += $(foreach mod,$(NUITKA_EXTRA_MODULES),--include-module=$(mod))
+endif
+
+ifneq ($(NUITKA_EXTRA_PACKAGES),)
+    NUITKA_COMMON_OPTS += $(foreach pkg,$(NUITKA_EXTRA_PACKAGES),--include-package=$(pkg))
+endif
+
+# Build mode options
+ifeq ($(NUITKA_BUILD_MODE),onefile)
+    NUITKA_COMMON_OPTS += --onefile
+else ifeq ($(NUITKA_BUILD_MODE),standalone)
+    NUITKA_COMMON_OPTS += --standalone
+endif
+
+# Platform-specific options
+ifeq ($(DETECTED_OS),Windows-NT)
+    NUITKA_OPTS := $(NUITKA_COMMON_OPTS) --mingw64 --output-filename=$(NUITKA_OUTPUT_NAME).exe
+else ifeq ($(DETECTED_OS),Windows-MSYS)
+    NUITKA_OPTS := $(NUITKA_COMMON_OPTS) --mingw64 --output-filename=$(NUITKA_OUTPUT_NAME).exe
+else
+    NUITKA_OPTS := $(NUITKA_COMMON_OPTS) --output-filename=$(NUITKA_OUTPUT_NAME)
+endif
+
+# Output directory
+NUITKA_OPTS += --output-dir=$(NUITKA_BUILD_DIR)
+
+# Nuitka-specific targets
+.PHONY: py-nuitka py-nuitka-clean py-nuitka-info py-nuitka-deps
+
+## Python Nuitka - Build Python binary with Nuitka
+py-nuitka: py-nuitka-deps
+	@echo "Building $(NUITKA_OUTPUT_NAME) with Nuitka..."
+	@echo "Detected OS: $(DETECTED_OS)"
+	@echo "Source: $(NUITKA_SOURCE_FILE)"
+	
+	# Clean previous build
+	@if [ -d "$(NUITKA_BUILD_DIR)" ]; then \
+		echo "Removing previous build directory..."; \
+		$(RM_RF) "$(NUITKA_BUILD_DIR)" 2>$(NULL_DEV) || true; \
+	fi
+	
+	# patch_meta.py is now part of the HSU Makefile System package ($(NUITKA_PATCH_META_MODULE))
+	
+	# Run Nuitka build
+	@echo "Running Nuitka compilation..."
+	$(PY_CMD) python -m nuitka $(NUITKA_OPTS) $(NUITKA_SOURCE_FILE) > $(NUITKA_LOG_FILE) 2>&1 || \
+		(echo "❌ Nuitka build failed! Check $(NUITKA_LOG_FILE) for details." && exit 1)
+	
+	@echo "Build completed. Check $(NUITKA_LOG_FILE) for details."
+	
+	# No cleanup needed - patch_meta.py stays in make/ package
+	
+	# Check if build was successful
+	@if [ -f "$(NUITKA_EXECUTABLE)" ]; then \
+		echo "✅ Nuitka build successful!"; \
+		echo "📦 Executable created: $(NUITKA_EXECUTABLE)"; \
+		echo "📏 Size: $$(du -h '$(NUITKA_EXECUTABLE)' | cut -f1)"; \
+	else \
+		echo "❌ Nuitka build failed! No executable was created."; \
+		exit 1; \
+	fi
+
+## Python Nuitka Dependencies - Install Nuitka and requirements
+py-nuitka-deps:
+	@echo "Installing Nuitka dependencies..."
+ifeq ($(shell $(PY_CMD) python -c "import nuitka" 2>$(NULL_DEV); echo $$?),0)
+	@echo "✅ Nuitka already installed"
+else
+	@echo "📦 Installing Nuitka..."
+	$(PY_CMD) pip install nuitka
+endif
+
+## Python Nuitka Clean - Clean Nuitka build artifacts
+py-nuitka-clean:
+	@echo "Cleaning Nuitka build artifacts..."
+	@$(RM_RF) "$(NUITKA_BUILD_DIR)" 2>$(NULL_DEV) || true
+	@$(RM_RF) "$(NUITKA_LOG_FILE)" 2>$(NULL_DEV) || true
+	@echo "✅ Nuitka clean complete"
+
+## Python Nuitka Info - Show Nuitka configuration
+py-nuitka-info:
+	@echo "=== Nuitka Build Configuration ==="
+	@echo "Enabled: $(ENABLE_NUITKA)"
+	@echo "Output Name: $(NUITKA_OUTPUT_NAME)"
+	@echo "Source File: $(NUITKA_SOURCE_FILE)"
+	@echo "Build Mode: $(NUITKA_BUILD_MODE)"
+	@echo "Build Directory: $(NUITKA_BUILD_DIR)"
+	@echo "Executable: $(NUITKA_EXECUTABLE)"
+	@echo "Log File: $(NUITKA_LOG_FILE)"
+	@echo "Excludes File: $(NUITKA_EXCLUDES_FILE)"
+	@echo "Excluded Packages: $(NUITKA_EXCLUDE_PACKAGES)"
+	@echo "Extra Modules: $(NUITKA_EXTRA_MODULES)"
+	@echo "Extra Packages: $(NUITKA_EXTRA_PACKAGES)"
+	@echo "Patch Meta Module: $(NUITKA_PATCH_META_MODULE)"
+	@echo "Include Prefix: '$(INCLUDE_PREFIX)'"
+
+
+            
+
+endif  # ENABLE_NUITKA 

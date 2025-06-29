@@ -7,6 +7,8 @@ PROJECT_DOMAIN := example
 PROJECT_VERSION := 1.0.0
 
 # Include Path Configuration
+# Must be either empty or single path segment ending with /
+# Examples: INCLUDE_PREFIX := make/  or  INCLUDE_PREFIX := tools/  or  INCLUDE_PREFIX := 
 INCLUDE_PREFIX :=  # Default: empty (root-level includes) | Common: make/ build/ scripts/
 
 # Repository Structure (auto-detected if not set)
@@ -52,6 +54,15 @@ TEST_VERBOSE := yes
 ENABLE_LINTING := yes
 ENABLE_FORMATTING := yes
 ENABLE_BENCHMARKS := yes
+
+# Nuitka Build Configuration (Python binary compilation)
+ENABLE_NUITKA := no
+NUITKA_OUTPUT_NAME := server
+NUITKA_SOURCE_FILE := srv/run_server_wrapper.py
+NUITKA_EXCLUDES_FILE := nuitka_excludes.txt
+NUITKA_EXTRA_MODULES := 
+NUITKA_EXTRA_PACKAGES := 
+NUITKA_BUILD_MODE := onefile
 
 # Platform
 TARGET_PLATFORMS := linux/amd64 windows/amd64 darwin/amd64

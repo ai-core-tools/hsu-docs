@@ -185,6 +185,9 @@ py-clean:
 	@find $(PYTHON_DIR) -name "*.pyo" -delete 2>$(NULL_DEV) || true
 	-$(RM_RF) $(PYTHON_DIR)/build 2>$(NULL_DEV) || true
 	-$(RM_RF) $(PYTHON_DIR)/dist 2>$(NULL_DEV) || true
+ifeq ($(ENABLE_NUITKA),yes)
+	@$(RM_RF) "$(NUITKA_GENERATED_WRAPPER)" 2>$(NULL_DEV) || true
+endif
 	@echo "✓ Python clean complete"
 
 ## Python Check - Run all Python checks (lint + test)

@@ -41,10 +41,16 @@ BUILD_LIB := yes
 DOMAIN_IMPORT_PREFIX := github.com/core-tools/hsu-$(PROJECT_DOMAIN)
 DOMAIN_REPLACE_TARGET := .
 
-# Custom build directories (relative to language root)
-CLI_BUILD_DIR := cmd/cli
-SRV_BUILD_DIR := cmd/srv
-LIB_BUILD_DIR := pkg
+# Language-specific build directories (relative to language root)
+# Go directories (for Go or multi-language projects)
+GO_CLI_BUILD_DIR := cmd/cli
+GO_SRV_BUILD_DIR := cmd/srv
+GO_LIB_BUILD_DIR := pkg
+
+# Python directories (for Python or multi-language projects)  
+PYTHON_CLI_BUILD_DIR := cli
+PYTHON_SRV_BUILD_DIR := srv
+PYTHON_LIB_BUILD_DIR := lib
 
 # Testing
 TEST_TIMEOUT := 10m

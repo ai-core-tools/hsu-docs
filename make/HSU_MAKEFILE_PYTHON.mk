@@ -8,10 +8,10 @@ PYTHON_BUILD_TOOL ?= setuptools  # setuptools | poetry | pdm | pip
 PYTHON_VERSION ?= 3.8
 PYTHON_VENV ?= .venv
 
-# Build directory configuration (relative to PYTHON_DIR)
-PY_CLI_BUILD_DIR ?= cli
-PY_SRV_BUILD_DIR ?= srv
-PY_LIB_BUILD_DIR ?= lib
+# Build directory configuration (relative to PYTHON_DIR) - Language-specific
+PY_CLI_BUILD_DIR := $(or $(PYTHON_CLI_BUILD_DIR),cli)
+PY_SRV_BUILD_DIR := $(or $(PYTHON_SRV_BUILD_DIR),srv)
+PY_LIB_BUILD_DIR := $(or $(PYTHON_LIB_BUILD_DIR),lib)
 
 # Auto-detect Python executables and packages
 PY_CLI_TARGETS := $(shell find $(PYTHON_DIR)/$(PY_CLI_BUILD_DIR) -name "*.py" -path "*/main.py" -o -name "run_*.py" 2>$(NULL_DEV) | head -10)
@@ -52,7 +52,7 @@ endif
 PYTHON_BUILD_TOOL := $(PYTHON_BUILD_DETECTED)
 
 # Python-specific targets
-.PHONY: py-setup py-deps py-build py-test py-lint py-format py-clean py-check py-info py-venv py-install
+.PHONY: py-setup py-deps py-build py-test py-lint py-format py-clean py-check py-info py-venv py-install py-protoc py-proto-gen
 
 ## Python Setup - Initialize Python development environment
 py-setup: py-venv py-deps
@@ -185,6 +185,12 @@ py-clean:
 	@find $(PYTHON_DIR) -name "*.pyo" -delete 2>$(NULL_DEV) || true
 	-$(RM_RF) $(PYTHON_DIR)/build 2>$(NULL_DEV) || true
 	-$(RM_RF) $(PYTHON_DIR)/dist 2>$(NULL_DEV) || true
+	# Clean generated protobuf files and __init__.py files
+ifeq ($(PYTHON_DIR),.)
+	-$(RM_RF) "$(PY_LIB_BUILD_DIR)/generated" 2>$(NULL_DEV) || true
+else
+	-$(RM_RF) "$(PYTHON_DIR)/$(PY_LIB_BUILD_DIR)/generated" 2>$(NULL_DEV) || true
+endif
 ifeq ($(ENABLE_NUITKA),yes)
 	@$(RM_RF) "$(NUITKA_GENERATED_WRAPPER)" 2>$(NULL_DEV) || true
 endif
@@ -424,4 +430,79 @@ py-nuitka-info:
 
             
 
-endif  # ENABLE_NUITKA 
+endif  # ENABLE_NUITKA
+
+# =============================================================================
+# Protocol Buffer Generation Support
+# =============================================================================
+
+# Protocol Buffer Configuration
+PROTO_API_DIR ?= api/proto
+
+# Handle single-language vs multi-language directory structure
+ifeq ($(PYTHON_DIR),.)
+    # Single-language repo: output directly to lib/generated/api/proto
+    PY_PROTO_OUTPUT_DIR := $(PY_LIB_BUILD_DIR)/generated/api/proto
+else
+    # Multi-language repo: output to python/lib/generated/api/proto
+    PY_PROTO_OUTPUT_DIR := $(PYTHON_DIR)/$(PY_LIB_BUILD_DIR)/generated/api/proto
+endif
+
+PY_FIX_IMPORTS_SCRIPT := $(PY_PROTO_OUTPUT_DIR)/fix_imports.py
+
+## Python Protocol Buffer Generation - Generate Python code from .proto files  
+py-protoc py-proto-gen:
+	@echo "Generating Python protobuf code..."
+	@if [ ! -d "$(PROTO_API_DIR)" ]; then \
+		echo "❌ Proto directory not found: $(PROTO_API_DIR)"; \
+		exit 1; \
+	fi
+	@if [ ! -f "$(PROTO_API_DIR)"/*.proto ]; then \
+		echo "❌ No .proto files found in $(PROTO_API_DIR)"; \
+		exit 1; \
+	fi
+	@if ! python -c "import grpc_tools.protoc" 2>$(NULL_DEV); then \
+		echo "❌ grpcio-tools not found. Install with: pip install grpcio-tools"; \
+		exit 1; \
+	fi
+	@$(MKDIR) "$(PY_PROTO_OUTPUT_DIR)" 2>$(NULL_DEV) || true
+	@echo "📁 Output directory: $(PY_PROTO_OUTPUT_DIR)"
+	
+	# Create __init__.py files for proper Python package structure
+	@echo "📦 Creating Python package structure..."
+ifeq ($(PYTHON_DIR),.)
+	@echo "# Generated Python package" > "$(PY_LIB_BUILD_DIR)/__init__.py"
+	@echo "# Generated Python package" > "$(PY_LIB_BUILD_DIR)/generated/__init__.py"
+	@echo "# Generated Python package" > "$(PY_LIB_BUILD_DIR)/generated/api/__init__.py"
+	@echo "# Generated Python package" > "$(PY_PROTO_OUTPUT_DIR)/__init__.py"
+else
+	@echo "# Generated Python package" > "$(PYTHON_DIR)/$(PY_LIB_BUILD_DIR)/__init__.py"
+	@echo "# Generated Python package" > "$(PYTHON_DIR)/$(PY_LIB_BUILD_DIR)/generated/__init__.py"
+	@echo "# Generated Python package" > "$(PYTHON_DIR)/$(PY_LIB_BUILD_DIR)/generated/api/__init__.py"
+	@echo "# Generated Python package" > "$(PY_PROTO_OUTPUT_DIR)/__init__.py"
+endif
+	
+	@for proto_file in $(PROTO_API_DIR)/*.proto; do \
+		echo "🔄 Processing: $$proto_file"; \
+		proto_base_name=$$(basename "$$proto_file" .proto); \
+		echo "📋 Proto base name: $$proto_base_name"; \
+		\
+		python -m grpc_tools.protoc \
+			-I"$(PROTO_API_DIR)" \
+			--python_out="$(PY_PROTO_OUTPUT_DIR)" \
+			--grpc_python_out="$(PY_PROTO_OUTPUT_DIR)" \
+			"$$proto_file"; \
+		\
+		if [ -f "$(INCLUDE_PREFIX)fix_imports.py.template" ]; then \
+			echo "🔧 Generating fix_imports.py from template..."; \
+			sed "s/{{PROTO_BASE_NAME}}/$$proto_base_name/g" \
+				"$(INCLUDE_PREFIX)fix_imports.py.template" \
+				> "$(PY_PROTO_OUTPUT_DIR)/fix_imports.py"; \
+			echo "🛠️  Running import fix script..."; \
+			python "$(PY_PROTO_OUTPUT_DIR)/fix_imports.py"; \
+		else \
+			echo "⚠️  fix_imports.py.template not found in $(INCLUDE_PREFIX)"; \
+		fi; \
+	done
+	@echo "✅ Python protobuf generation complete"
+	@echo "📂 Generated files in: $(PY_PROTO_OUTPUT_DIR)" 

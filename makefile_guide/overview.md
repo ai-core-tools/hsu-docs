@@ -32,13 +32,13 @@ The **HSU Universal Makefile System** provides a standardized, cross-platform bu
 - **Flexible Cleanup**: Comprehensive clean targets with language-specific cleanup
 - **Intelligent Defaults**: Extensive defaults with project-specific overrides only when needed
 
-### **🐍 Python Enhancements (New in v1.1.0)**
+### **🐍 Python Enhancements**
 - **Nuitka Binary Compilation**: Full support for Python binary packaging with Nuitka
 - **Modern Package Management**: Integration with `pyproject.toml` and modern Python tooling
 - **Production-Ready Builds**: Proper handling of editable vs non-editable packages
 - **Dependency Management**: Comprehensive options for complex dependency scenarios
 
-### **⚡ Development Integration (New in v1.1.0)**
+### **⚡ Development Integration**
 - **Protobuf/gRPC Integration**: Built-in support for protocol buffer generation
 - **Multi-Language Stub Generation**: Automatic generation for Go and Python
 - **Build Workflow Integration**: Proto generation integrated into build process

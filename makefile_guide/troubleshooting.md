@@ -290,7 +290,7 @@ make go-lint-diag
 make go-lint-fix
 
 # 4. Manual go.mod fix
-go mod edit -replace github.com/core-tools/hsu-echo=.
+go mod edit -replace github.com/core-tools/hsu-example2=.
 ```
 
 #### **"Build failed with race detector"**

@@ -310,18 +310,18 @@ hsu-{domain}-{variant}-srv-py/
 
 ### Progressive Evolution
 ```
-Start:  Approach 1 (hsu-echo-go)
+Start:  Approach 1 (hsu-example1-go)
   ↓     Add Python support
-Grow:   Approach 2 (merge to hsu-echo with /go/ and /python/)
+Grow:   Approach 2 (merge to hsu-example2 with /go/ and /python/)
   ↓     Extract shared components
-Scale:  Approach 3 (hsu-echo-common + hsu-echo-srv-go + hsu-echo-srv-py)
+Scale:  Approach 3 (hsu-example3-common + hsu-example3-srv-go + hsu-example3-srv-py)
 ```
 
 ### Language-First Evolution
 ```
-Start:  Multiple Approach 1 repos (hsu-echo-go, hsu-echo-py)
+Start:  Multiple Approach 1 repos (hsu-example1-go, hsu-example1-py)
   ↓     Coordinate development
-Unify:  Approach 2 (merge to single hsu-echo repo)
+Unify:  Approach 2 (merge to single hsu-example2 repo)
   ↓     Extract shared APIs
 Scale:  Approach 3 (separate implementation repositories)
 ```
@@ -378,11 +378,11 @@ make test              # Test this implementation
 
 ### From Approach 1 to Approach 2
 ```bash
-# Original: hsu-echo-go/
+# Original: hsu-example1-go/
 ├── pkg/domain/handler.go
 └── cmd/srv/main.go
 
-# Transform to: hsu-echo/
+# Transform to: hsu-example2/
 ├── go/
 │   ├── pkg/domain/handler.go    # MOVED: Add go/ prefix
 │   └── cmd/srv/main.go          # MOVED: Add go/ prefix  
@@ -391,19 +391,19 @@ make test              # Test this implementation
     └── srv/run_server.py        # ADDED: New Python server
 
 # CRITICAL: Imports remain IDENTICAL!
-# import "github.com/org/hsu-echo/pkg/domain"
+# import "github.com/org/hsu-example2/pkg/domain"
 ```
 
 ### From Approach 2 to Approach 3
 ```bash
-# Original: hsu-echo/go/pkg/domain/
+# Original: hsu-example2/go/pkg/domain/
 # Transform to: 
-# - hsu-echo-common/go/pkg/domain/     # EXTRACT: Shared components
-# - hsu-echo-srv-go/cmd/srv/           # KEEP: Implementation only
+# - hsu-example3-common/go/pkg/domain/     # EXTRACT: Shared components
+# - hsu-example3-srv-go/cmd/srv/           # KEEP: Implementation only
 
 # Dependencies change:
 # Before: Internal imports
-# After:  External dependency on hsu-echo-common
+# After:  External dependency on hsu-example3-common
 ```
 
 ## Success Patterns

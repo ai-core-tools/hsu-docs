@@ -59,13 +59,13 @@ python -m srv.run_server
 
 ```go
 // IDENTICAL imports in all approaches
-import "github.com/org/hsu-echo/pkg/domain"
-import "github.com/org/hsu-echo/pkg/control"
+import "github.com/org/hsu-example2/pkg/domain"
+import "github.com/org/hsu-example2/pkg/control"
 
 // Magic happens in go.mod replace directives:
-// Single-language: replace github.com/org/hsu-echo => .
-// Multi-language:  replace github.com/org/hsu-echo => . (in /go/go.mod)
-// Multi-repo:      require github.com/org/hsu-echo-common v1.0.0
+// Single-language: replace github.com/org/hsu-example2 => .
+// Multi-language:  replace github.com/org/hsu-example2 => . (in /go/go.mod)
+// Multi-repo:      require github.com/org/hsu-example3-common v1.0.0
 ```
 
 **Impact**: True portability - code works without modification across architectures.
@@ -114,28 +114,28 @@ The framework's key technical innovation is **import path consistency** achieved
 **Single-Language Repository:**
 ```go
 // File: /pkg/domain/handler.go
-module github.com/org/hsu-echo-go
-replace github.com/org/hsu-echo => .
+module github.com/org/hsu-example1-go
+replace github.com/org/hsu-example2 => .
 
-import "github.com/org/hsu-echo/pkg/domain"  // Works!
+import "github.com/org/hsu-example2/pkg/domain"  // Works!
 ```
 
 **Multi-Language Repository:**
 ```go  
 // File: /go/pkg/domain/handler.go
-module github.com/org/hsu-echo/go
-replace github.com/org/hsu-echo => .
+module github.com/org/hsu-example2/go
+replace github.com/org/hsu-example2 => .
 
-import "github.com/org/hsu-echo/pkg/domain"  // IDENTICAL import!
+import "github.com/org/hsu-example2/pkg/domain"  // IDENTICAL import!
 ```
 
 **Multi-Repository Architecture:**
 ```go
-// File: hsu-echo-srv-go/cmd/srv/main.go
-module github.com/org/hsu-echo-srv-go
-require github.com/org/hsu-echo-common v1.0.0
+// File: hsu-example3-srv-go/cmd/srv/main.go
+module github.com/org/hsu-example3-srv-go
+require github.com/org/hsu-example3-common v1.0.0
 
-import "github.com/org/hsu-echo-common/pkg/domain"  // External dependency
+import "github.com/org/hsu-example3-common/pkg/domain"  // External dependency
 ```
 
 ### Folder Portability Rules

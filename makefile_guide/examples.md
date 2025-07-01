@@ -115,7 +115,7 @@ DOMAIN_REPLACE_TARGET := .
 
 # Nuitka Build Configuration
 ENABLE_NUITKA := yes
-NUITKA_OUTPUT_NAME := hsu-echo-server
+NUITKA_OUTPUT_NAME := hsu-example-server
 NUITKA_ENTRY_POINT := srv/run_server.py
 NUITKA_EXCLUDES_FILE := nuitka_excludes.txt
 NUITKA_EXTRA_MODULES := srv.domain.simple_handler
@@ -146,11 +146,11 @@ make py-lint
 make py-format
 
 # Binary compilation
-make py-nuitka-build    # Creates hsu-echo-server.exe
+make py-nuitka-build    # Creates hsu-example-server.exe
 
 # Run the binary
-./hsu-echo-server.exe   # Windows
-./hsu-echo-server       # Linux/macOS
+./hsu-example-server.exe   # Windows
+./hsu-example-server       # Linux/macOS
 ```
 
 ### **Nuitka Configuration Details**
@@ -201,7 +201,7 @@ DOMAIN_REPLACE_TARGET := .
 
 # Nuitka Build Configuration for Python component
 ENABLE_NUITKA := yes
-NUITKA_OUTPUT_NAME := hsu-echo-server
+NUITKA_OUTPUT_NAME := hsu-example-server
 NUITKA_ENTRY_POINT := srv/run_server.py
 NUITKA_EXCLUDES_FILE := nuitka_excludes.txt
 NUITKA_EXTRA_MODULES := srv.domain.simple_handler
@@ -344,7 +344,7 @@ INCLUDE_PREFIX := make/
 
 # Nuitka Configuration for Python server
 ENABLE_NUITKA := yes
-NUITKA_OUTPUT_NAME := hsu-echo-server
+NUITKA_OUTPUT_NAME := hsu-example-server
 NUITKA_ENTRY_POINT := srv/run_server.py
 NUITKA_BUILD_MODE := onefile
 ```

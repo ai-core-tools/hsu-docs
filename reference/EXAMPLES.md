@@ -44,7 +44,7 @@ The HSU platform currently includes these working examples:
 - **Features**: Simple request/response pattern
 
 ### Echo Client
-- **Location**: `hsu-echo-cli-go/` directory  
+- **Location**: `hsu-example1-go/cmd/cli/echogrpccli/` directory  
 - **Purpose**: HSU client implementation
 - **Features**: Connection management, health checking, concurrent requests
 
@@ -62,8 +62,8 @@ cd hsu-example3-srv-go
 make build && make run
 
 # In another terminal, run client
-cd hsu-echo-cli-go  
-make build && ./bin/echogrpccli --port 50055
+cd hsu-example1-go  
+make run-client --port 50055
 ```
 
 ## Contributing Examples

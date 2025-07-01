@@ -132,7 +132,7 @@ DOMAIN_IMPORT_PREFIX := github.com/core-tools/hsu-$(PROJECT_DOMAIN)
 DOMAIN_REPLACE_TARGET := .
 
 # This automatically configures go.mod:
-# replace github.com/core-tools/hsu-echo => .
+# replace github.com/core-tools/hsu-example2 => .
 ```
 
 ### **Go Build Examples**
@@ -290,7 +290,7 @@ INCLUDE_PREFIX := make/
 
 ### **Python with Nuitka Configuration**
 ```make
-PROJECT_NAME := hsu-echo-server
+PROJECT_NAME := hsu-example-server
 PROJECT_DOMAIN := echo
 INCLUDE_PREFIX := make/
 

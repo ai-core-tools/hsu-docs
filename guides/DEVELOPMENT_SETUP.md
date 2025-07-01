@@ -60,7 +60,7 @@ cd ../hsu-example3-srv-go
 go build -o bin/server cmd/echogrpcsrv/main.go
 
 # Build example client
-cd ../hsu-echo-cli-go
+cd ../hsu-example1-go
 go build -o bin/client cmd/echogrpccli/main.go
 ```
 
@@ -74,7 +74,7 @@ cd hsu-example3-srv-go
 ./bin/server --port 50055
 
 # Terminal 2: Run the client
-cd hsu-echo-cli-go
+cd hsu-example1-go
 ./bin/client --port 50055
 ```
 

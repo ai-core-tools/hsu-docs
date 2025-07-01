@@ -23,8 +23,8 @@ HSU achieves **identical imports across all architectures** through clever build
 
 ```go
 // ✅ HSU approach - IDENTICAL imports everywhere
-import "github.com/org/hsu-echo/pkg/domain"
-import "github.com/org/hsu-echo/pkg/control"
+import "github.com/org/hsu-example2/pkg/domain"
+import "github.com/org/hsu-example2/pkg/control"
 
 // This works in ALL three approaches through build magic!
 ```
@@ -35,7 +35,7 @@ import "github.com/org/hsu-echo/pkg/control"
 
 **File Structure:**
 ```
-hsu-echo-go/
+hsu-example1-go/
 ├── go.mod                 # Module definition
 ├── pkg/domain/handler.go  # Source code
 └── cmd/srv/main.go        # Application code
@@ -43,12 +43,12 @@ hsu-echo-go/
 
 **Build Configuration (`go.mod`):**
 ```go
-module github.com/org/hsu-echo-go
+module github.com/org/hsu-example2-go
 
 go 1.21
 
 // Key magic: Map logical import to local directory
-replace github.com/org/hsu-echo => .
+replace github.com/org/hsu-example2 => .
 
 require (
     github.com/core-tools/hsu-core v1.0.0
@@ -62,8 +62,8 @@ require (
 package main
 
 import (
-    "github.com/org/hsu-echo/pkg/domain"    // Resolves to ./pkg/domain
-    "github.com/org/hsu-echo/pkg/control"   // Resolves to ./pkg/control
+    "github.com/org/hsu-example2/pkg/domain"    // Resolves to ./pkg/domain
+    "github.com/org/hsu-example2/pkg/control"   // Resolves to ./pkg/control
 )
 ```
 
@@ -71,7 +71,7 @@ import (
 
 **File Structure:**
 ```
-hsu-echo/
+hsu-example2/
 ├── go/
 │   ├── go.mod                 # Go module definition
 │   ├── pkg/domain/handler.go  # Source code (note: /go/ prefix)
@@ -82,12 +82,12 @@ hsu-echo/
 
 **Build Configuration (`go/go.mod`):**
 ```go
-module github.com/org/hsu-echo/go
+module github.com/org/hsu-example2/go
 
 go 1.21
 
 // Key magic: Map logical import to parent directory
-replace github.com/org/hsu-echo => ..
+replace github.com/org/hsu-example2 => ..
 
 require (
     github.com/core-tools/hsu-core v1.0.0
@@ -101,8 +101,8 @@ require (
 package main
 
 import (
-    "github.com/org/hsu-echo/pkg/domain"    // Resolves to ../pkg/domain
-    "github.com/org/hsu-echo/pkg/control"   // Resolves to ../pkg/control
+    "github.com/org/hsu-example2/pkg/domain"    // Resolves to ../pkg/domain
+    "github.com/org/hsu-example2/pkg/control"   // Resolves to ../pkg/control
 )
 ```
 
@@ -110,24 +110,24 @@ import (
 
 **File Structure:**
 ```
-hsu-echo-srv-go/
+hsu-example3-srv-go/
 ├── go.mod                     # Module definition
 ├── cmd/srv/main.go            # Application code
 └── cmd/srv/domain/handler.go  # Local implementation
 
-hsu-echo-common/
+hsu-example3-common/
 ├── go.mod                     # Common module
 └── go/pkg/domain/contract.go  # Shared interfaces
 ```
 
-**Build Configuration (`hsu-echo-srv-go/go.mod`):**
+**Build Configuration (`hsu-example3-srv-go/go.mod`):**
 ```go
-module github.com/org/hsu-echo-srv-go
+module github.com/org/hsu-example2-srv-go
 
 go 1.21
 
 require (
-    github.com/org/hsu-echo-common v1.0.0   // External dependency
+    github.com/org/hsu-example2-common v1.0.0   // External dependency
     github.com/core-tools/hsu-core v1.0.0
 )
 ```
@@ -138,8 +138,8 @@ require (
 package main
 
 import (
-    "github.com/org/hsu-echo-common/go/pkg/domain"   // External import
-    "github.com/org/hsu-echo-srv-go/cmd/srv/domain"  // Local import
+    "github.com/org/hsu-example2-common/go/pkg/domain"   // External import
+    "github.com/org/hsu-example2-srv-go/cmd/srv/domain"  // Local import
 )
 ```
 
@@ -156,8 +156,8 @@ import (
 /go/pkg/domain/handler.go    # ADD /go/ prefix
 
 # go.mod change:
-# Before: replace github.com/org/hsu-echo => .
-# After:  replace github.com/org/hsu-echo => .. (in /go/go.mod)
+# Before: replace github.com/org/hsu-example2 => .
+# After:  replace github.com/org/hsu-example2 => .. (in /go/go.mod)
 ```
 
 **Moving FROM Multi-Language Repository (STRIP language folder):**
@@ -169,8 +169,8 @@ import (
 /pkg/domain/handler.go       # STRIP /go/ prefix
 
 # go.mod change:  
-# Before: replace github.com/org/hsu-echo => .. (in /go/go.mod)
-# After:  replace github.com/org/hsu-echo => . (in root go.mod)
+# Before: replace github.com/org/hsu-example2 => .. (in /go/go.mod)
+# After:  replace github.com/org/hsu-example2 => . (in root go.mod)
 ```
 
 **CRITICAL**: Imports remain IDENTICAL in both cases!
@@ -198,7 +198,7 @@ Logical units maintain their purpose across all architectures:
 
 ```go
 // Logical import (NEVER changes)
-import "github.com/org/hsu-echo/pkg/domain"
+import "github.com/org/hsu-example2/pkg/domain"
 
 // Resolution (changes per approach via build config)
 // Approach 1: ./pkg/domain           (via replace . )
@@ -214,7 +214,7 @@ import "github.com/org/hsu-echo/pkg/domain"
 ```toml
 # pyproject.toml
 [project]
-name = "hsu-echo-py"
+name = "hsu-example1-py"
 packages = ["lib", "srv", "cli"]
 
 [project.scripts]
@@ -225,7 +225,7 @@ echo-server = "srv.run_server:main"
 ```toml
 # python/pyproject.toml
 [project]
-name = "hsu-echo"  
+name = "hsu-example2"  
 packages = ["python.lib", "python.srv", "python.cli"]
 
 [project.scripts]
@@ -236,8 +236,8 @@ echo-server = "python.srv.run_server:main"
 ```toml
 # pyproject.toml
 [project]
-name = "hsu-echo-srv-py"
-dependencies = ["hsu-echo-common[python]>=1.0.0"]
+name = "hsu-example3-srv-py"
+dependencies = ["hsu-example3-common[python]>=1.0.0"]
 
 [project.scripts] 
 echo-server = "srv.run_server:main"
@@ -268,19 +268,19 @@ from srv.domain import LocalHandler                     # Local
 **Development Mode (local replace directives):**
 ```go
 // go.mod - development
-replace github.com/org/hsu-echo-common => ../hsu-echo-common
+replace github.com/org/hsu-example2-common => ../hsu-example3-common
 
 // Enable local development with unreleased changes
-go mod edit -replace github.com/org/hsu-echo-common=../hsu-echo-common
+go mod edit -replace github.com/org/hsu-example2-common=../hsu-example3-common
 ```
 
 **Production Mode (versioned dependencies):**
 ```go
 // go.mod - production
-require github.com/org/hsu-echo-common v1.2.3
+require github.com/org/hsu-example2-common v1.2.3
 
 // Use tagged releases
-go get github.com/org/hsu-echo-common@v1.2.3
+go get github.com/org/hsu-example2-common@v1.2.3
 ```
 
 ### Cross-Repository Development
@@ -288,20 +288,20 @@ go get github.com/org/hsu-echo-common@v1.2.3
 **Synchronized Development Workflow:**
 ```bash
 # Working on common + implementation simultaneously
-cd hsu-echo-common
+cd hsu-example3-common
 git checkout feature/new-api
 
-cd ../hsu-echo-srv-go  
-go mod edit -replace github.com/org/hsu-echo-common=../hsu-echo-common
+cd ../hsu-example3-srv-go  
+go mod edit -replace github.com/org/hsu-example2-common=../hsu-example3-common
 go build ./...  # Test against development version
 
 # When ready, tag and release
-cd ../hsu-echo-common
+cd ../hsu-example3-common
 git tag v1.3.0
 git push origin v1.3.0
 
-cd ../hsu-echo-srv-go
-go get github.com/org/hsu-echo-common@v1.3.0  # Switch to released version
+cd ../hsu-example3-srv-go
+go get github.com/org/hsu-example2-common@v1.3.0  # Switch to released version
 ```
 
 ### Multi-Language Coordination
@@ -309,7 +309,7 @@ go get github.com/org/hsu-echo-common@v1.3.0  # Switch to released version
 **Shared API Evolution:**
 ```bash
 # Update protocol buffers in common repo
-cd hsu-echo-common
+cd hsu-example3-common
 vim api/proto/echo.proto
 
 # Regenerate all language bindings
@@ -386,11 +386,11 @@ make build → go get -u github.com/org/common && go build ./cmd/...
 **Issue 1: Import Path Mismatch**
 ```bash
 # Error: package not found
-go build: cannot find package "github.com/org/hsu-echo/pkg/domain"
+go build: cannot find package "github.com/org/hsu-example2/pkg/domain"
 
 # Solution: Check replace directive
-grep "replace.*hsu-echo" go.mod
-# Should show: replace github.com/org/hsu-echo => .
+grep "replace.*hsu-example2" go.mod
+# Should show: replace github.com/org/hsu-example2 => .
 ```
 
 **Issue 2: Language Folder Confusion**  
@@ -421,7 +421,7 @@ grep "replace.*hsu-echo" go.mod
 go mod tidy && go build ./...
 
 # Check for missing dependencies
-go mod graph | grep hsu-echo
+go mod graph | grep hsu-example2
 ```
 
 **Cross-Architecture Testing:**

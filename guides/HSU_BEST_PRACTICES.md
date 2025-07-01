@@ -32,7 +32,7 @@ go mod edit -replace github.com/core-tools/hsu-example3-common=../hsu-example3-c
 go mod tidy
 
 # Remove when ready for production
-go mod edit -dropreplace github.com/core-tools/hsu-echo
+go mod edit -dropreplace github.com/core-tools/hsu-example2
 go mod tidy
 ```
 
@@ -488,7 +488,7 @@ git submodule foreach --recursive git clean -fd
 go clean -modcache
 
 # Verify module paths
-go mod graph | grep hsu-echo
+go mod graph | grep hsu-example2
 
 # Check replace directives
 go mod edit -json | jq .Replace

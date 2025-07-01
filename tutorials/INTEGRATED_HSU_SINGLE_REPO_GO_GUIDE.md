@@ -26,16 +26,16 @@ This is ideal for:
 ## Step 1: Create Project Structure
 
 ```bash
-mkdir hsu-echo-simple-go
-cd hsu-echo-simple-go
+mkdir hsu-example1-go
+cd hsu-example1-go
 git init
-go mod init github.com/your-org/hsu-echo-simple-go
+go mod init github.com/your-org/hsu-example1-go
 ```
 
 Create the directory structure:
 
 ```
-hsu-echo-simple-go/
+hsu-example1-go/
 ├── api/
 │   └── proto/
 │       ├── echoservice.proto
@@ -72,7 +72,7 @@ Create `api/proto/echoservice.proto`:
 ```proto
 syntax = "proto3";
 
-option go_package = "github.com/your-org/hsu-echo-simple-go/internal/api/proto";
+option go_package = "github.com/your-org/hsu-example1-go/internal/api/proto";
 
 package proto;
 
@@ -143,7 +143,7 @@ package domain
 import (
     "context"
 
-    "github.com/your-org/hsu-echo-simple-go/internal/logging"
+    "github.com/your-org/hsu-example1-go/internal/logging"
 )
 
 func NewSimpleHandler(logger logging.Logger) Contract {
@@ -174,9 +174,9 @@ package control
 import (
     "context"
 
-    "github.com/your-org/hsu-echo-simple-go/internal/api/proto"
-    "github.com/your-org/hsu-echo-simple-go/internal/domain"
-    "github.com/your-org/hsu-echo-simple-go/internal/logging"
+    "github.com/your-org/hsu-example1-go/internal/api/proto"
+    "github.com/your-org/hsu-example1-go/internal/domain"
+    "github.com/your-org/hsu-example1-go/internal/logging"
 
     "google.golang.org/grpc"
 )
@@ -219,10 +219,10 @@ import (
     coreControl "github.com/core-tools/hsu-core/go/control"
     coreDomain "github.com/core-tools/hsu-core/go/domain"
     coreLogging "github.com/core-tools/hsu-core/go/logging"
-    echoDomain "github.com/your-org/hsu-echo-simple-go/internal/domain"
-    echoLogging "github.com/your-org/hsu-echo-simple-go/internal/logging"
+    echoDomain "github.com/your-org/hsu-example1-go/internal/domain"
+    echoLogging "github.com/your-org/hsu-example1-go/internal/logging"
 
-    "github.com/your-org/hsu-echo-simple-go/internal/logging"
+    "github.com/your-org/hsu-example1-go/internal/logging"
 
     flags "github.com/jessevdk/go-flags"
 )
@@ -265,7 +265,7 @@ func MainEcho(echoServerHandlerFactoryFunc func(echoLogger echoLogging.Logger) e
             Errorf: logger.Errorf,
         })
     echoLogger := echoLogging.NewLogger(
-        logPrefix("hsu-echo"), echoLogging.LogFuncs{
+        logPrefix("hsu-example1-go"), echoLogging.LogFuncs{
             Debugf: logger.Debugf,
             Infof:  logger.Infof,
             Warnf:  logger.Warnf,
@@ -299,8 +299,8 @@ Create `cmd/echogrpcsrv/main.go`:
 package main
 
 import (
-    "github.com/your-org/hsu-echo-simple-go/internal/control"
-    "github.com/your-org/hsu-echo-simple-go/internal/domain"
+    "github.com/your-org/hsu-example1-go/internal/control"
+    "github.com/your-org/hsu-example1-go/internal/domain"
 )
 
 func main() {
@@ -321,7 +321,7 @@ import (
     "log"
     "time"
 
-    "github.com/your-org/hsu-echo-simple-go/internal/api/proto"
+    "github.com/your-org/hsu-example1-go/internal/api/proto"
     coreProto "github.com/core-tools/hsu-core/go/api/proto"
     "google.golang.org/grpc"
     "google.golang.org/grpc/credentials/insecure"
@@ -377,7 +377,7 @@ func main() {
 Update `go.mod`:
 
 ```go
-module github.com/your-org/hsu-echo-simple-go
+module github.com/your-org/hsu-example1-go
 
 go 1.22
 

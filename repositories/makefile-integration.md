@@ -123,7 +123,7 @@ COMMON_DEPENDENCY = github.com/core-tools/hsu-example3-common
 PROJECT_NAME = hsu-example3-srv-py
 PROJECT_TYPE = implementation-python
 HSU_APPROACH = 3
-COMMON_DEPENDENCY = hsu-echo-common
+COMMON_DEPENDENCY = hsu-example3-common
 ```
 
 **Available Commands (both):**

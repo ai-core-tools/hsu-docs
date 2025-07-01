@@ -30,20 +30,20 @@ This document provides development workflow guidelines, naming conventions, and 
 
 ```bash
 # Approach 1: Single-Repository + Single-Language
-hsu-echo-go                    # Go implementation
-hsu-echo-py                    # Python implementation  
+hsu-example1-go                # Go implementation
+hsu-example1-py                # Python implementation  
 hsu-llm-go                     # LLM service in Go
 hsu-data-processor-py          # Data processing service in Python
 
 # Approach 2: Single-Repository + Multi-Language
-hsu-echo                       # Multi-language echo service
+hsu-example2                   # Multi-language echo service
 hsu-llm                        # Multi-language LLM service
 hsu-data-processor             # Multi-language data processor
 
 # Approach 3: Multi-Repository Architecture
-hsu-echo-common                # Shared components
-hsu-echo-simple-srv-go         # Simple Go server
-hsu-echo-advanced-srv-py       # Advanced Python server
+hsu-example3-common            # Shared components
+hsu-example3-srv-go            # Go server implementation
+hsu-example3-srv-py            # Python server implementation
 hsu-llm-llamacpp-srv-go        # LlamaCP implementation
 hsu-llm-transformers-srv-py    # Transformers implementation
 ```
@@ -53,29 +53,29 @@ hsu-llm-transformers-srv-py    # Transformers implementation
 **Go Modules:**
 ```go
 // Approach 1
-module github.com/org/hsu-echo-go
+module github.com/org/hsu-example1-go
 
 // Approach 2  
-module github.com/org/hsu-echo/go
+module github.com/org/hsu-example2/go
 
 // Approach 3
-module github.com/org/hsu-echo-srv-go
-module github.com/org/hsu-echo-common
+module github.com/org/hsu-example3-srv-go
+module github.com/org/hsu-example3-common
 ```
 
 **Python Packages:**
 ```python
 # Approach 1
-name = "hsu-echo-py"           # Package name
+name = "hsu-example1-py"           # Package name
 "hsu_echo"                     # Import name
 
 # Approach 2
-name = "hsu-echo"              # Package name
+name = "hsu-example2"              # Package name
 "hsu_echo"                     # Import name (shared)
 
 # Approach 3  
-name = "hsu-echo-srv-py"       # Implementation package
-name = "hsu-echo-common"       # Common package
+name = "hsu-example3-srv-py"       # Implementation package
+name = "hsu-example3-common"       # Common package
 ```
 
 ### File and Folder Naming
@@ -431,11 +431,11 @@ import "github.com/org/hsu-{domain}/pkg/domain"
 **Solution:**
 ```bash
 # ✅ Consistent naming enables automation
-hsu-echo-go              # Clear approach and language
-hsu-echo-py              # Same pattern
-hsu-echo                 # Multi-language version
-hsu-echo-common          # Shared components
-hsu-echo-srv-go          # Implementation
+hsu-example1-go              # Clear approach and language
+hsu-example1-py              # Same pattern
+hsu-example2                 # Multi-language version
+hsu-example3-common          # Shared components
+hsu-example3-srv-go          # Implementation
 
 # ❌ Inconsistent naming breaks tools  
 echo-service-go          # Different pattern

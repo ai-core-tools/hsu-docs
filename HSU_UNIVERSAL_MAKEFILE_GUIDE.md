@@ -1,7 +1,7 @@
 # HSU Universal Makefile System
 
-**Version**: 1.0.0  
-**Date**: December 28, 2024  
+**Version**: 1.1.0  
+**Date**: December 29, 2024  
 **Context**: Canonical build system for HSU Repository Portability Framework
 
 ## Overview
@@ -17,39 +17,42 @@ The **HSU Universal Makefile System** provides a standardized, cross-platform bu
 🎯 **Auto-Detection**: Automatically detects repository structure and enables appropriate languages  
 🌐 **Cross-Platform**: Works on Windows-MSYS, PowerShell, macOS, and Linux with intelligent shell detection  
 🔧 **Modular Design**: Language-specific functionality in separate, includable files  
-⚙️ **Configuration-Driven**: Include paths and project settings via configuration files  
-🔄 **Master → Replica Architecture**: Clean deployment with true file replication  
+⚙️ **Configuration-Driven**: Include paths and project settings via minimal configuration files  
+🔄 **Master → Replica Architecture**: Clean deployment with true file replication from `docs/make/`  
 🚀 **Comprehensive**: Covers build, test, lint, format, clean, and development workflows  
 🛠️ **Windows-MSYS Compatible**: Handles Windows PowerShell vs MSYS context correctly  
+📦 **Compact Master Packaging**: All system files organized in single `docs/make/` folder  
+🐍 **Nuitka Binary Compilation**: Full support for Python binary packaging with Nuitka  
+⚡ **Protobuf/gRPC Integration**: Built-in support for protocol buffer generation  
+🧹 **Flexible Cleanup**: Comprehensive clean targets with language-specific cleanup  
+📋 **Minimal Configuration**: Extensive defaults with project-specific overrides only when needed
 
 ## Quick Start
 
 ### 1. Install the System (Master → Rollout Process)
 
-**Step 1**: Copy master files to your project (true replication):
+**Step 1**: Copy master files from `docs/make/` (true replication):
 
 ```bash
-# Copy all HSU system files from master location
-cp /path/to/master/HSU_MAKEFILE_*.mk project/make/
+# Copy all HSU system files from master docs/make/ location
+cp docs/make/HSU_MAKEFILE_*.mk project/make/
 
 # Core system files deployed:
 # HSU_MAKEFILE_ROOT.mk      - Main coordinator
-# HSU_MAKEFILE_CONFIG.mk    - Configuration template  
+# HSU_MAKEFILE_CONFIG.mk    - Configuration template with extensive defaults
 # HSU_MAKEFILE_GO.mk        - Go-specific operations
-# HSU_MAKEFILE_PYTHON.mk    - Python-specific operations
+# HSU_MAKEFILE_PYTHON.mk    - Python-specific operations (includes Nuitka support)
 ```
 
 **Step 2**: Configure include path in `Makefile.config`:
 
 ```make
-# Project Configuration
+# Minimal Project Configuration
 PROJECT_NAME := my-hsu-project
 PROJECT_DOMAIN := my-domain
 
-# Include Path Configuration (NEW!)
+# Include Path Configuration
 INCLUDE_PREFIX := make/    # Folder where HSU files are located
-# OR: INCLUDE_PREFIX := build/
-# OR: INCLUDE_PREFIX :=     # (root level)
 ```
 
 ### 2. Create Your Project Makefile
@@ -60,26 +63,23 @@ include make/HSU_MAKEFILE_ROOT.mk
 # System will automatically use INCLUDE_PREFIX from config
 ```
 
-### 3. Configure Your Project (Optional)
+### 3. Configure Your Project (Optional - Extensive Defaults)
 
-Create `Makefile.config` in your project root:
+Create `Makefile.config` in your project root. Most settings have sensible defaults:
 
 ```make
-# Project Configuration
+# Project Configuration (required)
 PROJECT_NAME := my-hsu-project
 PROJECT_DOMAIN := my-domain
-DEFAULT_PORT := 8080
 
-# Language Support
-ENABLE_GO := yes
-ENABLE_PYTHON := yes
+# Include Path (required)
+INCLUDE_PREFIX := make/
 
-# Go Configuration
-GO_MODULE_NAME := github.com/myorg/$(PROJECT_NAME)
-GO_BUILD_FLAGS := -v -race
-
-# Python Configuration
-PYTHON_BUILD_TOOL := poetry
+# Everything else is optional with intelligent defaults:
+# DEFAULT_PORT := 50055
+# ENABLE_GO := auto-detected
+# ENABLE_PYTHON := auto-detected
+# ENABLE_NUITKA := auto-detected if Python present
 ```
 
 ### 4. Use the System
@@ -88,17 +88,13 @@ PYTHON_BUILD_TOOL := poetry
 # Get help
 make help
 
-# Initialize development environment
-make setup
-
-# Build everything
+# Build everything (auto-detects languages)
 make build
 
-# Run tests
-make test
-
-# Language-specific commands
+# Language-specific commands (if detected)
 make go-build
+make py-install
+make py-nuitka-build    # Binary compilation
 make py-test
 ```
 

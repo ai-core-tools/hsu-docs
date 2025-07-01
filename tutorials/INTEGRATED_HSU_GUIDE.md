@@ -53,6 +53,7 @@ make run-client         # Test both servers
 ```
 
 **🕐 Time to implement:** 60-90 minutes  
+**📋 Follow this guide:** [Single-Repository Multi-Language Implementation](INTEGRATED_HSU_SINGLE_REPO_MULTI_LANG_GUIDE.md)
 **📋 Decision help:** [Repository Approach Comparison](../repositories/three-approaches.md)
 
 ### 🏭 Approach 3: Multi-Repository Architecture

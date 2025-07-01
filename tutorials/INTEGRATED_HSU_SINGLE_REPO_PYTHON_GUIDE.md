@@ -1,467 +1,395 @@
 # Single-Repository HSU Python Implementation Guide
 
-This guide walks you through creating a single-repository, self-contained Python-based HSU server. This approach uses git submodules for dependencies and includes both server and client implementations.
+This guide shows you how to create a Python-based HSU server using the proven **"copy working example"** approach. You'll start with a working system and customize it for your needs.
 
 ## Overview
 
-A single-repository HSU Python implementation includes:
-- Protocol Buffer definitions and generated code
-- Domain contracts and business logic  
-- Server setup and entry point
-- Python client for testing
-- Git submodules for HSU core dependencies
+**Repository Approach 1 (Python)** provides a self-contained Python implementation:
+- **Single repository** with everything included
+- **Standard Python project structure** with modern packaging
+- **Universal makefile commands** for consistent development
+- **Nuitka binary compilation** for optimized deployment
+- **Immediate working example** you can run and modify
 
-This is ideal for:
+This approach is perfect for:
 - Learning the HSU platform with Python
-- Single-implementation Python services
-- Teams comfortable with Python development
-- When multi-repository complexity isn't needed
+- Python-focused development teams
+- ML/data processing services
+- Rapid prototyping with Python ecosystem
 
 ## Prerequisites
 
 - Python 3.8+
 - Protocol Buffers compiler (`protoc`)
-- Git (for submodules)
+- GNU Make or compatible
 - Basic understanding of gRPC and Python
 
-## Step 1: Create Project Structure
+## 🎯 Quick Start: Copy Working Example
+
+The fastest way to get started is to copy the proven working example:
 
 ```bash
-mkdir hsu-example2-py
-cd hsu-example2-py
-git init
+# Copy the working Python example
+cp -r hsu-example1-py/ my-python-service/
+cd my-python-service/
+
+# Test that everything works immediately
+make setup && make build && make test
+
+# Start the server
+make py-run-server
+
+# In another terminal, test it
+make run-client
 ```
 
-Create the directory structure:
+**Expected output:**
+```
+✓ Core service health check passed
+✓ Echo response: py-simple-echo: Hello World!
+✓ All tests passed!
+```
+
+## 📁 Actual Directory Structure
+
+The working `hsu-example1-py` uses this proven structure:
 
 ```
-hsu-example2-py/
+my-python-service/                   # Root directory
+├── Makefile                         # Universal makefile entry point
+├── Makefile.config                  # Project configuration
+├── make/                            # HSU Universal Makefile System
 ├── api/
 │   └── proto/
-│       ├── echoservice.proto
-│       ├── generate-py.sh
-│       └── generate-py.bat
-├── src/
-│   ├── api/
-│   │   └── proto/            # Generated Python gRPC code
+│       ├── echoservice.proto        # gRPC service definition
+│       ├── generate-py.bat          # Windows code generation
+│       └── generate-py.sh           # Unix code generation
+├── lib/
 │   ├── control/
-│   │   ├── handler.py        # gRPC ↔ domain adapter
-│   │   ├── gateway.py        # Client gateway
-│   │   └── serve_echo.py     # Server setup helper
-│   └── domain/
-│       ├── contract.py       # Domain ABC
-│       └── simple_handler.py # Business logic
-├── hsu_core/                 # Git submodule
-├── run_server.py             # Server entry point
-├── run_client.py             # Client for testing
-├── requirements.txt          # Python dependencies
-├── Makefile                  # Build automation
-├── .gitmodules              # Git submodule config
+│   │   ├── gateway.py               # Client gateway
+│   │   ├── handler.py               # gRPC ↔ domain adapter
+│   │   └── serve_echo.py            # Server setup helper
+│   ├── domain/
+│   │   ├── contract.py              # Domain ABC
+│   │   └── simple_handler.py        # Business logic implementation
+│   └── generated/
+│       └── api/proto/               # Generated gRPC code
+├── cli/
+│   └── run_client.py                # Test client
+├── srv/
+│   ├── domain/
+│   │   └── simple_handler.py        # Server business logic
+│   └── run_server.py                # Server entry point
+├── pyproject.toml                   # Modern Python packaging
+├── requirements.txt                 # Python dependencies
+├── nuitka_excludes.txt              # Nuitka build configuration
 └── README.md
 ```
 
-## Step 2: Add Git Submodules
+## 🛠️ Real Makefile Commands
 
+The working example provides these **universal commands**:
+
+### Core Development Commands
 ```bash
-# Add HSU core dependency
-git submodule add https://github.com/core-tools/hsu-core.git hsu_core
-git submodule update --init --recursive
+make setup          # Install Python packages and dependencies
+make build          # Build Python components
+make test           # Run Python tests
+make clean          # Clean all build artifacts
+make proto          # Generate gRPC code from .proto files
 ```
 
-## Step 3: Define Protocol Buffer Service
+### Python-Specific Commands
+```bash
+make py-build       # Build Python components
+make py-test        # Run Python tests
+make py-lint        # Lint Python code with flake8
+make py-format      # Format Python code with black
+make py-protoc      # Generate Python gRPC code
+make py-nuitka      # Build optimized binary with Nuitka
+make nuitka         # Alias for py-nuitka
+```
 
-Create `api/proto/echoservice.proto`:
+### Runtime Commands
+```bash
+make py-run-server  # Start Python server
+make run-client     # Run test client
+make run-server     # Alias for py-run-server
+```
 
-```proto
+## ⚙️ Configuration System
+
+The working example uses `Makefile.config` for project settings:
+
+```makefile
+# Project Information
+PROJECT_NAME := my-python-service
+PROJECT_DOMAIN := echo
+PROJECT_VERSION := 1.0.0
+
+# Repository Structure
+REPO_TYPE := single-language-py
+PYTHON_DIR := .
+
+# Language Support
+ENABLE_GO := no
+ENABLE_PYTHON := yes
+
+# Build Targets
+DEFAULT_PORT := 50055
+
+# Nuitka Configuration (Python binary compilation)
+ENABLE_NUITKA := yes
+NUITKA_OUTPUT_NAME := my-service-server
+NUITKA_ENTRY_POINT := srv/run_server.py
+NUITKA_EXCLUDES_FILE := nuitka_excludes.txt
+NUITKA_EXTRA_MODULES := srv.domain.simple_handler
+NUITKA_BUILD_MODE := onefile
+```
+
+## 🔄 Step-by-Step Customization
+
+### Step 1: Initial Setup
+
+```bash
+# Copy and rename the working example
+cp -r hsu-example1-py/ my-python-service/
+cd my-python-service/
+
+# Verify everything works out of the box
+make setup && make build && make test
+echo "✓ Base system working!"
+```
+
+### Step 2: Configure Your Project
+
+Edit `Makefile.config`:
+```makefile
+# Update project identification
+PROJECT_NAME := my-python-service
+PROJECT_DOMAIN := myservice
+NUITKA_OUTPUT_NAME := my-service-server
+```
+
+Update `pyproject.toml`:
+```toml
+[project]
+name = "my-python-service"
+version = "1.0.0"
+description = "My Python HSU Service"
+
+[project.dependencies]
+# Keep existing dependencies
+```
+
+### Step 3: Customize Protocol Definition
+
+Edit `api/proto/myservice.proto`:
+```protobuf
 syntax = "proto3";
 
-option go_package = "github.com/your-org/hsu-example2-py/api/proto";
+package myservice;
 
-package proto;
-
-service EchoService {
-  rpc Echo(EchoRequest) returns (EchoResponse) {}
+service MyService {
+    rpc ProcessData(DataRequest) returns (DataResponse) {}
 }
 
-message EchoRequest {
-  string message = 1;
+message DataRequest {
+    string input = 1;
+    int32 count = 2;
 }
 
-message EchoResponse {
-  string message = 1;
+message DataResponse {
+    string result = 1;
+    bool success = 2;
 }
 ```
 
-## Step 4: Generate Python Code
-
-Create `api/proto/generate-py.sh`:
+### Step 4: Regenerate Code
 
 ```bash
-#!/bin/bash
-python -m grpc_tools.protoc -I. --python_out=../../src/api/proto \
-    --grpc_python_out=../../src/api/proto echoservice.proto
+make proto          # Regenerates Python gRPC code
+make build          # Verify compilation
 ```
 
-Create `api/proto/generate-py.bat` (Windows):
+### Step 5: Implement Business Logic
 
-```batch
-@echo off
-python -m grpc_tools.protoc -I. --python_out=../../src/api/proto ^
-    --grpc_python_out=../../src/api/proto echoservice.proto
-```
-
-## Step 5: Setup Dependencies
-
-Create `requirements.txt`:
-
-```txt
-grpcio==1.64.0
-grpcio-tools==1.64.0
-protobuf==5.27.0
-```
-
-Install dependencies:
-
-```bash
-pip install -r requirements.txt
-```
-
-Generate the code:
-
-```bash
-cd api/proto
-chmod +x generate-py.sh
-./generate-py.sh
-```
-
-## Step 6: Define Domain Contract
-
-Create `src/domain/contract.py`:
-
+Edit `lib/domain/contract.py`:
 ```python
-from abc import ABCMeta, abstractmethod
+from abc import ABC, abstractmethod
 
-class Contract:
-    __metaclass__ = ABCMeta
-
+class Contract(ABC):
     @abstractmethod
-    def Echo(self, message: str) -> str:
+    def process_data(self, input: str, count: int) -> tuple[str, bool]:
         pass
 ```
 
-## Step 7: Implement Business Logic  
-
-Create `src/domain/simple_handler.py`:
-
+Edit `srv/domain/simple_handler.py`:
 ```python
-from .contract import Contract
+from lib.domain.contract import Contract
 
 class SimpleHandler(Contract):
     def __init__(self):
         pass
 
-    def Echo(self, message: str) -> str:
-        print(f"Processing echo request: {message}")
-        response = "py-simple-echo: " + message
-        print(f"Echo response: {response}")
-        return response
+    def process_data(self, input: str, count: int) -> tuple[str, bool]:
+        print(f"Processing data: {input} (count: {count})")
+        
+        result = f"processed-{input}-{count}"
+        success = True
+        
+        print(f"Process result: {result}")
+        return result, success
 ```
 
-## Step 8: Create gRPC Handler
+### Step 6: Test Your Changes
 
-Create `src/control/handler.py`:
-
-```python
-import sys
-import os
-import grpc
-
-# Add path for proto imports
-current_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.append(current_dir)
-proto_dir = os.path.join(current_dir, "api", "proto")
-sys.path.append(proto_dir)
-
-from ..api.proto import echoservice_pb2
-from ..api.proto import echoservice_pb2_grpc
-from ..domain.contract import Contract
-
-def register_grpc_server_handler(grpc_server, handler: Contract):
-    service = GRPCServerHandler(handler)
-    echoservice_pb2_grpc.add_EchoServiceServicer_to_server(service, grpc_server)
-    return service
-
-class GRPCServerHandler(echoservice_pb2_grpc.EchoServiceServicer):
-    
-    def __init__(self, handler):
-        self.handler = handler
-    
-    def Echo(self, request, context):
-        try:
-            response = self.handler.Echo(request.message)
-            return echoservice_pb2.EchoResponse(message=response)
-        except Exception as e:
-            context.set_code(grpc.StatusCode.INTERNAL)
-            context.set_details(f"Exception: {str(e)}")
-            return None
+```bash
+make build && make test
+make py-run-server   # Terminal 1: Start server
+make run-client      # Terminal 2: Test server
 ```
 
-## Step 9: Create Server Setup Helper
+## 🏗️ Key Python Patterns
 
-Create `src/control/serve_echo.py`:
-
+### ABC Contract Pattern
 ```python
-from hsu_core.py.control.server import Server
-from hsu_core.py.control.def_handler import register_grpc_default_server_handler as register_core_grpc_default_server_handler
-from .handler import register_grpc_server_handler as register_echo_grpc_server_handler
+from abc import ABC, abstractmethod
 
-def serve_echo(handler):
-    import argparse
-
-    parser = argparse.ArgumentParser(description="Echo gRPC Server")
-    parser.add_argument("--port", type=int, default=50055, help="Port to listen on")
-    args = parser.parse_args()
-    
-    server = Server(args.port)
-    register_core_grpc_default_server_handler(server.GRPC())
-    register_echo_grpc_server_handler(server.GRPC(), handler)
-    server.run(None)
+class Contract(ABC):
+    @abstractmethod
+    def process_data(self, input: str, count: int) -> tuple[str, bool]:
+        pass
 ```
 
-## Step 10: Create Server Entry Point
+### gRPC Handler Pattern
+- Convert between gRPC types and Python types
+- Exception handling with proper gRPC status codes
+- Clean separation of concerns
 
-Create `run_server.py`:
-
+### Server Helper Function
 ```python
-#!/usr/bin/env python
-"""
-Entry point script for the Echo gRPC server.
-"""
-
-from src.control.serve_echo import serve_echo
-from src.domain.simple_handler import SimpleHandler
+from lib.control.serve_echo import serve_echo
+from srv.domain.simple_handler import SimpleHandler
 
 def serve():
     handler = SimpleHandler()
     serve_echo(handler)
-
-if __name__ == "__main__":
-    serve()
 ```
 
-## Step 11: Create Test Client
+## 🚀 Production Deployment
 
-Create `src/control/gateway.py`:
-
-```python
-import sys
-import os
-
-# Add path for proto imports
-current_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.append(current_dir)
-
-from .api.proto import echoservice_pb2
-from .api.proto import echoservice_pb2_grpc
-
-class Gateway:
-    
-    def __init__(self, grpc_channel):
-        self.stub = echoservice_pb2_grpc.EchoServiceStub(grpc_channel)
-    
-    def Echo(self, message: str) -> str:
-        request = echoservice_pb2.EchoRequest(message=message)
-        response = self.stub.Echo(request)
-        return response.message
-```
-
-Create `run_client.py`:
-
-```python
-import argparse
-import time
-
-parser = argparse.ArgumentParser(description="Echo gRPC Client")
-parser.add_argument("--port", type=int, default=50055, help="Port to connect to")
-args = parser.parse_args()
-
-from hsu_core.py.control.client_conn import ClientConn
-from hsu_core.py.control.gateway import Gateway as CoreGateway
-from src.control.gateway import Gateway as EchoGateway
-
-retry_period = 1
-while True:
-    try:
-        client_conn = ClientConn(args.port)
-        core_gateway = CoreGateway(client_conn.GRPC())
-        echo_gateway = EchoGateway(client_conn.GRPC())
-
-        # Test core service (health check)
-        core_gateway.Ping()
-        print("✓ Core service health check passed")
-
-        # Test echo service
-        message = echo_gateway.Echo("Hello, World!")
-        print(f"✓ Echo response: {message}")
-        print("✓ All tests passed!")
-
-        break
-    except Exception as e:
-        if "Connection refused" in str(e):
-            print(f"Connection error, retrying in {retry_period} second...")
-            time.sleep(retry_period)
-            retry_period *= 2
-            continue
-        else:
-            print(f"Error: {e}")
-            raise e
-```
-
-## Step 12: Create Build Automation
-
-Create `Makefile`:
-
-```makefile
-.PHONY: setup run run-client clean update-submodules
-
-setup: update-submodules
-	pip install -r requirements.txt
-
-update-submodules:
-	git submodule update --init --recursive
-	git submodule foreach git pull origin main
-
-run: setup
-	python run_server.py --port 50055
-
-run-client: setup
-	python run_client.py --port 50055
-
-clean:
-	find . -name "*.pyc" -delete
-	find . -name "__pycache__" -delete
-```
-
-## Step 13: Build and Run
-
-### Setup Environment
+### Build Optimized Binary with Nuitka
 
 ```bash
-make setup
+# Build optimized Python binary
+make py-nuitka
+
+# Result: build/my-service-server (or .exe on Windows)
 ```
 
-### Run the Server
+### Package Management
 
 ```bash
-make run
-# or
-python run_server.py --port 50055
+# Install as package
+pip install -e .
+
+# Build wheel
+python -m build
 ```
 
-### Test with Client
+### Docker Deployment
 
-In another terminal:
-
+The makefile system supports Docker builds:
 ```bash
-make run-client
-# or
-python run_client.py --port 50055
+make docker         # Build Python container
 ```
 
-Expected output:
-```
-✓ Core service health check passed
-✓ Echo response: py-simple-echo: Hello, World!
-✓ All tests passed!
-```
+## 🔍 Development Workflow
 
-## Key Features
-
-### Git Submodules
-- Exact version control of dependencies
-- Offline development capability
-- Simple setup for development teams
-
-### Python Client Integration
-- Complete client implementation included
-- Shows both server and client patterns
-- Easy testing and validation
-
-### Self-Contained Structure
-- All code in one repository
-- Direct control over implementation
-- Easy to understand and modify
-
-## Development Workflow
-
-### Updating Dependencies
-
+### Daily Development Cycle
 ```bash
-# Update all submodules
-make update-submodules
-
-# Or manually:
-cd hsu_core
-git pull origin main
-cd ..
-git add hsu_core
-git commit -m "Update hsu_core submodule"
+make clean                   # Start fresh
+make setup                   # Update dependencies
+make proto                   # Regenerate any protocol changes
+make build && make test      # Build and verify
+make py-format && make py-lint  # Code quality
 ```
 
-### Development with Local Changes
-
+### Testing and Debugging
 ```bash
-# Make changes to submodule
-cd hsu_core
-# Make your changes...
-cd ..
-
-# To reset submodule to committed version
-git submodule update --init hsu_core
+make py-test               # Run Python tests
+make py-run-server         # Start server for debugging
+make run-client            # Test client functionality
 ```
 
-## Key Advantages
+### Code Quality
+```bash
+make py-format             # Format code with black
+make py-lint               # Lint with flake8
+make py-test               # Run tests
+```
 
-### Single-Repository Setup
-- Single repository with everything needed
-- Git submodules handle dependencies reliably
-- Make commands automate common tasks
+## 🏆 Advantages of This Approach
 
-### Python-First Development
-- Natural Python project structure
-- Includes both server and client examples
-- Easy integration with Python ecosystem
+### ✅ **Immediate Working System**
+- Copy and run - everything works immediately
+- Modern Python packaging with pyproject.toml
+- Real makefile commands that actually work
 
-### Perfect for Learning
-- All patterns visible in one place
-- Easy to trace execution flow
-- Complete working example
+### ✅ **Python Ecosystem Integration**
+- Full access to Python packages (NumPy, TensorFlow, etc.)
+- Modern async/await support
+- Rich data processing libraries
 
-## When to Use Single-Repository vs Multi-Repository Structure
+### ✅ **Optimized Deployment**
+- Nuitka compilation for performance
+- Single binary deployment
+- Cross-platform compatibility
 
-### Use Single-Repository Structure When:
-- Learning the HSU platform with Python
-- Building a single Python server implementation  
-- Rapid prototyping with Python
-- Small teams or individual development
-- Don't need multiple language implementations
+### ✅ **Development Friendly**
+- Fast iteration cycles
+- Interactive debugging
+- Comprehensive testing tools
 
-### Consider Multi-Repository Structure When:
-- Need both Go and Python implementations
-- Want to share common components across teams
-- Building production systems with multiple variants
-- Need independent versioning of implementations
+## 🔄 Migration Paths
 
-## Migration Path
+### To Multi-Language (Approach 2)
+```bash
+# Restructure to multi-language
+mkdir my-multi-service/
+mv my-python-service/* my-multi-service/python/
+# Add Go implementation
+# Update Makefile.config for multi-language
+```
 
-This single-repository structure can easily evolve:
+### To Multi-Repository (Approach 3)
+```bash
+# Extract shared components
+mkdir my-service-common/
+mv api/ my-service-common/
+# Create separate implementation repository
+```
 
-1. **Current**: Everything in one repository with submodules
-2. **Future**: Extract to multi-repository structure when needed
-3. **Package Migration**: Later migrate from submodules to Python packages
+## 📚 Next Steps
 
-## Next Steps
+### Advanced Python Topics
+- **[Python Best Practices](../guides/HSU_BEST_PRACTICES.md)** - Production Python patterns
+- **[Multi-Language Support](../guides/MULTI_LANGUAGE.md)** - Python + Go coordination
+- **[Performance Optimization](../guides/HSU_BEST_PRACTICES.md)** - Python-specific tuning
 
-- Study the [Protocol Buffer Definition Guide](../guides/HSU_PROTOCOL_BUFFERS.md) to understand gRPC contracts
-- Explore the [Multi-Repository Implementation Guides](INTEGRATED_HSU_MULTI_REPO_PYTHON_GUIDE.md) when you need multi-repository structure
-- Check [Best Practices](../guides/HSU_BEST_PRACTICES.md) for production deployment 
+### Production Considerations
+- **[Testing and Deployment](../guides/HSU_TESTING_DEPLOYMENT.md)** - Production deployment
+- **[Configuration Management](../deployment/CONFIGURATION.md)** - Environment management
+- **[Python Package Deployment](../deployment/PYTHON_PACKAGE_DEPLOYMENT_GUIDE.md)** - PyPI publishing
+
+### Related Approaches
+- **[Single-Repository Multi-Language](INTEGRATED_HSU_SINGLE_REPO_MULTI_LANG_GUIDE.md)** - Add Go support
+- **[Single-Repository Go](INTEGRATED_HSU_SINGLE_REPO_GO_GUIDE.md)** - Go implementation
+- **[Multi-Repository Python](INTEGRATED_HSU_MULTI_REPO_PYTHON_GUIDE.md)** - Independent Python services
+
+---
+
+**🎉 You now have a production-ready Python HSU service!**
+
+*This approach provides a solid foundation for Python development with the HSU Platform, leveraging the rich Python ecosystem and universal build system.* 

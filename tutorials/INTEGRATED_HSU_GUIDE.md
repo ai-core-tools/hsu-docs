@@ -92,7 +92,7 @@ Choose your implementation approach based on your needs:
 ### Implementation Steps
 
 #### Step 1: Understand the Architecture
-**📋 Essential reading:** [HSU Repository Structure](HSU_REPOSITORY_STRUCTURE.md)
+**📋 Essential reading:** [Repository Framework Overview](../repositories/framework-overview.md)
 
 Learn about:
 - Common domain repositories vs server implementation repositories
@@ -103,7 +103,7 @@ Learn about:
 **Time to complete:** ~15 minutes
 
 #### Step 2: Setup Protocol Buffers
-**📋 Complete setup:** [Protocol Buffer Definition Guide](HSU_PROTOCOL_BUFFERS.md)
+**📋 Complete setup:** [Protocol Buffer Definition Guide](../guides/HSU_PROTOCOL_BUFFERS.md)
 
 Setup includes:
 - gRPC service definitions
@@ -143,7 +143,7 @@ Follow both implementation guides to create servers in both languages sharing th
 **Time to complete:** ~2-3 hours
 
 #### Step 4: Testing and Deployment
-**📋 Best practices:** [Testing and Deployment Guide](HSU_TESTING_DEPLOYMENT.md)
+**📋 Best practices:** [Testing and Deployment Guide](../guides/HSU_TESTING_DEPLOYMENT.md)
 
 Covers:
 - Cross-language testing strategies
@@ -154,7 +154,7 @@ Covers:
 **Time to complete:** ~30 minutes
 
 #### Step 5: Follow Best Practices
-**📋 Platform conventions:** [HSU Best Practices](HSU_BEST_PRACTICES.md)
+**📋 Platform conventions:** [HSU Best Practices](../guides/HSU_BEST_PRACTICES.md)
 
 Learn:
 - Error handling patterns
@@ -193,17 +193,17 @@ The HSU platform supports this evolution without breaking existing functionality
 
 Once you've created your HSU implementation, explore these topics:
 
-- **[Working with gRPC Services](GRPC_SERVICES.md)** - Advanced gRPC patterns
-- **[Multi-Language Support](MULTI_LANGUAGE.md)** - Language-specific considerations  
-- **[Process Management](PROCESS_MANAGEMENT.md)** - Managing HSU processes
-- **[Creating HSU Masters](HSU_MASTER_GUIDE.md)** - Building master processes
+- **[Working with gRPC Services](../reference/GRPC_SERVICES.md)** - Advanced gRPC patterns
+- **[Multi-Language Support](../guides/MULTI_LANGUAGE.md)** - Language-specific considerations  
+- **[Process Management](../guides/PROCESS_MANAGEMENT.md)** - Managing HSU processes
+- **[Creating HSU Masters](../guides/HSU_MASTER_GUIDE.md)** - Building master processes
 
 ## 🆘 Getting Help
 
 - **Single-Repository Implementation Issues**: Check the troubleshooting sections in the single-repository implementation guides
-- **Multi-Repository Implementation Issues**: Review the [Best Practices troubleshooting](HSU_BEST_PRACTICES.md#troubleshooting)
+- **Multi-Repository Implementation Issues**: Review the [Best Practices troubleshooting](../guides/HSU_BEST_PRACTICES.md#troubleshooting)
 - **Architecture Questions**: Study the reference implementation in `hsu-example3-common/`
-- **Platform Concepts**: Consult the [Developer Guide](DEVELOPER_GUIDE.md)
+- **Platform Concepts**: Consult the [Developer Guide](../guides/DEVELOPER_GUIDE.md)
 
 ## 🎯 Recommended Learning Sequence
 
@@ -214,11 +214,11 @@ Once you've created your HSU implementation, explore these topics:
 4. Study the reference implementation patterns
 
 ### For Production Development
-1. Read **[Repository Structure](HSU_REPOSITORY_STRUCTURE.md)** first
-2. Setup **[Protocol Buffers](HSU_PROTOCOL_BUFFERS.md)**
+1. Read **[Repository Framework Overview](../repositories/framework-overview.md)** first
+2. Setup **[Protocol Buffers](../guides/HSU_PROTOCOL_BUFFERS.md)**
 3. Implement your chosen language(s)
-4. Follow **[Testing and Deployment](HSU_TESTING_DEPLOYMENT.md)**
-5. Apply **[Best Practices](HSU_BEST_PRACTICES.md)**
+4. Follow **[Testing and Deployment](../guides/HSU_TESTING_DEPLOYMENT.md)**
+5. Apply **[Best Practices](../guides/HSU_BEST_PRACTICES.md)**
 
 ---
 

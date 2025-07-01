@@ -124,4 +124,4 @@ Recommended extensions:
 
 - [Creating an HSU Master Process](HSU_MASTER_GUIDE.md)
 - [Creating an Integrated HSU](INTEGRATED_HSU_GUIDE.md)
-- [Working with gRPC Services](GRPC_SERVICES.md) 
+- [Working with gRPC Services](../reference/GRPC_SERVICES.md) 

@@ -121,12 +121,12 @@ We need more real-world examples! Here's how you can contribute:
 
 ## See Also
 
-- [Creating an HSU Master Process](HSU_MASTER_GUIDE.md)
-- [Creating an Integrated HSU](INTEGRATED_HSU_GUIDE.md)
+- [Creating an HSU Master Process](../guides/HSU_MASTER_GUIDE.md)
+- [Creating an Integrated HSU](../tutorials/INTEGRATED_HSU_GUIDE.md)
 - [Working with gRPC Services](GRPC_SERVICES.md)
-- [Configuration Guide](CONFIGURATION.md) (planned)
-- [Testing and Debugging](TESTING_DEBUGGING.md) (planned)
+- [Configuration Guide](../deployment/CONFIGURATION.md) (planned)
+- [Testing and Debugging](../guides/TESTING_DEBUGGING.md) (planned)
 
 ## Contributing
 
-See [ROADMAP.md](ROADMAP.md) for details on how this examples collection fits into the broader platform development plan. 
+See [ROADMAP.md](../analysis/ROADMAP.md) for details on how this examples collection fits into the broader platform development plan. 

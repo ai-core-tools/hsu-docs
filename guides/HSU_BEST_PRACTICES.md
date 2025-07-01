@@ -542,7 +542,7 @@ git commit -m "Upgrade hsu_echo to v1.3.0"
 
 ## Next Steps
 
-- [Repository Structure](HSU_REPOSITORY_STRUCTURE.md) - Understand the organization
-- [Go Implementation Guide](INTEGRATED_HSU_MULTI_REPO_GO_GUIDE.md) - Build Go servers
-- [Python Implementation Guide](INTEGRATED_HSU_MULTI_REPO_PYTHON_GUIDE.md) - Build Python servers
+- [Repository Framework](../repositories/framework-overview.md) - Understand the organization
+- [Go Implementation Guide](../tutorials/INTEGRATED_HSU_MULTI_REPO_GO_GUIDE.md) - Build Go servers
+- [Python Implementation Guide](../tutorials/INTEGRATED_HSU_MULTI_REPO_PYTHON_GUIDE.md) - Build Python servers
 - [Testing and Deployment](HSU_TESTING_DEPLOYMENT.md) - Deploy your servers 

@@ -45,7 +45,7 @@ Before implementing the Go server, you need to define your gRPC service contract
 - Setting up code generation scripts
 - Generating Go gRPC code
 
-**📋 Complete Setup Guide:** [Protocol Buffer Definition Guide](HSU_PROTOCOL_BUFFERS.md)
+**📋 Complete Setup Guide:** [Protocol Buffer Definition Guide](../guides/HSU_PROTOCOL_BUFFERS.md)
 
 The Protocol Buffer guide covers:
 - Service and message definitions
@@ -400,5 +400,5 @@ Convert between gRPC types and domain types in the control layer, keeping domain
 ## Next Steps
 
 - [Python Implementation Guide](INTEGRATED_HSU_MULTI_REPO_PYTHON_GUIDE.md) - Create Python servers
-- [Testing and Deployment](HSU_TESTING_DEPLOYMENT.md) - Test and deploy your servers
-- [Best Practices](HSU_BEST_PRACTICES.md) - Follow platform conventions 
+- [Testing and Deployment](../guides/HSU_TESTING_DEPLOYMENT.md) - Test and deploy your servers
+- [Best Practices](../guides/HSU_BEST_PRACTICES.md) - Follow platform conventions 

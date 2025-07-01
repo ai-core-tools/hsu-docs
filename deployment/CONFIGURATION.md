@@ -37,8 +37,8 @@ The HSU platform currently supports basic configuration through:
 - Hardcoded server options (port numbers, timeouts)
 
 For working examples, see:
-- [Creating an HSU Master Process](HSU_MASTER_GUIDE.md) - Basic flag handling
-- [Creating an Integrated HSU](INTEGRATED_HSU_GUIDE.md) - Server configuration
+- [Creating an HSU Master Process](../guides/HSU_MASTER_GUIDE.md) - Basic flag handling
+- [Creating an Integrated HSU](../tutorials/INTEGRATED_HSU_GUIDE.md) - Server configuration
 
 ## Contributing
 
@@ -49,10 +49,10 @@ This guide needs to be written! If you're interested in contributing:
 3. Create examples and documentation
 4. Submit a pull request
 
-See [ROADMAP.md](ROADMAP.md) for more details on planned documentation work.
+See [ROADMAP.md](../analysis/ROADMAP.md) for more details on planned documentation work.
 
 ## See Also
 
-- [Development Setup](DEVELOPMENT_SETUP.md)
-- [API Reference](API_REFERENCE.md)
-- [Examples and Patterns](EXAMPLES.md) (planned) 
+- [Development Setup](../guides/DEVELOPMENT_SETUP.md)
+- [API Reference](../reference/API_REFERENCE.md)
+- [Examples and Patterns](../reference/EXAMPLES.md) (planned) 

@@ -301,5 +301,5 @@ func TestBusinessHandler_ProcessData(t *testing.T) {
 ## Next Steps
 
 - [API Reference](API_REFERENCE.md) - Complete API documentation
-- [Testing and Debugging](TESTING_DEBUGGING.md) - Advanced testing strategies
-- [Multi-Language Support](MULTI_LANGUAGE.md) - Cross-language implementations 
+- [Testing and Debugging](../guides/TESTING_DEBUGGING.md) - Advanced testing strategies
+- [Multi-Language Support](../guides/MULTI_LANGUAGE.md) - Cross-language implementations 

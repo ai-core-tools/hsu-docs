@@ -370,5 +370,5 @@ The import structure will remain similar, making migration straightforward.
 ## Next Steps
 
 - [Go Implementation Guide](INTEGRATED_HSU_MULTI_REPO_GO_GUIDE.md) - Create Go servers
-- [Testing and Deployment](HSU_TESTING_DEPLOYMENT.md) - Test and deploy your servers
-- [Best Practices](HSU_BEST_PRACTICES.md) - Follow platform conventions 
+- [Testing and Deployment](../guides/HSU_TESTING_DEPLOYMENT.md) - Test and deploy your servers
+- [Best Practices](../guides/HSU_BEST_PRACTICES.md) - Follow platform conventions 

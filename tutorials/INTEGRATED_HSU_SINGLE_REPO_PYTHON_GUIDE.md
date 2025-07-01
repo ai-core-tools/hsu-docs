@@ -462,6 +462,6 @@ This single-repository structure can easily evolve:
 
 ## Next Steps
 
-- Study the [Protocol Buffer Definition Guide](HSU_PROTOCOL_BUFFERS.md) to understand gRPC contracts
+- Study the [Protocol Buffer Definition Guide](../guides/HSU_PROTOCOL_BUFFERS.md) to understand gRPC contracts
 - Explore the [Multi-Repository Implementation Guides](INTEGRATED_HSU_MULTI_REPO_PYTHON_GUIDE.md) when you need multi-repository structure
-- Check [Best Practices](HSU_BEST_PRACTICES.md) for production deployment 
+- Check [Best Practices](../guides/HSU_BEST_PRACTICES.md) for production deployment 

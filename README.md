@@ -8,7 +8,7 @@ Unlike Kubernetes, which separates orchestration into dedicated services (API se
 
 ## Problem
 
-Kubernetes revolutionized container orchestration but while enabling horizontal scaling of orchestration components it creates significant resource overhead and imposes strict packaging requirements that limit deployment flexibility in resource-constrained environments such as:
+**Kubernetes** revolutionized container orchestration but while enabling horizontal scaling of orchestration components it creates significant resource overhead and imposes strict packaging requirements that limit deployment flexibility in resource-constrained environments such as:
 
 - **Edge computing environments** with limited resources and intermittent connectivity
 - **On-premises deployments** requiring native process control and legacy system integration
@@ -16,24 +16,28 @@ Kubernetes revolutionized container orchestration but while enabling horizontal 
 - **Embedded systems** where containers are impractical or impossible
 - **Development environments** requiring lightweight orchestration of diverse tooling
 
+Other orchestration systems such as **Nomad**, **systemd**, **Docker Compose** and some others provide more lightweight services orchestration but still require additional dependencies and resources, such as RAM and CPU for orchestration service itself or containers runtime on Windows and MacOS
+
 ## Solution
 
-The HSU framework provides Kubernetes-like orchestration for native applications, offering the following functionality with minimal hardware resources overhead:
+The HSU framework provides Kubernetes-grade service orchestration capabilities that are **built-in right into one of the service processes** in the system (so-called master process), offering the following functionality with near to zero hardware resources overhead:
 
-- **Automated deployment and scaling** locally or across distributed nodes
-- **Service discovery and configuration management** for native processes
-- **Health monitoring and self-healing** without container dependencies
-- **Multi-language gRPC APIs** for deep services integration and type-safe communication
-- **Resource-efficient operation** optimized for constrained environments
+- **Native Process Control** in Windows, Linux and macOS without containers runtime overhead
+- **Automated deployment and scaling** including installation, update, on-demand wakeup and on-idle shutdown
+- **Service discovery and configuration management** for native processes and network services
+- **Health monitoring** including memory and CPU usage tracking using OS-native APIs
 
-## Key Differentiators
+The main difference between *external* orchestration systems (e.g. Kubernetes, Nomad, Docker Compose) and HSU is represented on this diagram:
 
-- **Integrated Orchestration Layer**: HSU integrates orchestration directly into the *master* service or process
-- **Native Process Control**: Direct OS-level process management without container overhead
-- **Edge-Optimized**: Designed for resource-constrained and offline-ready environments
-- **Hybrid Integration**: Seamlessly manages existing processes alongside new deployments
-- **Multi-Language Support**: gRPC-based APIs enable implementation in any language
-- **Lightweight Architecture**: Single binary master process with minimal resource footprint
+![HSU vs Kubernetes, Nomad and Docker Compose](./img/hsu-vs-k8s.drawio.svg)
+
+Since orchestration is built directly into the system processes, HSU provides not just a set of orchestration libraries but rather a complete development framework with an ability to define and implement service business APIs:
+- **client libraries** - that allow to orchestrate and communicate with other services, currently for **Go-lang** only, but with **Rust** in backlog
+- **server libraries** - allowing to implement base control or service specific APIs in **Go**, **Python**, with upcoming **Rust** and **C++** support
+- **API protocol defintion** - for those services who want to implement their own business API (currently gRPC with plans to support HTTP)
+- **build system assistents** - allowing to compile server code into binaries, including Python code-to-binary compilation with help of **Nuitka**
+- **code examples** - comprehensive documentation and examples
+- **code repository layout guides** - consistent repository layouts and conventions, making it straightforward to generate client/server libraries across languages while maintaining a cohesive system architecture
 
 ## Core Architecture
 

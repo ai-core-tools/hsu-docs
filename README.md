@@ -11,10 +11,10 @@ Welcome to the comprehensive documentation for the HSU Platform - a cutting-edge
 
 ## 📚 Documentation Sections
 
-### 🏗️ Core Framework Documentation
-
-#### Architecture & Product Vision
+### 🎯 Product Vision and Architecture
 - [**Product Overview & Architecture**](architecture/index.md) - Product concept, value proposition, and system design
+
+### 🏗️ Core Framework Documentation
 
 #### Repository Architecture
 Choose the approach that fits your team structure:

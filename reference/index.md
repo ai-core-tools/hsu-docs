@@ -4,18 +4,17 @@ Technical specifications, APIs, and reference materials for the HSU Platform.
 
 ## ?? API & Technical Specs
 
-- [**API Reference**](API_REFERENCE.md) - Complete API documentation
-- [**gRPC Services**](GRPC_SERVICES.md) - Service definitions and protocols
-- [**Repository Portability Framework**](HSU_REPO_PORTABILITY_FRAMEWORK.md) - Technical specification
+- [**API Reference**](api_reference.md) - Complete API documentation
+- [**gRPC Services**](grpc_services.md) - Service definitions and protocols
+- [**Repository Portability Framework**](repo_portability_framework.md) - Technical specification
 
 ## ?? Examples & Patterns
 
-- [**Examples Collection**](EXAMPLES.md) - Code examples and snippets
+- [**Examples Collection**](examples.md) - Code examples and snippets
 
 ## ?? Implementation Guidance
 
 ### Getting Started
-- [**5-Minute Quick Start**](../QUICK_START.md) - Fast setup guide
 - [**Step-by-Step Tutorials**](../tutorials/index.md) - Implementation walkthroughs
 
 ### Architecture & Design

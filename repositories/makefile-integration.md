@@ -255,7 +255,7 @@ go mod tidy            # All Go projects
 1. **Set Up Project**: Follow [approach guides](three-approaches.md) for detailed setup
 2. **Master Commands**: See [command reference](../makefile_guide/commands.md)
 3. **Configure Advanced**: Review [configuration guide](../makefile_guide/configuration.md)
-4. **Deploy Team-Wide**: Use [master rollout](../makefile_guide/master-rollout.md)
+4. **Deploy Team-Wide**: Use [git submodule deployment](../makefile_guide/master-rollout.md)
 
 ---
 

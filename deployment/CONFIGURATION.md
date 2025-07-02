@@ -54,5 +54,5 @@ See [ROADMAP.md](../analysis/ROADMAP.md) for more details on planned documentati
 ## See Also
 
 - [Development Setup](../guides/DEVELOPMENT_SETUP.md)
-- [API Reference](../reference/API_REFERENCE.md)
-- [Examples and Patterns](../reference/EXAMPLES.md) (planned) 
+- [API Reference](../reference/api_reference.md)
+- [Examples and Patterns](../reference/examples.md) (planned) 

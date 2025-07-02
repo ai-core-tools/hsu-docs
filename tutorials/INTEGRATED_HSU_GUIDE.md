@@ -374,14 +374,14 @@ make generate               # Regenerate all code
 ## 📚 Next Steps
 
 ### Explore Advanced Topics
-- **[Working with gRPC Services](../reference/GRPC_SERVICES.md)** - Advanced gRPC patterns
+- **[Working with gRPC Services](../reference/grpc_services.md)** - Advanced gRPC patterns
 - **[Multi-Language Support](../guides/MULTI_LANGUAGE.md)** - Go + Python coordination  
 - **[Process Management](../guides/PROCESS_MANAGEMENT.md)** - Managing HSU processes
 - **[Creating HSU Masters](../guides/HSU_MASTER_GUIDE.md)** - Building master processes
 
 ### Production Deployment
-- **[Configuration Management](../deployment/CONFIGURATION.md)** - Environment configuration
-- **[Python Package Deployment](../deployment/PYTHON_PACKAGE_DEPLOYMENT_GUIDE.md)** - PyPI publishing
+- **[Configuration Management](../deployment/configuration.md)** - Environment configuration
+- **[Python Package Deployment](../deployment/python_package_deployment_guide.md)** - PyPI publishing
 - **[Docker Integration](../makefile_guide/examples.md)** - Container deployment
 
 ### Community and Contribution

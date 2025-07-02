@@ -390,7 +390,7 @@ mv api/ my-service-common/
 
 ### Production Considerations
 - **[Testing and Deployment](../guides/HSU_TESTING_DEPLOYMENT.md)** - Production deployment
-- **[Configuration Management](../deployment/CONFIGURATION.md)** - Environment management
+- **[Configuration Management](../deployment/configuration.md)** - Environment management
 - **[Performance Optimization](../guides/HSU_BEST_PRACTICES.md)** - Language-specific tuning
 
 ### Related Approaches

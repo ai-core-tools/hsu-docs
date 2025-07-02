@@ -2,9 +2,9 @@
 
 **Date**: December 28, 2024  
 **Context**: Assessment of proposed revolutionary repository structure for HSU platform  
-**Status**: **SUPERSEDED** - See [HSU_REPO_PORTABILITY_FRAMEWORK.md](../reference/HSU_REPO_PORTABILITY_FRAMEWORK.md) for evolved framework
+**Status**: **SUPERSEDED** - See [repo_portability_framework.md](../reference/repo_portability_framework.md) for evolved framework
 
-> **UPDATE**: This initial assessment led to the development of a more mature and practical framework. The key insight - that repo-portability comes from logical boundaries, not folder structure - led to the comprehensive 3-approach framework documented in HSU_REPO_PORTABILITY_FRAMEWORK.md.
+> **UPDATE**: This initial assessment led to the development of a more mature and practical framework. The key insight - that repo-portability comes from logical boundaries, not folder structure - led to the comprehensive 3-approach framework documented in repo_portability_framework.md.
 
 ## Executive Summary
 
@@ -161,7 +161,7 @@ hsu-{domain}/
 ```
 
 **Pros**: Familiar within languages, unified domain, **ACHIEVES full repo-portability**
-**Cons**: ~~Doesn't achieve "repo-portable" goal~~ **CORRECTION: This assessment was wrong - see [HSU_REPO_PORTABILITY_FRAMEWORK.md](../reference/HSU_REPO_PORTABILITY_FRAMEWORK.md)**
+**Cons**: ~~Doesn't achieve "repo-portable" goal~~ **CORRECTION: This assessment was wrong - see [repo_portability_framework.md](../reference/repo_portability_framework.md)**
 
 #### **Option C: Your Proposal + Tool Adaptation**
 Implement your proposal but invest heavily in:

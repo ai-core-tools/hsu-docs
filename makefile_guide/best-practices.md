@@ -309,14 +309,14 @@ custom-target: go-build-srv
 
 ## 📦 **Deployment Best Practices**
 
-### **1. Master → Replica Deployment**
-✅ **DO**: Use true file replication for deployments
+### **1. Git Submodule Deployment**
+✅ **DO**: Use git submodule for clean deployments
 ```bash
-# Deploy from master location
-cp docs/make/HSU_MAKEFILE_*.mk project/make/
+# Deploy HSU makefile system as submodule
+git submodule add https://github.com/Core-Tools/make.git make
 
-# Or copy from any project (files are identical)
-cp existing-project/make/HSU_MAKEFILE_*.mk new-project/make/
+# Initialize and update submodule
+git submodule update --init --recursive
 ```
 
 ✅ **DO**: Verify deployment after copying
@@ -334,23 +334,34 @@ sed -i 's/old/new/' make/HSU_MAKEFILE_*.mk
 ```
 
 ### **2. Version Control Integration**
-✅ **DO**: Version control project configuration, not system files
+✅ **DO**: Commit submodule references and project configuration
 ```bash
 # Commit these files
 git add Makefile
 git add Makefile.config
 git add nuitka_excludes.txt
+git add .gitmodules      # Submodule configuration
+git add make             # Submodule reference (not contents)
 
-# Don't commit system files (they're replicas)
-echo "make/HSU_MAKEFILE_*.mk" >> .gitignore
+# Git automatically handles submodule contents
 ```
 
-✅ **DO**: Document system file versions in your project
+✅ **DO**: Pin to specific HSU versions for stability
+```bash
+# Pin to specific version for production
+cd make
+git checkout v1.2.0
+cd ..
+git add make
+git commit -m "Pin HSU makefile system to v1.2.0"
+```
+
+✅ **DO**: Document system version in your project
 ```make
 # Makefile.config
-# HSU Universal Makefile System v1.1.0
-# Last updated: 2024-12-29
-# Source: docs/make/
+# HSU Universal Makefile System
+# Repository: https://github.com/Core-Tools/make
+# Version: Tracked via git submodule
 
 PROJECT_NAME := my-project
 PROJECT_DOMAIN := example

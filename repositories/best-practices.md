@@ -111,13 +111,15 @@ cmd/ (Go) or srv/ (Python)     # Executable implementations
 # 1-3 developers: Approach 1
 mkdir hsu-{domain}-{lang}
 cd hsu-{domain}-{lang}
-cp -r ../hsu-core/docs/make/ .
+git submodule add https://github.com/Core-Tools/make.git make
+git submodule update --init --recursive
 
 # 3-8 developers: Approach 2  
 mkdir hsu-{domain}
 cd hsu-{domain}
 mkdir go python api
-cp -r ../hsu-core/docs/make/ .
+git submodule add https://github.com/Core-Tools/make.git make
+git submodule update --init --recursive
 
 # 8+ developers: Approach 3
 mkdir hsu-{domain}-common hsu-{domain}-srv-go hsu-{domain}-srv-py
@@ -134,9 +136,9 @@ HSU_APPROACH = 1|2|3
 
 **3. Set Up Build System:**
 ```bash
-# Install HSU makefile system
-make install-hsu-makefiles     # If available
-# Or copy manually from docs/make/
+# Add HSU makefile system as git submodule
+git submodule add https://github.com/Core-Tools/make.git make
+git submodule update --init --recursive
 
 # Verify setup
 make validate-setup

@@ -26,7 +26,6 @@ Choose the tutorial that matches your selected approach:
 Not sure which approach is right for you? Check out:
 
 - [**Repository Approach Comparison**](../repositories/three-approaches.md) - Detailed comparison with decision matrix
-- [**5-Minute Quick Start**](../QUICK_START.md) - Fast overview of all options
 - [**Migration Patterns**](../repositories/migration-patterns.md) - Moving between approaches
 
 ## 📚 Related Documentation

@@ -26,7 +26,6 @@ These analyses inform the practical documentation:
 - [**Best Practices**](../guides/HSU_BEST_PRACTICES.md) - Standards and conventions
 
 ### Getting Started
-- [**5-Minute Quick Start**](../QUICK_START.md) - Immediate implementation
 - [**Step-by-Step Tutorials**](../tutorials/index.md) - Detailed walkthroughs
 
 ---

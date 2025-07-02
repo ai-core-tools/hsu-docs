@@ -380,8 +380,8 @@ mv api/ my-service-common/
 
 ### Production Considerations
 - **[Testing and Deployment](../guides/HSU_TESTING_DEPLOYMENT.md)** - Production deployment
-- **[Configuration Management](../deployment/CONFIGURATION.md)** - Environment management
-- **[Python Package Deployment](../deployment/PYTHON_PACKAGE_DEPLOYMENT_GUIDE.md)** - PyPI publishing
+- **[Configuration Management](../deployment/configuration.md)** - Environment management
+- **[Python Package Deployment](../deployment/python_package_deployment_guide.md)** - PyPI publishing
 
 ### Related Approaches
 - **[Single-Repository Multi-Language](INTEGRATED_HSU_SINGLE_REPO_MULTI_LANG_GUIDE.md)** - Add Go support

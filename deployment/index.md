@@ -4,8 +4,8 @@ Production deployment and operational guides for the HSU Platform.
 
 ## 🚀 Configuration & Setup
 
-- [**Configuration Management**](CONFIGURATION.md) - Environment configuration and settings
-- [**Python Package Deployment**](PYTHON_PACKAGE_DEPLOYMENT_GUIDE.md) - PyPI publishing and distribution
+- [**Configuration Management**](configuration.md) - Environment configuration and settings
+- [**Python Package Deployment**](python_package_deployment_guide.md) - PyPI publishing and distribution
 
 ## 🔗 Related Documentation
 
@@ -24,8 +24,7 @@ Production deployment and operational guides for the HSU Platform.
 
 ## 🎯 Quick Access
 
-- [**5-Minute Quick Start**](../QUICK_START.md) - Get up and running fast
-- [**Examples Collection**](../reference/EXAMPLES.md) - Code patterns and snippets
+- [**Examples Collection**](../reference/examples.md) - Code patterns and snippets
 
 ---
 

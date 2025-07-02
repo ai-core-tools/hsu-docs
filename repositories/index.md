@@ -87,6 +87,31 @@ hsu-example3-srv-py/      # Python server implementation
 └── srv/                  # Server implementation only
 ```
 
+## Quick Setup
+
+### Adding HSU Makefile System
+All repository approaches use the same setup process:
+
+```bash
+# Navigate to your project root
+cd your-project/
+
+# Add HSU makefile system as git submodule
+git submodule add https://github.com/Core-Tools/make.git make
+git submodule update --init --recursive
+
+# Create project configuration
+# In Makefile.config:
+PROJECT_NAME := your-project
+PROJECT_DOMAIN := your-domain
+INCLUDE_PREFIX := make/
+GENERATED_PREFIX := generated/
+
+# Create minimal Makefile
+# In Makefile:
+include make/HSU_MAKEFILE_ROOT.mk
+```
+
 ## Integration with HSU Ecosystem
 
 ### Universal Makefile System

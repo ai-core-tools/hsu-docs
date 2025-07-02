@@ -123,8 +123,8 @@ We need more real-world examples! Here's how you can contribute:
 
 - [Creating an HSU Master Process](../guides/HSU_MASTER_GUIDE.md)
 - [Creating an Integrated HSU](../tutorials/INTEGRATED_HSU_GUIDE.md)
-- [Working with gRPC Services](GRPC_SERVICES.md)
-- [Configuration Guide](../deployment/CONFIGURATION.md) (planned)
+- [Working with gRPC Services](grpc_services.md)
+- [Configuration Guide](../deployment/configuration.md) (planned)
 - [Testing and Debugging](../guides/TESTING_DEBUGGING.md) (planned)
 
 ## Contributing

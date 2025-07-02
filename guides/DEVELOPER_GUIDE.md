@@ -12,12 +12,12 @@ This guide helps developers create HSU master processes and integrated HSU units
 - [Creating an HSU Master Process](HSU_MASTER_GUIDE.md) - Step-by-step guide for building master processes
 - [**Complete HSU Implementation Guide**](../tutorials/INTEGRATED_HSU_GUIDE.md) - **Comprehensive guide covering all 3 approaches with working examples**
 - [HSU Tutorial Index](../tutorials/index.md) - Navigation hub for approach-specific tutorials
-- [Working with gRPC Services](../reference/GRPC_SERVICES.md) - Defining and implementing gRPC interfaces
+- [Working with gRPC Services](../reference/grpc_services.md) - Defining and implementing gRPC interfaces
 
 ### Reference Documentation
-- [Platform API Reference](../reference/API_REFERENCE.md) - Complete API documentation
-- [Configuration Guide](../deployment/CONFIGURATION.md) - Configuration management and best practices
-- [Examples and Patterns](../reference/EXAMPLES.md) - Code examples and common patterns
+- [Platform API Reference](../reference/api_reference.md) - Complete API documentation
+- [Configuration Guide](../deployment/configuration.md) - Configuration management and best practices
+- [Examples and Patterns](../reference/examples.md) - Code examples and common patterns
 
 ### Advanced Topics
 - [Multi-Language Support](MULTI_LANGUAGE.md) - Implementing HSUs in different languages
@@ -111,8 +111,8 @@ The platform includes several working examples organized by repository approach:
 
 ## Need Help?
 
-- Check the [Examples and Patterns](../reference/EXAMPLES.md) for common implementation patterns
+- Check the [Examples and Patterns](../reference/examples.md) for common implementation patterns
 - Review the working examples in the repository
-- For advanced scenarios, see the [API Reference](../reference/API_REFERENCE.md)
+- For advanced scenarios, see the [API Reference](../reference/api_reference.md)
 
 The HSU platform is designed to grow with your needs - start simple and add complexity as your requirements evolve. 

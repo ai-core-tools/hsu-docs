@@ -336,6 +336,6 @@ See [ROADMAP.md](../analysis/ROADMAP.md) for testing and debugging development p
 ## See Also
 
 - [Development Setup](DEVELOPMENT_SETUP.md) - Setting up testing environment
-- [Working with gRPC Services](../reference/GRPC_SERVICES.md) - gRPC testing patterns
+- [Working with gRPC Services](../reference/grpc_services.md) - gRPC testing patterns
 - [Process Management](PROCESS_MANAGEMENT.md) (planned) - Process testing strategies
-- [API Reference](../reference/API_REFERENCE.md) - Testing API documentation 
+- [API Reference](../reference/api_reference.md) - Testing API documentation 

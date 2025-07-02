@@ -401,7 +401,7 @@ mv api/ my-service-common/
 
 ### Production Considerations
 - **[Testing and Deployment](../guides/HSU_TESTING_DEPLOYMENT.md)** - Production deployment
-- **[Configuration Management](../deployment/CONFIGURATION.md)** - Environment management
+- **[Configuration Management](../deployment/configuration.md)** - Environment management
 - **[Monitoring and Observability](../guides/HSU_BEST_PRACTICES.md)** - Production monitoring
 
 ### Related Approaches

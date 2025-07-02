@@ -16,19 +16,34 @@ Get up and running with the HSU Universal Makefile System in minutes.
 - **Nuitka**: For Python binary compilation (`pip install nuitka`)
 - **protoc**: For protocol buffer generation
 
-## 📦 **Step 1: Deploy the System**
+## 📦 **Step 1: Add the HSU Makefile System**
 
-Copy the HSU system files from the master location to your project:
+Add the HSU Universal Makefile System to your project as a git submodule:
 
 ```bash
-# Copy all HSU system files from docs/make/
-cp docs/make/HSU_MAKEFILE_*.mk project/make/
+# Navigate to your project root
+cd your-project/
 
-# Files deployed:
+# Add the HSU makefile system as a submodule
+git submodule add https://github.com/Core-Tools/make.git make
+
+# Initialize and update the submodule
+git submodule update --init --recursive
+
+# Files available in make/:
 # HSU_MAKEFILE_ROOT.mk      - Main coordinator
-# HSU_MAKEFILE_CONFIG.mk    - Template with extensive defaults
+# HSU_MAKE_CONFIG_TMPL.mk   - Configuration template with extensive defaults
 # HSU_MAKEFILE_GO.mk        - Go-specific operations
 # HSU_MAKEFILE_PYTHON.mk    - Python-specific operations + Nuitka support
+```
+
+**Alternative (Direct Download)**:
+```bash
+# For projects that cannot use git submodules
+mkdir make
+curl -L https://github.com/Core-Tools/make/archive/main.zip -o make.zip
+unzip make.zip -d make --strip-components=1
+rm make.zip
 ```
 
 ## ⚙️ **Step 2: Create Project Makefile**
@@ -51,8 +66,10 @@ Create `Makefile.config` in your project root with minimal settings:
 PROJECT_NAME := my-hsu-project
 PROJECT_DOMAIN := my-domain
 INCLUDE_PREFIX := make/
+GENERATED_PREFIX := generated/
 
 # Everything else is auto-detected with intelligent defaults!
+# See make/HSU_MAKE_CONFIG_TMPL.mk for all available options
 ```
 
 ### **Optional: Language-Specific Configuration**
@@ -126,8 +143,11 @@ my-hsu-project-go/
 │   ├── cli/mycli/main.go   # ← Auto-detected: CLI targets
 │   └── srv/mysrv/main.go   # ← Auto-detected: Server targets
 ├── pkg/                     # ← Auto-detected: Library components
-└── make/
-    └── HSU_MAKEFILE_*.mk   # ← System files (replicas)
+└── make/ (git submodule)    # ← HSU makefile system submodule
+    ├── HSU_MAKEFILE_ROOT.mk
+    ├── HSU_MAKE_CONFIG_TMPL.mk
+    ├── HSU_MAKEFILE_GO.mk
+    └── HSU_MAKEFILE_PYTHON.mk
 ```
 
 **Auto-Detection Result**: `REPO_TYPE=single-language-go`, `GO_DIR=.`
@@ -142,8 +162,11 @@ my-hsu-project-py/
 ├── srv/run_server.py        # ← Auto-detected: Server targets
 ├── cli/run_client.py        # ← Auto-detected: CLI targets
 ├── lib/                     # ← Auto-detected: Library components
-└── make/
-    └── HSU_MAKEFILE_*.mk   # ← System files (replicas)
+└── make/ (git submodule)    # ← HSU makefile system submodule
+    ├── HSU_MAKEFILE_ROOT.mk
+    ├── HSU_MAKE_CONFIG_TMPL.mk
+    ├── HSU_MAKEFILE_GO.mk
+    └── HSU_MAKEFILE_PYTHON.mk
 ```
 
 **Auto-Detection Result**: `REPO_TYPE=single-language-python`, `PYTHON_DIR=.`
@@ -160,8 +183,11 @@ my-hsu-project/
 ├── python/                  # ← Auto-detected: Python components
 │   ├── pyproject.toml
 │   └── srv/run_server.py
-└── make/
-    └── HSU_MAKEFILE_*.mk   # ← System files (replicas)
+└── make/ (git submodule)    # ← HSU makefile system submodule
+    ├── HSU_MAKEFILE_ROOT.mk
+    ├── HSU_MAKE_CONFIG_TMPL.mk
+    ├── HSU_MAKEFILE_GO.mk
+    └── HSU_MAKEFILE_PYTHON.mk
 ```
 
 **Auto-Detection Result**: `REPO_TYPE=multi-language`, `GO_DIR=go`, `PYTHON_DIR=python`
@@ -211,6 +237,26 @@ make info
 # SRV_TARGETS: cmd/srv/mysrv
 ```
 
+## 🔄 **Updating the System**
+
+Keep your HSU makefile system up to date:
+
+```bash
+# Update to latest version
+git submodule update --remote
+
+# Commit the update
+git add make
+git commit -m "Update HSU makefile system to latest version"
+
+# Alternative: Update and reset to specific version
+cd make
+git checkout v1.2.0  # or specific commit/tag
+cd ..
+git add make
+git commit -m "Update HSU makefile system to v1.2.0"
+```
+
 ## 🚨 **Common Issues**
 
 ### **"No rule to make target 'go-build'"**
@@ -218,12 +264,12 @@ make info
 - **Solution**: Check `make info` output, ensure `go.mod` exists
 
 ### **"include HSU_MAKEFILE_*.mk: No such file or directory"**
-- **Cause**: System files not deployed or wrong `INCLUDE_PREFIX`
-- **Solution**: Verify files copied to correct location, check `INCLUDE_PREFIX` in `Makefile.config`
+- **Cause**: Git submodule not initialized or wrong `INCLUDE_PREFIX`
+- **Solution**: Run `git submodule update --init --recursive`, check `INCLUDE_PREFIX` in `Makefile.config`
 
-### **Windows: "No CLI targets found"**
-- **Cause**: Windows-MSYS path detection issues
-- **Solution**: Fixed in v1.1.0 - update system files from `docs/make/`
+### **"fatal: not a git repository" during submodule add**
+- **Cause**: Project is not a git repository
+- **Solution**: Run `git init` first, or use the direct download alternative
 
 ## 📚 **Next Steps**
 

@@ -445,8 +445,8 @@ cp -r my-service-py/ my-service-ml-py/
 
 ### Production Considerations
 - **[Testing and Deployment](../guides/HSU_TESTING_DEPLOYMENT.md)** - Multi-service testing
-- **[Python Package Deployment](../deployment/PYTHON_PACKAGE_DEPLOYMENT_GUIDE.md)** - PyPI publishing
-- **[Configuration Management](../deployment/CONFIGURATION.md)** - Service configuration
+- **[Python Package Deployment](../deployment/python_package_deployment_guide.md)** - PyPI publishing
+- **[Configuration Management](../deployment/configuration.md)** - Service configuration
 
 ### Related Approaches
 - **[Multi-Repository Go](INTEGRATED_HSU_MULTI_REPO_GO_GUIDE.md)** - Go services

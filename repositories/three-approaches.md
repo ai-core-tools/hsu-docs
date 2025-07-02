@@ -45,7 +45,7 @@ hsu-{domain}-{lang}/
 │   └── cli/                    # Client implementations (optional)
 │       └── {domain}grpccli/
 │           └── main.go
-├── make/                       # HSU makefile system files
+├── make/ (git submodule)       # HSU makefile system from https://github.com/Core-Tools/make
 └── README.md
 ```
 
@@ -65,7 +65,7 @@ hsu-{domain}-py/
 │   └── run_server.py
 ├── cli/                        # Client implementations (optional)
 │   └── run_client.py
-├── make/                       # HSU makefile system files
+├── make/ (git submodule)       # HSU makefile system from https://github.com/Core-Tools/make
 └── README.md
 ```
 
@@ -123,7 +123,7 @@ hsu-{domain}/
 │   │   └── run_server.py
 │   └── cli/                    # Repo-portable Python clients
 │       └── run_client.py
-├── make/                       # HSU makefile system files
+├── make/ (git submodule)       # HSU makefile system from https://github.com/Core-Tools/make
 └── README.md
 ```
 
@@ -186,7 +186,7 @@ hsu-{domain}-common/
 │   │   └── generated/api/proto/
 │   └── cli/                    # Shared Python executables
 │       └── run_client.py       # Test clients
-├── make/                       # HSU makefile system files
+├── make/ (git submodule)       # HSU makefile system from https://github.com/Core-Tools/make
 └── README.md
 ```
 
@@ -205,7 +205,7 @@ hsu-{domain}-{variant}-srv-go/
 │       │   └── {variant}_handler.go  # Business logic
 │       └── {domain}grpcsrv/
 │           └── main.go              # Entry point
-├── make/                       # HSU makefile system files
+├── make/ (git submodule)       # HSU makefile system from https://github.com/Core-Tools/make
 └── README.md
 ```
 
@@ -219,7 +219,7 @@ hsu-{domain}-{variant}-srv-py/
 │   ├── domain/
 │   │   └── {variant}_handler.py     # Business logic
 │   └── run_server.py                # Entry point
-├── make/                       # HSU makefile system files
+├── make/ (git submodule)       # HSU makefile system from https://github.com/Core-Tools/make
 └── README.md
 ```
 

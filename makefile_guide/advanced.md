@@ -15,10 +15,11 @@ cp Makefile Makefile.backup
 cp -r build/ build.backup/  # If you have a build directory
 ```
 
-#### **Step 2: Deploy HSU System Files**
+#### **Step 2: Add HSU System via Git Submodule**
 ```bash
-# Deploy HSU system files
-cp docs/make/HSU_MAKEFILE_*.mk project/make/
+# Add HSU makefile system as submodule
+git submodule add https://github.com/Core-Tools/make.git make
+git submodule update --init --recursive
 ```
 
 #### **Step 3: Replace Makefile**
@@ -128,7 +129,7 @@ To add support for a new language (e.g., Rust):
 
 #### **Step 1: Create Language-Specific File**
 ```make
-# docs/make/HSU_MAKEFILE_RUST.mk
+# HSU_MAKEFILE_RUST.mk (would be added to canonical repository)
 # Rust-specific targets and operations
 
 ifdef ENABLE_RUST
@@ -187,7 +188,7 @@ endif
 
 #### **Step 3: Add Configuration Options**
 ```make
-# In HSU_MAKEFILE_CONFIG.mk, add Rust defaults
+# In HSU_MAKE_CONFIG_TMPL.mk, add Rust defaults
 # Rust Configuration
 RUST_BUILD_FLAGS ?= --release
 RUST_TEST_FLAGS ?= --

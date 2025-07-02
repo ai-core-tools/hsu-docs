@@ -639,7 +639,7 @@ func main() {
 ## Next Steps
 
 - [Creating an Integrated HSU](INTEGRATED_HSU_GUIDE.md) - Learn how to create HSUs that your master can manage
-- [Working with gRPC Services](../reference/GRPC_SERVICES.md) - Advanced gRPC patterns and best practices
+- [Working with gRPC Services](../reference/grpc_services.md) - Advanced gRPC patterns and best practices
 - [Process Management](PROCESS_MANAGEMENT.md) - Advanced process lifecycle management techniques
 
 ## Troubleshooting

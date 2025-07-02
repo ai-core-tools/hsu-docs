@@ -4,7 +4,7 @@
 **Status**: Framework Implementation Complete  
 **Context**: Mature architecture framework with comprehensive documentation suite
 
-> **📋 Notice**: This document has been restructured into a comprehensive guide suite at [docs/repositories/](repositories/index.md) for better organization and maintainability. This document serves as the high-level framework overview.
+> **📋 Notice**: This document has been restructured into a comprehensive guide suite at [docs/repositories/](../repositories/index.md) for better organization and maintainability. This document serves as the high-level framework overview.
 
 ## Executive Summary
 
@@ -31,7 +31,7 @@ The HSU framework provides **three distinct approaches** that can be mixed, matc
 hsu-{domain}-go/
 ├── Makefile                    # HSU Universal Makefile integration
 ├── Makefile.config             # Project configuration
-├── make/                       # HSU makefile system files
+├── make/ (git submodule)       # HSU makefile system from https://github.com/Core-Tools/make
 ├── go.mod                      # replace github.com/org/hsu-{domain} => .
 ├── api/                        # 🔵 Mandatory - API definitions
 │   └── proto/
@@ -54,7 +54,7 @@ hsu-{domain}-go/
 hsu-{domain}-py/
 ├── Makefile                    # HSU Universal Makefile integration
 ├── Makefile.config             # Project configuration
-├── make/                       # HSU makefile system files
+├── make/ (git submodule)       # HSU makefile system from https://github.com/Core-Tools/make
 ├── pyproject.toml              # Modern Python packaging
 ├── api/                        # 🔵 Mandatory - API definitions
 │   └── proto/
@@ -87,7 +87,7 @@ make proto-gen          # Generate gRPC code
 hsu-{domain}/
 ├── Makefile                    # Cross-language build automation
 ├── Makefile.config             # Multi-language configuration
-├── make/                       # HSU makefile system files
+├── make/ (git submodule)       # HSU makefile system from https://github.com/Core-Tools/make
 ├── api/                        # 🔵 Mandatory - Language-independent APIs
 │   └── proto/
 ├── go/                         # 🔵 Mandatory - Go language boundary
@@ -133,7 +133,7 @@ make proto-gen          # Generate for all languages
 hsu-{domain}-common/
 ├── Makefile                    # Shared component builds
 ├── Makefile.config             # Common configuration
-├── make/                       # HSU makefile system files
+├── make/ (git submodule)       # HSU makefile system from https://github.com/Core-Tools/make
 ├── api/                        # 🔵 Mandatory - Shared API definitions
 │   └── proto/
 ├── go/                         # Go shared components
@@ -160,7 +160,7 @@ hsu-{domain}-common/
 hsu-{domain}-{variant}-srv-go/
 ├── Makefile                    # Server-specific builds
 ├── Makefile.config             # Implementation configuration
-├── make/                       # HSU makefile system files
+├── make/ (git submodule)       # HSU makefile system from https://github.com/Core-Tools/make
 ├── go.mod                      # require github.com/org/hsu-{domain}-common
 ├── cmd/                        # 🔵 Mandatory - Server executables
 │   └── srv/
@@ -174,7 +174,7 @@ hsu-{domain}-{variant}-srv-go/
 hsu-{domain}-{variant}-srv-py/
 ├── Makefile                    # Server-specific builds
 ├── Makefile.config             # Implementation configuration
-├── make/                       # HSU makefile system files
+├── make/ (git submodule)       # HSU makefile system from https://github.com/Core-Tools/make
 ├── pyproject.toml              # dependencies = ["hsu-{domain}-common[python]"]
 ├── srv/                        # 🔵 Mandatory - Server implementation
 │   ├── domain/{variant}_handler.py     # Business logic
@@ -224,7 +224,25 @@ import "github.com/org/hsu-{domain}/pkg/control"
 
 ## HSU Universal Makefile System Integration
 
-All three approaches integrate seamlessly with the **[HSU Universal Makefile System](makefile_guide/index.md)**:
+All three approaches integrate seamlessly with the **[HSU Universal Makefile System](../makefile_guide/index.md)**:
+
+### Setup Process
+```bash
+# Add HSU makefile system to your project
+git submodule add https://github.com/Core-Tools/make.git make
+git submodule update --init --recursive
+
+# Create project configuration
+# In Makefile.config:
+PROJECT_NAME := hsu-{domain}
+PROJECT_DOMAIN := {domain}
+INCLUDE_PREFIX := make/
+GENERATED_PREFIX := generated/
+
+# Create minimal Makefile
+# In Makefile:
+include make/HSU_MAKEFILE_ROOT.mk
+```
 
 ### Automatic Detection
 - **Language Detection**: Go/Python project detection
@@ -288,7 +306,7 @@ Scale:  hsu-example3-* (Approach 3 - multi-repo)
 ## Framework Maturity
 
 ### Production Ready
-- ✅ **Complete Documentation**: [Comprehensive guide suite](repositories/index.md)
+- ✅ **Complete Documentation**: [Comprehensive guide suite](../repositories/index.md)
 - ✅ **Working Examples**: All claims validated with real code
 - ✅ **Build System Integration**: HSU Universal Makefile System
 - ✅ **Migration Tooling**: Automated transitions between approaches
@@ -349,4 +367,4 @@ The HSU Repository Portability Framework has evolved from concept to **productio
 
 ---
 
-**📋 For detailed implementation guidance, see the [comprehensive repository documentation suite](repositories/index.md).** 
+**📋 For detailed implementation guidance, see the [comprehensive repository documentation suite](../repositories/index.md).** 

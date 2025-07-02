@@ -21,10 +21,10 @@ The **HSU Universal Makefile System** provides a standardized, cross-platform bu
 - **Configuration-Driven**: Include paths and project settings via minimal configuration files
 
 ### **🔄 Deployment Architecture**
-- **Master → Replica Architecture**: Clean deployment with true file replication from `docs/make/`
-- **Compact Master Packaging**: All system files organized in single `docs/make/` folder
-- **Simple Rollout**: Direct folder copy (`cp docs/make/* project/make/`)
-- **Zero File Modifications**: True replication without changes during deployment
+- **Git Submodule Architecture**: Clean deployment via canonical repository reference
+- **Canonical Repository**: All system files maintained at [github.com/Core-Tools/make](https://github.com/Core-Tools/make)
+- **Simple Rollout**: Single command deployment (`git submodule add https://github.com/Core-Tools/make.git make`)
+- **Automatic Updates**: Version-controlled updates via `git submodule update --remote`
 
 ### **🚀 Build System Features**
 - **Comprehensive**: Covers build, test, lint, format, clean, and development workflows

@@ -18,8 +18,9 @@ ls make/HSU_MAKEFILE_*.mk
 # 2. Check INCLUDE_PREFIX in Makefile.config
 cat Makefile.config | grep INCLUDE_PREFIX
 
-# 3. Deploy system files if missing
-cp docs/make/HSU_MAKEFILE_*.mk make/
+# 3. Add/update system files if missing
+git submodule add https://github.com/Core-Tools/make.git make
+git submodule update --init --recursive
 
 # 4. Correct INCLUDE_PREFIX if wrong
 # In Makefile.config:
@@ -106,8 +107,8 @@ pip --version
 
 **Solutions**:
 ```bash
-# 1. Update system files to v1.1.0+
-cp docs/make/HSU_MAKEFILE_*.mk make/
+# 1. Update system files to latest version
+git submodule update --remote
 
 # 2. Check detection manually
 make info
@@ -362,8 +363,8 @@ Unblock-File make\HSU_MAKEFILE_*.mk
 
 **Solutions**:
 ```bash
-# 1. Update to HSU v1.1.0+ (fixed)
-cp docs/make/HSU_MAKEFILE_*.mk make/
+# 1. Update to latest HSU version (includes fixes)
+git submodule update --remote
 
 # 2. Check shell detection
 make info
@@ -475,10 +476,10 @@ rm -rf .venv __pycache__ *.egg-info
 go clean -cache -modcache  # Go
 pip cache purge           # Python
 
-# 4. Redeploy system files
+# 4. Reinitialize system files
 rm -rf make/
-mkdir make/
-cp docs/make/HSU_MAKEFILE_*.mk make/
+git submodule add https://github.com/Core-Tools/make.git make
+git submodule update --init --recursive
 
 # 5. Test basic functionality
 make help

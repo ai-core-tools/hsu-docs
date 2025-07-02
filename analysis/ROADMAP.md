@@ -9,8 +9,8 @@ This document captures recommended next steps and ideas for the long-term develo
 1. **✅ Review and validate** the guides with existing codebase
 2. **✅ Test the examples** to ensure they work with current implementation  
 3. **✅ Add placeholder guides** for referenced documentation:
-   - `CONFIGURATION.md` - Configuration management and best practices
-   - `EXAMPLES.md` - Code examples and common patterns
+   - `configuration.md` - Configuration management and best practices
+   - `examples.md` - Code examples and common patterns
    - `MULTI_LANGUAGE.md` - Implementing HSUs in different languages
    - `PROCESS_MANAGEMENT.md` - Advanced process lifecycle control
    - `TESTING_DEBUGGING.md` - Testing strategies and debugging techniques

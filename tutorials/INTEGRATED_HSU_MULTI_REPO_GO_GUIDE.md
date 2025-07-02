@@ -463,7 +463,7 @@ cp -r my-service-go/ my-service-advanced-go/
 
 ### Production Considerations
 - **[Testing and Deployment](../guides/HSU_TESTING_DEPLOYMENT.md)** - Multi-service testing
-- **[Configuration Management](../deployment/CONFIGURATION.md)** - Service configuration
+- **[Configuration Management](../deployment/configuration.md)** - Service configuration
 - **[Performance Optimization](../guides/HSU_BEST_PRACTICES.md)** - Go-specific tuning
 
 ### Related Approaches

@@ -331,4 +331,4 @@ cd api/proto && protoc --version
 - **[Approach 2: Multi-Language](../tutorials/INTEGRATED_HSU_SINGLE_REPO_MULTI_LANG_GUIDE.md)** - Coordinate Go and Python
 - **[Approach 3: Multi-Repository](../tutorials/INTEGRATED_HSU_MULTI_REPO_GO_GUIDE.md)** - Independent microservices
 - **[Universal Makefile Guide](../makefile_guide/index.md)** - Master the build system
-- **[gRPC Services Documentation](../reference/GRPC_SERVICES.md)** - Advanced gRPC patterns
+- **[gRPC Services Documentation](../reference/grpc_services.md)** - Advanced gRPC patterns

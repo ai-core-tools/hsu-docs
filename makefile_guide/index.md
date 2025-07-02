@@ -2,7 +2,15 @@
 
 **Version**: 1.1.0  
 **Date**: December 29, 2024  
-**Context**: Canonical build system for HSU Repository Portability Framework
+**Context**: Canonical build system for HSU Repository Portability Framework  
+**Repository**: https://github.com/Core-Tools/make
+
+## 🏛️ **Canonical Repository**
+
+The HSU Universal Makefile System is published as a standalone repository:
+- **Repository**: [https://github.com/Core-Tools/make](https://github.com/Core-Tools/make)
+- **Distribution**: Git submodule (recommended) or direct download
+- **Updates**: `git submodule update --remote`
 
 ## 📚 **Documentation Structure**
 
@@ -27,6 +35,7 @@ This documentation is organized into focused guides for different aspects of the
 
 | **I want to...** | **Go to...** |
 |-------------------|--------------|
+| Get the makefile system | [https://github.com/Core-Tools/make](https://github.com/Core-Tools/make) |
 | Get started quickly | [Quick Start Guide](quick-start.md) |
 | Understand the architecture | [Master Rollout Architecture](master-rollout.md) |
 | Configure my project | [Configuration Options](configuration.md) |
@@ -36,7 +45,7 @@ This documentation is organized into focused guides for different aspects of the
 | Troubleshoot issues | [Troubleshooting](troubleshooting.md) |
 | Migrate existing project | [Advanced Usage](advanced.md) |
 
-For comprehensive information about repository layouts and approaches, see the [HSU Repository Portability Framework Guide](../HSU_REPO_PORTABILITY_FRAMEWORK.md).
+For comprehensive information about repository layouts and approaches, see the [HSU Repository Portability Framework Guide](../repo_portability_framework.md).
 
 ## 🎯 **Core Benefits**
 

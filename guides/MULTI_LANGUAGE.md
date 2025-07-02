@@ -232,10 +232,10 @@ impl ExampleService for ExampleServiceImpl {
 
 ## See Also
 
-- [Working with gRPC Services](../reference/GRPC_SERVICES.md)
-- [API Reference](../reference/API_REFERENCE.md)
+- [Working with gRPC Services](../reference/grpc_services.md)
+- [API Reference](../reference/api_reference.md)
 - [Development Setup](DEVELOPMENT_SETUP.md)
-- [Examples and Patterns](../reference/EXAMPLES.md) (planned)
+- [Examples and Patterns](../reference/examples.md) (planned)
 
 ## Contributing
 

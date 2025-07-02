@@ -38,7 +38,7 @@ This guide will cover advanced process lifecycle control and management techniqu
 
 The HSU platform currently provides basic process management through:
 
-### Core Process Control (`hsu-core/go/process`)
+### Core Process Control (`hsu-core/go/pkg/process`)
 - **Automatic Restart**: Failed processes are automatically restarted
 - **Output Capture**: stdout/stderr redirection and logging
 - **Cross-Platform**: Windows, Linux, macOS support

@@ -10,7 +10,8 @@ This guide helps developers create HSU master processes and integrated HSU units
 
 ### Implementation Guides
 - [Creating an HSU Master Process](HSU_MASTER_GUIDE.md) - Step-by-step guide for building master processes
-- [Creating an Integrated HSU](../tutorials/INTEGRATED_HSU_GUIDE.md) - Step-by-step guide for building HSU units
+- [**Complete HSU Implementation Guide**](../tutorials/INTEGRATED_HSU_GUIDE.md) - **Comprehensive guide covering all 3 approaches with working examples**
+- [HSU Tutorial Index](../tutorials/index.md) - Navigation hub for approach-specific tutorials
 - [Working with gRPC Services](../reference/GRPC_SERVICES.md) - Defining and implementing gRPC interfaces
 
 ### Reference Documentation
@@ -85,14 +86,22 @@ The HSU platform currently supports:
 
 ## Example Applications
 
-The platform includes several working examples:
+The platform includes several working examples organized by repository approach:
 
+**Core Framework:**
 - **hsu-core** - Core platform libraries for Go and Python
-- **hsu-example3-common** - Echo service demonstrating gRPC integration
-- **hsu-example1-go** - Single-repository Go implementation
-- **hsu-example1-py** - Single-repository Python implementation  
-- **hsu-example3-srv-go** - Go server implementing integrated HSU pattern
-- **hsu-example3-srv-py** - Python server demonstrating cross-language support
+
+**Approach 1: Single-Repository + Single-Language**
+- **hsu-example1-go** - Pure Go implementation with full gRPC stack
+- **hsu-example1-py** - Pure Python implementation with gRPC services
+
+**Approach 2: Single-Repository + Multi-Language**
+- **hsu-example2** - Go and Python services in one repository with shared protocols
+
+**Approach 3: Multi-Repository Architecture**
+- **hsu-example3-common** - Shared protocols and client libraries
+- **hsu-example3-srv-go** - Go microservice implementation
+- **hsu-example3-srv-py** - Python microservice implementation
 
 ## Next Steps
 

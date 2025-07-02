@@ -76,7 +76,7 @@ This guide will cover implementing HSUs in different programming languages and e
 - **Testing**: Unit and integration test support
 
 ### Python Support 🚧
-- **Core Libraries**: `hsu-core/py/` with basic functionality
+- **Core Libraries**: `hsu-core/python/` with basic functionality
 - **Examples**: Echo service implementation
 - **Binary Packaging**: Nuitka integration for standalone executables
 - **Limitations**: Limited compared to Go implementation

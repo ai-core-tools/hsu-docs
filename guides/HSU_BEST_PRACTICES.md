@@ -24,46 +24,42 @@ Keep distinct layers separate:
 
 ### Go Development
 
-#### Use Replace Directives for Local Development
-
-```bash
-# In server implementation repository
-go mod edit -replace github.com/core-tools/hsu-example3-common=../hsu-example3-common
-go mod tidy
-
-# Remove when ready for production
-go mod edit -dropreplace github.com/core-tools/hsu-example2
-go mod tidy
-```
-
 #### Version Management
 
+**Production Dependencies:**
 ```go
 // Use specific versions in production
 require (
-    github.com/core-tools/hsu-example3-common v1.2.3
+    github.com/core-tools/hsu-core v1.2.3
+    google.golang.org/grpc v1.64.0
 )
+```
 
-// Use development versions with replace
-replace github.com/core-tools/hsu-example3-common => ../hsu-example3-common
+**Development Dependencies:**
+```go
+// For local development, the repo-portability framework 
+// automatically handles module resolution via replace directives
+// See: docs/repositories/portability-mechanics.md
 ```
 
 ### Python Development
 
-#### Submodule Management
+#### Modern Package Management
 
-```bash
-# Initial setup
-git submodule add https://github.com/core-tools/hsu-core.git hsu_core
-git submodule add https://github.com/core-tools/hsu-example3-common.git hsu_echo
+**Use pyproject.toml for all Python projects:**
+```toml
+[project]
+name = "my-hsu-service"
+version = "1.0.0"
+dependencies = [
+    "grpcio>=1.64.0",
+    "grpcio-tools>=1.64.0",
+    "protobuf>=5.27.0"
+]
 
-# Regular updates
-git submodule update --init --recursive
-git submodule foreach git pull origin main
-
-# Commit submodule updates
-git add hsu_echo hsu_core
-git commit -m "Update submodules to latest versions"
+[project.optional-dependencies]
+dev = ["pytest", "black", "flake8"]
+build = ["nuitka"]
 ```
 
 #### Requirements Management
@@ -80,6 +76,8 @@ pytest==7.4.0
 black==23.0.0
 flake8==6.0.0
 ```
+
+**Important**: Avoid editable installs (`pip install -e .`) when using Nuitka compilation. Use standard installation for production builds.
 
 ## Error Handling
 
@@ -119,13 +117,13 @@ func (h *grpcServerHandler) Echo(ctx context.Context, req *proto.EchoRequest) (*
 ```python
 def Echo(self, request, context):
     try:
-        # Validate input
+        // Validate input
         if not request.message:
             context.set_code(grpc.StatusCode.INVALID_ARGUMENT)
             context.set_details("message cannot be empty")
             return None
 
-        # Call domain handler
+        // Call domain handler
         response = self.handler.Echo(request.message)
         return echoservice_pb2.EchoResponse(message=response)
         
@@ -166,12 +164,12 @@ h.logger.Errorf("Failed to process echo: %v, message: %s", err, req.Message)
 #### Python Logging
 
 ```python
-# Use proper logging instead of print
+// Use proper logging instead of print
 import logging
 
 logger = logging.getLogger(__name__)
 
-# Log levels
+// Log levels
 logger.info(f"Processing echo request, message_length={len(request.message)}")
 logger.debug(f"Echo response prepared: {response}")
 logger.warning(f"Slow response time: {duration} for message: {request.message}")
@@ -227,10 +225,10 @@ Organize tests by layer:
 ```
 tests/
 ├── unit/
-│   ├── domain/          # Pure domain logic tests
-│   └── handlers/        # Handler tests with mocks
-├── integration/         # End-to-end gRPC tests
-└── fixtures/           # Test data and utilities
+│   ├── domain/          // Pure domain logic tests
+│   └── handlers/        // Handler tests with mocks
+├── integration/         // End-to-end gRPC tests
+└── fixtures/           // Test data and utilities
 ```
 
 ### Mock Patterns
@@ -264,14 +262,14 @@ class TestGRPCHandler(unittest.TestCase):
         self.grpc_handler = GRPCServerHandler(self.mock_handler)
     
     def test_echo_success(self):
-        # Setup mock
+        // Setup mock
         self.mock_handler.Echo.return_value = "mocked response"
         
-        # Create request
+        // Create request
         request = echoservice_pb2.EchoRequest(message="test")
         context = Mock()
         
-        # Call and verify
+        // Call and verify
         response = self.grpc_handler.Echo(request, context)
         self.assertEqual(response.message, "mocked response")
         self.mock_handler.Echo.assert_called_once_with("test")
@@ -321,15 +319,15 @@ class Handler:
         self.executor = ThreadPoolExecutor(max_workers=4)
     
     def Echo(self, message: str) -> str:
-        # For CPU-intensive work, use thread pool
-        if len(message) > 1000:  # Large message
+        // For CPU-intensive work, use thread pool
+        if len(message) > 1000:  // Large message
             future = self.executor.submit(self._process_large_message, message)
             return future.result(timeout=30)
         
         return f"processed: {message}"
     
     def _process_large_message(self, message: str) -> str:
-        # CPU-intensive processing
+        // CPU-intensive processing
         return f"large-processed: {message}"
 ```
 
@@ -370,7 +368,7 @@ def validate_echo_request(request):
     if len(request.message) > 10000:
         raise ValueError("message too long")
     
-    # Check for malicious patterns
+    // Check for malicious patterns
     if "<?xml" in request.message:
         raise ValueError("XML not allowed")
 ```
@@ -459,39 +457,37 @@ class Handler:
 #### gRPC Connection Issues
 
 ```bash
-# Test connectivity
+// Test connectivity
 grpcurl -plaintext localhost:50055 list
 
-# Test specific service
+// Test specific service
 grpcurl -plaintext localhost:50055 proto.CoreService/Ping
 
-# Check service methods
+// Check service methods
 grpcurl -plaintext localhost:50055 describe proto.EchoService
-```
-
-#### Submodule Issues (Python)
-
-```bash
-# Reset submodules
-git submodule deinit --all
-git submodule update --init --recursive
-
-# Force update
-git submodule foreach --recursive git reset --hard
-git submodule foreach --recursive git clean -fd
 ```
 
 #### Import Path Issues (Go)
 
 ```bash
-# Clean module cache
+// Clean module cache
 go clean -modcache
 
-# Verify module paths
-go mod graph | grep hsu-example2
+// Verify module paths in current working examples
+cd hsu-example1-go && go mod graph | grep hsu-example
 
-# Check replace directives
-go mod edit -json | jq .Replace
+// Use makefile for consistent builds
+make clean && make setup && make build
+```
+
+#### Python Package Issues
+
+```bash
+// Use makefile for consistent Python setup
+make clean && make setup && make build
+
+// For Nuitka issues, avoid editable installs
+pip install . // instead of pip install -e .
 ```
 
 ### Debug Logging
@@ -499,50 +495,30 @@ go mod edit -json | jq .Replace
 Enable debug logging for troubleshooting:
 
 ```bash
-# Go debug logging
-GRPC_GO_LOG_VERBOSITY_LEVEL=99 GRPC_GO_LOG_SEVERITY_LEVEL=info ./bin/echogrpcsrv
+// Go debug logging
+GRPC_GO_LOG_VERBOSITY_LEVEL=99 GRPC_GO_LOG_SEVERITY_LEVEL=info make run-server
 
-# Python debug logging
-GRPC_VERBOSITY=DEBUG GRPC_TRACE=all python run_server.py
+// Python debug logging
+GRPC_VERBOSITY=DEBUG GRPC_TRACE=all make run-server
 ```
 
-## Migration Strategies
+## Universal Makefile Integration
 
-### From Submodules to Packages (Python)
-
-When the platform migrates to Python packages:
-
-```python
-# Current
-from hsu_echo.py.control.serve_echo import serve_echo
-
-# Future
-from hsu_echo.control import serve_echo
-```
-
-Prepare by:
-1. Using absolute imports where possible
-2. Avoiding deep path dependencies
-3. Testing with both import styles
-
-### Version Upgrades
+All HSU projects benefit from using the **[Universal Makefile System](../makefile_guide/index.md)**:
 
 ```bash
-# Go version upgrades
-go get -u github.com/core-tools/hsu-example3-common@v1.3.0
-go mod tidy
-
-# Python submodule upgrades
-cd hsu_echo
-git checkout v1.3.0
-cd ..
-git add hsu_echo
-git commit -m "Upgrade hsu_echo to v1.3.0"
+// Consistent commands across all repository approaches
+make setup          // Install dependencies
+make proto          // Generate gRPC code
+make build          // Build all components  
+make test           // Run tests
+make run-server     // Start development server
+make clean          // Clean build artifacts
 ```
 
 ## Next Steps
 
-- [Repository Framework](../repositories/framework-overview.md) - Understand the organization
-- [Go Implementation Guide](../tutorials/INTEGRATED_HSU_MULTI_REPO_GO_GUIDE.md) - Build Go servers
-- [Python Implementation Guide](../tutorials/INTEGRATED_HSU_MULTI_REPO_PYTHON_GUIDE.md) - Build Python servers
-- [Testing and Deployment](HSU_TESTING_DEPLOYMENT.md) - Deploy your servers 
+- **[Repository Framework](../repositories/framework-overview.md)** - Understand the organization
+- **[Complete Implementation Guide](../tutorials/INTEGRATED_HSU_GUIDE.md)** - Build your first HSU service
+- **[Testing and Deployment](HSU_TESTING_DEPLOYMENT.md)** - Deploy your servers
+- **[Universal Makefile System](../makefile_guide/index.md)** - Master the build system

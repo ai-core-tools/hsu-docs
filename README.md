@@ -35,12 +35,16 @@ Standardized build commands across all projects:
 
 ### 🎓 Step-by-Step Tutorials
 
-Hands-on guides for implementing HSU in different scenarios:
-- [**General HSU Implementation**](tutorials/INTEGRATED_HSU_GUIDE.md) - Foundation concepts
-- [**Single-Repository Go Implementation**](tutorials/INTEGRATED_HSU_SINGLE_REPO_GO_GUIDE.md)
-- [**Single-Repository Python Implementation**](tutorials/INTEGRATED_HSU_SINGLE_REPO_PYTHON_GUIDE.md)
-- [**Multi-Repository Go Implementation**](tutorials/INTEGRATED_HSU_MULTI_REPO_GO_GUIDE.md)
-- [**Multi-Repository Python Implementation**](tutorials/INTEGRATED_HSU_MULTI_REPO_PYTHON_GUIDE.md)
+Hands-on guides for implementing HSU with working examples:
+- [**🏆 Complete HSU Implementation Guide**](tutorials/INTEGRATED_HSU_GUIDE.md) - **Comprehensive guide covering all 3 approaches**
+- [**Tutorial Index**](tutorials/index.md) - Navigation hub for all specific implementation tutorials
+
+**Approach-Specific Tutorials:**
+- [**Approach 1: Go Implementation**](tutorials/INTEGRATED_HSU_SINGLE_REPO_GO_GUIDE.md) - Based on `hsu-example1-go`
+- [**Approach 1: Python Implementation**](tutorials/INTEGRATED_HSU_SINGLE_REPO_PYTHON_GUIDE.md) - Based on `hsu-example1-py`
+- [**Approach 2: Multi-Language Implementation**](tutorials/INTEGRATED_HSU_SINGLE_REPO_MULTI_LANG_GUIDE.md) - Based on `hsu-example2`
+- [**Approach 3: Go Microservice**](tutorials/INTEGRATED_HSU_MULTI_REPO_GO_GUIDE.md) - Based on `hsu-example3-srv-go`
+- [**Approach 3: Python Microservice**](tutorials/INTEGRATED_HSU_MULTI_REPO_PYTHON_GUIDE.md) - Based on `hsu-example3-srv-py`
 
 ### 📖 Developer Guides
 

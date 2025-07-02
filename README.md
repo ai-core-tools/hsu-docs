@@ -13,6 +13,9 @@ Welcome to the comprehensive documentation for the HSU Platform - a cutting-edge
 
 ### 🏗️ Core Framework Documentation
 
+#### Architecture & Product Vision
+- [**Product Overview & Architecture**](architecture/index.md) - Product concept, value proposition, and system design
+
 #### Repository Architecture
 Choose the approach that fits your team structure:
 - [**Repository Framework Overview**](repositories/index.md) - Start here for repository decisions

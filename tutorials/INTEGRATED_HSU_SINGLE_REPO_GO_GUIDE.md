@@ -28,9 +28,14 @@ This approach is perfect for:
 The fastest way to get started is to copy the proven working example:
 
 ```bash
-# Copy the working Go example
+# Copy the working Go example (without make system)
 cp -r hsu-example1-go/ my-go-service/
 cd my-go-service/
+rm -rf make/  # Remove make directory (will be added as submodule)
+
+# Add HSU makefile system as git submodule
+git init
+git submodule add https://github.com/core-tools/make.git make
 
 # Test that everything works immediately
 make setup && make build && make test
@@ -57,7 +62,12 @@ The working `hsu-example1-go` uses this proven structure:
 my-go-service/                       # Root directory
 ├── Makefile                         # Universal makefile entry point
 ├── Makefile.config                  # Project configuration
-├── make/                            # HSU Universal Makefile System
+├── make/                            # HSU Universal Makefile System (git submodule)
+│   ├── HSU_MAKEFILE_ROOT.mk         # Main makefile system
+│   ├── HSU_MAKEFILE_GO.mk           # Go-specific targets
+│   ├── HSU_MAKEFILE_PYTHON.mk       # Python-specific targets
+│   ├── HSU_MAKE_CONFIG_TMPL.mk      # Configuration template
+│   └── README.md                    # Makefile system documentation
 ├── api/
 │   └── proto/
 │       ├── echoservice.proto        # gRPC service definition
@@ -158,6 +168,11 @@ ENABLE_BENCHMARKS := yes
 # Copy and rename the working example
 cp -r hsu-example1-go/ my-go-service/
 cd my-go-service/
+rm -rf make/  # Remove make directory (will be added as submodule)
+
+# Initialize git and add HSU makefile system
+git init
+git submodule add https://github.com/core-tools/make.git make
 
 # Verify everything works out of the box
 make setup && make build && make test

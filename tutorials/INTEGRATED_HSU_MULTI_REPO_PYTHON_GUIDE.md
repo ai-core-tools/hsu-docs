@@ -31,17 +31,27 @@ This approach is perfect for:
 The fastest way to get started is to copy the proven working examples:
 
 ```bash
-# Copy the working common repository
+# Copy the working common repository (without make system)
 cp -r hsu-example3-common/ my-service-common/
 cd my-service-common/
+rm -rf make/  # Remove make directory (will be added as submodule)
+
+# Add HSU makefile system as git submodule
+git init
+git submodule add https://github.com/core-tools/make.git make
 
 # Test common repository works
 make setup && make build && make test
 
-# Copy the working Python service implementation
+# Copy the working Python service implementation (without make system)
 cd ..
 cp -r hsu-example3-srv-py/ my-service-py/
 cd my-service-py/
+rm -rf make/  # Remove make directory (will be added as submodule)
+
+# Add HSU makefile system as git submodule
+git init
+git submodule add https://github.com/core-tools/make.git make
 
 # Test Python service works
 make setup && make build && make test
@@ -64,26 +74,34 @@ The working examples use this proven multi-repository structure:
 my-service-common/                   # Shared components repository
 ├── Makefile                         # Universal makefile entry point
 ├── Makefile.config                  # Project configuration
-├── make/                            # HSU Universal Makefile System
+├── make/                            # HSU Universal Makefile System (git submodule)
+│   ├── HSU_MAKEFILE_ROOT.mk         # Main makefile system
+│   ├── HSU_MAKEFILE_GO.mk           # Go-specific targets
+│   ├── HSU_MAKEFILE_PYTHON.mk       # Python-specific targets
+│   ├── HSU_MAKE_CONFIG_TMPL.mk      # Configuration template
+│   └── README.md                    # Makefile system documentation
 ├── api/
 │   └── proto/
 │       ├── echoservice.proto        # Shared gRPC service definition
 │       ├── generate-go.sh           # Go code generation
 │       └── generate-py.sh           # Python code generation
-├── go/                              # Go bindings (optional)
-├── python/
-│   ├── pyproject.toml               # Python packaging
-│   ├── lib/
+├── go/
+│   ├── go.mod                       # Go module for common components
+│   ├── pkg/
 │   │   ├── control/
-│   │   │   ├── gateway.py           # Client gateway
-│   │   │   ├── handler.py           # gRPC ↔ domain adapter
-│   │   │   └── serve_echo.py        # Server setup helper
+│   │   │   ├── gateway.go           # Client gateway
+│   │   │   ├── handler.go           # gRPC ↔ domain adapter
+│   │   │   └── main_echo.go         # Server setup helper
 │   │   ├── domain/
-│   │   │   └── contract.py          # Domain ABC
-│   │   └── generated/
-│   │       └── api/proto/           # Generated gRPC code
-│   └── cli/
-│       └── run_client.py            # Shared test client
+│   │   │   └── contract.go          # Domain interface
+│   │   ├── generated/
+│   │   │   └── api/proto/           # Generated gRPC code
+│   │   └── logging/
+│   │       └── logging.go           # Logging interface
+│   └── cmd/
+│       └── cli/echogrpccli/
+│           └── main.go              # Shared test client
+├── python/                          # Python bindings (optional)
 └── README.md
 ```
 
@@ -92,14 +110,18 @@ my-service-common/                   # Shared components repository
 my-service-py/                       # Python service implementation
 ├── Makefile                         # Universal makefile entry point
 ├── Makefile.config                  # Service-specific configuration
-├── make/                            # HSU Universal Makefile System
+├── make/                            # HSU Universal Makefile System (git submodule)
+│   ├── HSU_MAKEFILE_ROOT.mk         # Main makefile system
+│   ├── HSU_MAKEFILE_GO.mk           # Go-specific targets
+│   ├── HSU_MAKEFILE_PYTHON.mk       # Python-specific targets
+│   ├── HSU_MAKE_CONFIG_TMPL.mk      # Configuration template
+│   └── README.md                    # Makefile system documentation
 ├── srv/
 │   ├── domain/
 │   │   └── simple_handler.py        # Service-specific business logic
 │   └── run_server.py                # Service entry point
-├── pyproject.toml                   # Service packaging
-├── requirements.txt                 # Service dependencies
-├── nuitka_excludes.txt              # Nuitka build configuration
+├── pyproject.toml                   # Python project configuration
+├── requirements.txt
 └── README.md
 ```
 
@@ -181,13 +203,18 @@ NUITKA_ENTRY_POINT := srv/run_server.py
 # Copy and customize common repository
 cp -r hsu-example3-common/ my-service-common/
 cd my-service-common/
+rm -rf make/  # Remove make directory (will be added as submodule)
+
+# Initialize git and add HSU makefile system
+git init
+git submodule add https://github.com/core-tools/make.git make
 
 # Update configuration
-edit Makefile.config  # Update PROJECT_NAME
+edit Makefile.config  # Update PROJECT_NAME, GO_MODULE_NAME
 
-# Update Python packaging
-cd python/
-edit pyproject.toml   # Update name, version
+# Update Go module
+cd go/
+go mod edit -module github.com/myorg/my-service-common
 
 # Test common components
 make setup && make build && make test
@@ -198,18 +225,20 @@ echo "✓ Common repository working!"
 
 ```bash
 # Copy and customize service repository
-cd ../..
+cd ..
 cp -r hsu-example3-srv-py/ my-service-py/
 cd my-service-py/
+rm -rf make/  # Remove make directory (will be added as submodule)
+
+# Initialize git and add HSU makefile system
+git init
+git submodule add https://github.com/core-tools/make.git make
 
 # Update configuration
-edit Makefile.config  # Update PROJECT_NAME, NUITKA_OUTPUT_NAME
+edit Makefile.config  # Update PROJECT_NAME, GO_MODULE_NAME
 
-# Update packaging
-edit pyproject.toml   # Update name, version
-
-# Setup dependency (development)
-# Add ../my-service-common to Python path or install in development mode
+# Update Python project settings
+edit pyproject.toml  # Update package name and dependencies
 
 # Test service
 make setup && make build && make test
@@ -433,6 +462,13 @@ mv my-single-service/srv/ my-service-py/
 ```bash
 # Create additional service repositories
 cp -r my-service-py/ my-service-ml-py/
+cd my-service-ml-py/
+
+# Reinitialize git submodule (copying converts submodule to regular directory)
+rm -rf make/
+git init
+git submodule add https://github.com/core-tools/make.git make
+
 # Customize for ML workloads while keeping same common dependency
 ```
 

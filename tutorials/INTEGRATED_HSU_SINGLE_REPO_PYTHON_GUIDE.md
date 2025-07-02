@@ -29,9 +29,14 @@ This approach is perfect for:
 The fastest way to get started is to copy the proven working example:
 
 ```bash
-# Copy the working Python example
+# Copy the working Python example (without make system)
 cp -r hsu-example1-py/ my-python-service/
 cd my-python-service/
+rm -rf make/  # Remove make directory (will be added as submodule)
+
+# Add HSU makefile system as git submodule
+git init
+git submodule add https://github.com/core-tools/make.git make
 
 # Test that everything works immediately
 make setup && make build && make test
@@ -58,7 +63,12 @@ The working `hsu-example1-py` uses this proven structure:
 my-python-service/                   # Root directory
 ├── Makefile                         # Universal makefile entry point
 ├── Makefile.config                  # Project configuration
-├── make/                            # HSU Universal Makefile System
+├── make/                            # HSU Universal Makefile System (git submodule)
+│   ├── HSU_MAKEFILE_ROOT.mk         # Main makefile system
+│   ├── HSU_MAKEFILE_GO.mk           # Go-specific targets
+│   ├── HSU_MAKEFILE_PYTHON.mk       # Python-specific targets
+│   ├── HSU_MAKE_CONFIG_TMPL.mk      # Configuration template
+│   └── README.md                    # Makefile system documentation
 ├── api/
 │   └── proto/
 │       ├── echoservice.proto        # gRPC service definition
@@ -70,19 +80,16 @@ my-python-service/                   # Root directory
 │   │   ├── handler.py               # gRPC ↔ domain adapter
 │   │   └── serve_echo.py            # Server setup helper
 │   ├── domain/
-│   │   ├── contract.py              # Domain ABC
+│   │   ├── contract.py              # Domain interface
 │   │   └── simple_handler.py        # Business logic implementation
 │   └── generated/
 │       └── api/proto/               # Generated gRPC code
 ├── cli/
 │   └── run_client.py                # Test client
 ├── srv/
-│   ├── domain/
-│   │   └── simple_handler.py        # Server business logic
 │   └── run_server.py                # Server entry point
-├── pyproject.toml                   # Modern Python packaging
-├── requirements.txt                 # Python dependencies
-├── nuitka_excludes.txt              # Nuitka build configuration
+├── pyproject.toml
+├── requirements.txt
 └── README.md
 ```
 
@@ -155,6 +162,11 @@ NUITKA_BUILD_MODE := onefile
 # Copy and rename the working example
 cp -r hsu-example1-py/ my-python-service/
 cd my-python-service/
+rm -rf make/  # Remove make directory (will be added as submodule)
+
+# Initialize git and add HSU makefile system
+git init
+git submodule add https://github.com/core-tools/make.git make
 
 # Verify everything works out of the box
 make setup && make build && make test

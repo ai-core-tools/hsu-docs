@@ -2,6 +2,8 @@
 
 Hands-on guides for implementing HSU in different scenarios. Start with the comprehensive guide to understand all approaches, then dive into specific implementation tutorials.
 
+> **🔧 Modern Architecture**: All HSU tutorials now use git submodules for the [HSU makefile system](https://github.com/core-tools/make), providing better version control, easier updates, and cleaner project structure.
+
 ## 🎯 Start Here
 
 - [**🏆 Complete HSU Implementation Guide**](INTEGRATED_HSU_GUIDE.md) - **Comprehensive guide covering all 3 approaches with working examples**

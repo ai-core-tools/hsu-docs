@@ -83,6 +83,8 @@ make package            # Create distribution
 
 All HSU projects use the **same build commands** regardless of approach:
 
+> **🔧 Modern Architecture**: The HSU makefile system is now distributed via git submodules from the [canonical repository](https://github.com/core-tools/make). This provides better version control, easier updates, and cleaner project structure.
+
 ### 🔧 Core Development Commands
 ```bash
 make setup              # Install dependencies (Go modules, pip packages)
@@ -197,17 +199,33 @@ make --version      # GNU Make or compatible
 
 #### 2.1 Copy Working Example
 ```bash
-# For Approach 1
+# For Approach 1 (copy without make system, then add submodule)
 cp -r hsu-example1-go/ my-project/
 cd my-project/
+rm -rf make/  # Remove make directory (will be added as submodule)
+git init
+git submodule add https://github.com/core-tools/make.git make
 
-# For Approach 2  
+# For Approach 2 (copy without make system, then add submodule)
 cp -r hsu-example2/ my-project/
 cd my-project/
+rm -rf make/  # Remove make directory (will be added as submodule)
+git init
+git submodule add https://github.com/core-tools/make.git make
 
-# For Approach 3
+# For Approach 3 (copy each repository without make system, then add submodules)
 cp -r hsu-example3-common/ my-project-common/
+cd my-project-common/
+rm -rf make/  # Remove make directory (will be added as submodule)
+git init
+git submodule add https://github.com/core-tools/make.git make
+
+cd ..
 cp -r hsu-example3-srv-go/ my-project-srv-go/
+cd my-project-srv-go/
+rm -rf make/  # Remove make directory (will be added as submodule)
+git init
+git submodule add https://github.com/core-tools/make.git make
 ```
 
 #### 2.2 Update Project Configuration

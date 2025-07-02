@@ -29,29 +29,29 @@ This approach is ideal for:
 The fastest way to get started is to copy the proven working example:
 
 ```bash
-# Copy the working multi-language example
+# Copy the working multi-language example (without make system)
 cp -r hsu-example2/ my-multi-service/
 cd my-multi-service/
+rm -rf make/  # Remove make directory (will be added as submodule)
+
+# Add HSU makefile system as git submodule
+git init
+git submodule add https://github.com/core-tools/make.git make
 
 # Test that everything works immediately
 make setup && make build && make test
 
 # Start both servers
-# Terminal 1: Go server
-make go-run-server &
-
-# Terminal 2: Python server
-make py-run-server &
-
-# Test both implementations
-make run-client
+make go-run-server    # Terminal 1: Go server
+make py-run-server    # Terminal 2: Python server
+make run-client       # Terminal 3: Test both
 ```
 
 **Expected output:**
 ```
 ✓ Go server: go-echo: Hello World!
 ✓ Python server: py-echo: Hello World!
-✓ Both servers working!
+✓ Both servers working simultaneously!
 ```
 
 ## 📁 Actual Directory Structure
@@ -62,33 +62,53 @@ The working `hsu-example2` uses this proven structure:
 my-multi-service/                    # Root directory
 ├── Makefile                         # Universal makefile entry point
 ├── Makefile.config                  # Project configuration
-├── make/                            # HSU Universal Makefile System
+├── make/                            # HSU Universal Makefile System (git submodule)
+│   ├── HSU_MAKEFILE_ROOT.mk         # Main makefile system
+│   ├── HSU_MAKEFILE_GO.mk           # Go-specific targets
+│   ├── HSU_MAKEFILE_PYTHON.mk       # Python-specific targets
+│   ├── HSU_MAKE_CONFIG_TMPL.mk      # Configuration template
+│   └── README.md                    # Makefile system documentation
 ├── api/
 │   └── proto/
-│       ├── echoservice.proto        # Shared protocol definition
-│       ├── generate-go.sh           # Go code generation
-│       └── generate-py.sh           # Python code generation
-├── go/                              # Go implementation
-│   ├── go.mod
+│       ├── echoservice.proto        # Shared gRPC service definition
+│       ├── generate-go.bat          # Windows Go code generation
+│       ├── generate-go.sh           # Unix Go code generation
+│       ├── generate-py.bat          # Windows Python code generation
+│       └── generate-py.sh           # Unix Python code generation
+├── go/
+│   ├── go.mod                       # Go module
 │   ├── pkg/
 │   │   ├── control/
+│   │   │   ├── gateway.go           # Go client gateway
+│   │   │   ├── handler.go           # Go gRPC ↔ domain adapter
+│   │   │   └── main_echo.go         # Go server setup helper
 │   │   ├── domain/
-│   │   ├── generated/api/proto/     # Generated Go gRPC code
+│   │   │   └── contract.go          # Go domain interface
+│   │   ├── generated/
+│   │   │   └── api/proto/           # Generated Go gRPC code
 │   │   └── logging/
+│   │       └── logging.go           # Go logging interface
 │   └── cmd/
-│       ├── cli/echogrpccli/         # Go client
-│       └── srv/echogrpcsrv/         # Go server
-├── python/                          # Python implementation
-│   ├── pyproject.toml
+│       ├── cli/echogrpccli/
+│       │   └── main.go              # Go test client
+│       └── srv/echogrpcsrv/
+│           └── main.go              # Go server entry point
+├── python/
+│   ├── pyproject.toml               # Python project configuration
 │   ├── lib/
 │   │   ├── control/
+│   │   │   ├── gateway.py           # Python client gateway
+│   │   │   ├── handler.py           # Python gRPC ↔ domain adapter
+│   │   │   └── serve_echo.py        # Python server setup helper
 │   │   ├── domain/
-│   │   └── generated/api/proto/     # Generated Python gRPC code
+│   │   │   └── contract.py          # Python domain interface
+│   │   └── generated/
+│   │       └── api/proto/           # Generated Python gRPC code
 │   ├── cli/
-│   │   └── run_client.py            # Python client
+│   │   └── run_client.py            # Python test client
 │   └── srv/
-│       └── run_server.py            # Python server
-├── requirements.txt                 # Python dependencies
+│       └── run_server.py            # Python server entry point
+├── requirements.txt
 └── README.md
 ```
 
@@ -166,9 +186,14 @@ NUITKA_ENTRY_POINT := srv/run_server.py
 # Copy and rename the working example
 cp -r hsu-example2/ my-multi-service/
 cd my-multi-service/
+rm -rf make/  # Remove make directory (will be added as submodule)
+
+# Initialize git and add HSU makefile system
+git init
+git submodule add https://github.com/core-tools/make.git make
 
 # Verify everything works out of the box
-make setup && make build
+make setup && make build && make test
 echo "✓ Base system working!"
 ```
 
@@ -370,7 +395,14 @@ make run-client              # Test against both
 mkdir my-multi-service/
 cp -r my-go-service/* my-multi-service/go/
 cp -r my-py-service/* my-multi-service/python/
+cd my-multi-service/
+
+# Setup git and makefile system for new multi-language project
+git init
+git submodule add https://github.com/core-tools/make.git make
+
 # Configure Makefile.config for multi-language
+edit Makefile.config  # Set ENABLE_GO=yes, ENABLE_PYTHON=yes
 ```
 
 ### To Multi-Repository (Approach 3)

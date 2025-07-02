@@ -31,17 +31,27 @@ This approach is perfect for:
 The fastest way to get started is to copy the proven working examples:
 
 ```bash
-# Copy the working common repository
+# Copy the working common repository (without make system)
 cp -r hsu-example3-common/ my-service-common/
 cd my-service-common/
+rm -rf make/  # Remove make directory (will be added as submodule)
+
+# Add HSU makefile system as git submodule
+git init
+git submodule add https://github.com/core-tools/make.git make
 
 # Test common repository works
 make setup && make build && make test
 
-# Copy the working Go service implementation
+# Copy the working Go service implementation (without make system)
 cd ..
 cp -r hsu-example3-srv-go/ my-service-go/
 cd my-service-go/
+rm -rf make/  # Remove make directory (will be added as submodule)
+
+# Add HSU makefile system as git submodule
+git init
+git submodule add https://github.com/core-tools/make.git make
 
 # Test Go service works
 make setup && make build && make test
@@ -64,7 +74,12 @@ The working examples use this proven multi-repository structure:
 my-service-common/                   # Shared components repository
 ├── Makefile                         # Universal makefile entry point
 ├── Makefile.config                  # Project configuration
-├── make/                            # HSU Universal Makefile System
+├── make/                            # HSU Universal Makefile System (git submodule)
+│   ├── HSU_MAKEFILE_ROOT.mk         # Main makefile system
+│   ├── HSU_MAKEFILE_GO.mk           # Go-specific targets
+│   ├── HSU_MAKEFILE_PYTHON.mk       # Python-specific targets
+│   ├── HSU_MAKE_CONFIG_TMPL.mk      # Configuration template
+│   └── README.md                    # Makefile system documentation
 ├── api/
 │   └── proto/
 │       ├── echoservice.proto        # Shared gRPC service definition
@@ -95,7 +110,12 @@ my-service-common/                   # Shared components repository
 my-service-go/                       # Go service implementation
 ├── Makefile                         # Universal makefile entry point
 ├── Makefile.config                  # Service-specific configuration
-├── make/                            # HSU Universal Makefile System
+├── make/                            # HSU Universal Makefile System (git submodule)
+│   ├── HSU_MAKEFILE_ROOT.mk         # Main makefile system
+│   ├── HSU_MAKEFILE_GO.mk           # Go-specific targets
+│   ├── HSU_MAKEFILE_PYTHON.mk       # Python-specific targets
+│   ├── HSU_MAKE_CONFIG_TMPL.mk      # Configuration template
+│   └── README.md                    # Makefile system documentation
 ├── cmd/
 │   └── srv/
 │       ├── domain/
@@ -190,6 +210,11 @@ BUILD_SRV := yes
 # Copy and customize common repository
 cp -r hsu-example3-common/ my-service-common/
 cd my-service-common/
+rm -rf make/  # Remove make directory (will be added as submodule)
+
+# Initialize git and add HSU makefile system
+git init
+git submodule add https://github.com/core-tools/make.git make
 
 # Update configuration
 edit Makefile.config  # Update PROJECT_NAME, GO_MODULE_NAME
@@ -210,6 +235,11 @@ echo "✓ Common repository working!"
 cd ..
 cp -r hsu-example3-srv-go/ my-service-go/
 cd my-service-go/
+rm -rf make/  # Remove make directory (will be added as submodule)
+
+# Initialize git and add HSU makefile system
+git init
+git submodule add https://github.com/core-tools/make.git make
 
 # Update configuration
 edit Makefile.config  # Update PROJECT_NAME, GO_MODULE_NAME
@@ -451,6 +481,13 @@ mv my-single-service/cmd/ my-service-go/
 ```bash
 # Create additional service repositories
 cp -r my-service-go/ my-service-advanced-go/
+cd my-service-advanced-go/
+
+# Reinitialize git submodule (copying converts submodule to regular directory)
+rm -rf make/
+git init
+git submodule add https://github.com/core-tools/make.git make
+
 # Customize business logic while keeping same common dependency
 ```
 

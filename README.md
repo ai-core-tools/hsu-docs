@@ -29,7 +29,7 @@ The HSU framework provides Kubernetes-grade service orchestration capabilities t
 
 The main difference between *external* orchestration systems (e.g. Kubernetes, Nomad, Docker Compose) and HSU is represented on this diagram:
 
-![HSU vs Kubernetes, Nomad and Docker Compose](../img/hsu-vs-k8s.drawio.svg)
+![HSU vs Kubernetes, Nomad and Docker Compose](img/hsu-vs-k8s.drawio.svg)
 
 Since orchestration is built directly into the system processes, HSU provides not just a set of orchestration libraries but rather a complete development framework with an ability to define and implement service business APIs:
 - **client libraries** - that allow to orchestrate and communicate with other services, currently for **Go-lang** only, but with **Rust** in backlog
@@ -106,15 +106,14 @@ This design enables microservices architectures in resource-constrained environm
 
 ## 📚 Documentation Sections
 
-### 🎓 Step-by-Step Tutorials
+### 🎯 Architecture Deep Dive
+Learn more on HSU concept, value proposition, and system design:
+- [**Architecture Deep Dive**](architecture/index.md) - Detailed architecture description
 
+### 🎓 Step-by-Step Tutorials
 Hands-on guides for implementing HSU with working examples:
 - [**HSU Implementation Guide**](tutorials/INTEGRATED_HSU_GUIDE.md) -  - Complete implementation guide for integrated HSU
 - [**Tutorial Index**](tutorials/index.md) - Navigation hub for all specific implementation tutorials
-
-### 🎯 Architecture Deep Dive
-Learn more on HSU concept, value proposition, and system design
-- [**Architecture Deep Dive**](architecture/index.md) - Detailed architecture description
 
 ### 🏗️ Core Framework Documentation
 

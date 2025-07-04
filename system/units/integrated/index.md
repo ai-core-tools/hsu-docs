@@ -58,11 +58,13 @@ service CoreService {
 }
 ```
 
+For Integrated Unit, standard way of implementing the Core HSU Interface is by integrating with [hsu-core](https://github.com/Core-Tools/hsu-core) library. 
+
 **Complete Reference:** [Core API Reference](../../core/reference.md)
 
 ## Exposing Business APIs
 
-Beyond the Core HSU Interface, integrated units expose custom gRPC services for domain-specific functionality:
+Beyond the Core HSU Interface, Integrated Unit exposes custom gRPC services for domain-specific functionality:
 
 ### Business API Design
 

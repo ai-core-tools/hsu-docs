@@ -1,6 +1,6 @@
-# HSU Universal Makefile System - Configuration Options
+# HSU Make System - Configuration Options
 
-Complete reference for configuring the HSU Universal Makefile System.
+Complete reference for configuring the HSU Make System.
 
 ## 📋 **Configuration Overview**
 

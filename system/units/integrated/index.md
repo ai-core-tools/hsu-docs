@@ -41,7 +41,7 @@ Every integrated unit must implement the standardized Core HSU Interface, which 
 // Core HSU Interface - must be implemented by all integrated units
 service CoreHSUService {
     // Health and status
-    rpc Ping(PingRequest) returns PingResponse
+    rpc Ping(PingRequest) returns (PingResponse);
     rpc GetStatus(GetStatusRequest) returns (GetStatusResponse);
     
     // Lifecycle management
@@ -49,7 +49,7 @@ service CoreHSUService {
     rpc Shutdown(ShutdownRequest) returns (ShutdownResponse);
     
     // Configuration and metrics
-    rpc UpdateConfiguration(UpdateConfigurationRequest) returns (UpdateConfiguratoinResponse);
+    rpc UpdateConfiguration(UpdateConfigurationRequest) returns (UpdateConfigurationResponse);
     rpc GetMetrics(GetMetricsRequest) returns (GetMetricsResponse);
 }
 ```
@@ -129,10 +129,10 @@ The **Repository Portability** is a practical way to organizing domain-centric c
 
 Traditional approaches of code organization force developers to choose between language-specific tooling OR innovative repository organization. The HSU framework **eliminates this trade-off** by recognizing that code portability comes from **clean logical boundaries and purpose separation** and **consistent and portable import schemes**. This enables seamless migration between repository architectures without code changes.
 
-The HSU framework supports **three approaches** of organizing domain-centric code enabling "repo-portability" . **The choice will determine team scaling and deployment flexibility**.
+The HSU framework supports **three repository approaches** of organizing domain-centric code enabling "repo-portability" . **The choice will determine team scaling and deployment flexibility**.
 
-| Approach | Description | Complexity | Best For |
-|----------|-------------|------------|----------|
+| Repository Approach | Description | Complexity | Best For |
+|---------------------|-------------|------------|----------|
 | **Approach 1** | Single-Repository + Single-Language | ✅ Simple | New domains, single-language teams |
 | **Approach 2** | Single-Repository + Multi-Language | ⚠️ Moderate | Coordinated multi-language development |
 | **Approach 3** | Multi-Repository Architecture | ❌ Complex | Large teams, independent scaling |
@@ -187,11 +187,11 @@ hsu-example3-srv-py/      # Python server implementation
 
 ## Integration with HSU Make System
 
-The HSU make system is distributed via git submodules from the [canonical repository](https://github.com/core-tools/make). This provides better version control, easier updates, and cleaner project structure.
+The HSU Make System is distributed via git submodules from the [canonical repository](https://github.com/core-tools/make). This provides better version control, easier updates, and cleaner project structure.
 
 It provides a number of standard commands to generate API stubs (generate gRPC code from .proto), build all components (binaries, packages), run tests. 
 
-It supports the repository layouts of all repo-portability approaches.
+It supports the repository layouts of all repository portability approaches.
 
 ```makefile
 # Approach 1: Single-language commands
@@ -219,7 +219,7 @@ make deploy-srv    # Deploy server implementation
 
 ### Step 1: Foundation Setup
 
-#### 1.1 Choose Your Approach
+#### 1.1 Choose Your Repository Approach
 - **Single team, one language?** → Approach 1
 - **Multi-language coordination?** → Approach 2  
 - **Multiple teams, microservices?** → Approach 3
@@ -233,7 +233,7 @@ protoc --version    # Protocol Buffers compiler
 make --version      # GNU Make or compatible
 ```
 
-### Step 2: Copy Axample and Customize
+### Step 2: Copy Example and Customize
 
 #### 2.1 Copy Working Example
 ```bash
@@ -344,7 +344,7 @@ HSU framework currently does not support any type of deployment.
 
 ## Examples and Tutorials
 
-Examples and tutorials listed below cover all the three repository approaches standartized in HSU framework.
+Examples and tutorials listed below cover all the three repository approaches standardized in HSU framework.
 
 ### Approach 1: Single-Repository + Single-Language
 

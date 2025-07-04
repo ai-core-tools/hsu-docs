@@ -1,4 +1,4 @@
-# HSU Universal Makefile System - Advanced Usage
+# HSU Make System - Advanced Usage
 
 Advanced topics including migration, extensibility, and custom workflows.
 
@@ -6,7 +6,7 @@ Advanced topics including migration, extensibility, and custom workflows.
 
 ### **From Existing Makefile**
 
-Migrating an existing project to use the HSU Universal Makefile System:
+Migrating an existing project to use the HSU Make System:
 
 #### **Step 1: Backup Current Setup**
 ```bash

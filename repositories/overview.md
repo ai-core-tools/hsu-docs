@@ -89,7 +89,7 @@ The framework provides **three distinct approaches** that can be mixed and match
 | **Deployment Flexibility** | Monolithic | Coupled | ✅ |
 
 ### Cross-Platform Integration
-- **Windows, macOS, Linux**: Full compatibility through HSU Universal Makefile System
+- **Windows, macOS, Linux**: Full compatibility through HSU Make System
 - **Go & Python**: Native support with language-specific optimizations
 - **Binary Compilation**: Nuitka integration for Python, standard Go compilation
 - **gRPC Services**: API-first design with automatic code generation

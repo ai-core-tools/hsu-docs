@@ -47,7 +47,7 @@ message EchoResponse {
 
 ### Automatic Generation
 
-The HSU Universal Makefile System handles all code generation automatically:
+The HSU Make System handles all code generation automatically:
 
 ```bash
 # Generate protocol buffer stubs for all languages
@@ -60,7 +60,7 @@ make proto
 
 ### Behind the Scenes
 
-The makefile system automatically:
+The Make System automatically:
 1. **Detects available languages** (Go, Python)
 2. **Runs appropriate protoc commands** with correct paths
 3. **Handles cross-platform differences** (Windows, Linux, macOS)
@@ -241,7 +241,7 @@ hsu-example3-common/
 
 ### Available Commands
 
-All HSU repositories support these protocol buffer commands with the Universal Makefile System:
+All HSU repositories support these protocol buffer commands with the HSU Make System:
 
 ```bash
 # Generate all protocol buffer stubs
@@ -267,7 +267,7 @@ The makefile automatically detects:
 
 ### Tool Installation
 
-The Universal Makefile System handles most setup, but you may need:
+The HSU Make System handles most setup, but you may need:
 
 **For Go:**
 ```bash

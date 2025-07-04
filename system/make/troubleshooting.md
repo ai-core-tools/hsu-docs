@@ -1,6 +1,6 @@
-# HSU Universal Makefile System - Troubleshooting
+# HSU Make System - Troubleshooting
 
-Common issues and solutions for the HSU Universal Makefile System.
+Common issues and solutions for the HSU Make System.
 
 ## 🚨 **Common Issues**
 

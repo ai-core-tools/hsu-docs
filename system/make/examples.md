@@ -1,14 +1,14 @@
-# HSU Universal Makefile System - Integration Examples
+# HSU Make System - Integration Examples
 
 Real-world usage patterns and integration examples from tested HSU repositories.
 
 ## 🎯 **Overview**
 
-These examples are based on actual working repositories that have been battle-tested across all 3 HSU approaches. Each example demonstrates different aspects of the HSU Universal Makefile System.
+These examples are based on actual working repositories that have been battle-tested across all 3 HSU repository approaches. Each example demonstrates different aspects of the HSU Make System.
 
 ## 📋 **Example Repository Summary**
 
-| Repository | Approach | Languages | Key Features |
+| Repository | Repository Approach | Languages | Key Features |
 |------------|----------|-----------|--------------|
 | [hsu-example1-go](#hsu-example1-go) | 1: Single-Repo + Single-Language | Go | Standard Go project, domain imports |
 | [hsu-example1-py](#hsu-example1-py) | 1: Single-Repo + Single-Language | Python | Nuitka binary compilation |
@@ -18,7 +18,7 @@ These examples are based on actual working repositories that have been battle-te
 | [hsu-example3-srv-py](#hsu-example3-srv-py) | 3: Multi-Repo + Implementation | Python | Python server with Nuitka |
 
 ## 🐹 **hsu-example1-go**
-*Approach 1: Single-Repository + Single-Language (Go)*
+*Repository Approach 1: Single-Repository + Single-Language (Go)*
 
 ### **Repository Structure**
 ```
@@ -80,7 +80,7 @@ make go-lint    # Check code quality
 ```
 
 ## 🐍 **hsu-example1-py**
-*Approach 1: Single-Repository + Single-Language (Python with Nuitka)*
+*Repository Approach 1: Single-Repository + Single-Language (Python with Nuitka)*
 
 ### **Repository Structure**
 ```
@@ -166,7 +166,7 @@ matplotlib
 ```
 
 ## 🔄 **hsu-example2**
-*Approach 2: Single-Repository + Multi-Language (Go + Python)*
+*Repository Approach 2: Single-Repository + Multi-Language (Go + Python)*
 
 ### **Repository Structure**
 ```
@@ -250,7 +250,7 @@ ENABLE_PROTOBUF: yes (api/proto/ detected)
 ```
 
 ## 🔗 **hsu-example3-common**
-*Approach 3: Multi-Repository + Multi-Language (Shared Components)*
+*Repository Approach 3: Multi-Repository + Multi-Language (Shared Components)*
 
 ### **Repository Structure**
 ```
@@ -301,7 +301,7 @@ make py-run-cli        # Run Python client
 ```
 
 ## 🚀 **hsu-example3-srv-go** & **hsu-example3-srv-py**
-*Approach 3: Multi-Repository + Single-Language (Implementation)*
+*Repository Approach 3: Multi-Repository + Single-Language (Implementation)*
 
 ### **Go Server Repository** (`hsu-example3-srv-go`)
 ```
@@ -351,7 +351,7 @@ NUITKA_BUILD_MODE := onefile
 
 ## 🔄 **Multi-Repository Coordination**
 
-For Approach 3, you can coordinate builds across repositories:
+For Repository Approach 3, you can coordinate builds across repositories:
 
 ### **Parent Directory Coordination**
 ```make

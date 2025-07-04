@@ -1,6 +1,6 @@
-# HSU Universal Makefile System - Command Reference
+# HSU Make System - Command Reference
 
-Complete reference for all available commands and targets in the HSU Universal Makefile System.
+Complete reference for all available commands and targets in the HSU Make System.
 
 ## 🎯 **Universal Commands**
 
@@ -116,7 +116,7 @@ Available when `.proto` files are detected in `api/proto/`:
 ### **Example `make info` Output**
 ```bash
 $ make info
-HSU Universal Makefile System v1.1.0
+HSU Make System v1.1.0
 =====================================
 REPO_TYPE: single-language-go
 PROJECT_NAME: hsu-example1-go

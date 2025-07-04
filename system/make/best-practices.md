@@ -1,6 +1,6 @@
-# HSU Universal Makefile System - Best Practices
+# HSU Make System - Best Practices
 
-Guidelines and recommendations for optimal use of the HSU Universal Makefile System.
+Guidelines and recommendations for optimal use of the HSU Make System.
 
 ## 🎯 **Core Principles**
 
@@ -406,7 +406,7 @@ cli/client.py           # Same in all repository layouts
 lib/utils.py            # Same in all repository layouts
 ```
 
-✅ **DO**: Use the same HSU makefile system across all approaches
+✅ **DO**: Use the same HSU Make System across all repository approaches
 ```
 # Same system files work in all repository layouts
 make/HSU_MAKEFILE_*.mk  # Identical across all projects

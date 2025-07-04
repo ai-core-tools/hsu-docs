@@ -14,7 +14,7 @@ This documentation is organized into focused guides for different aspects of the
 
 ### **Advanced Topics**
 - **[Best Practices](best-practices.md)** - Guidelines and recommendations
-- **[Repository Approach Migration](migration-patterns.md)** - Migrating between the repository approaches
+- **[Repository Approach Migration](migration-patterns.md)** - Migrating between repository approaches
 
 ---
 

@@ -365,7 +365,7 @@ LANGUAGE_TYPE = go
 
 ### Automatic Build Adaptation
 
-The HSU Universal Makefile System automatically adapts based on detected repository structure:
+The HSU Make System automatically adapts based on detected repository structure:
 
 ```makefile
 # Single-language: Direct commands

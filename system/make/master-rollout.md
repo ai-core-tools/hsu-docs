@@ -1,6 +1,6 @@
-# HSU Universal Makefile System - Git Submodule Architecture
+# HSU Make System - Git Submodule Architecture
 
-The HSU Universal Makefile System uses a **Git Submodule deployment model** for maximum maintainability and consistency.
+The HSU Make System uses a **Git Submodule deployment model** for maximum maintainability and consistency.
 
 ## 🏗️ **Architecture Overview**
 

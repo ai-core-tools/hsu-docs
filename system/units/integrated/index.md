@@ -43,7 +43,7 @@ Every integrated unit must implement the standardized Core HSU Interface, which 
 
 ```protobuf
 // Core HSU Interface - must be implemented by all integrated units
-service CoreHSUService {
+service CoreService {
     // Health and status
     rpc Ping(PingRequest) returns (PingResponse);
     rpc GetStatus(GetStatusRequest) returns (GetStatusResponse);

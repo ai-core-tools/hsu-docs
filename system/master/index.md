@@ -577,4 +577,14 @@ func (lb *LoadBalancer) GetNext() ServiceInfo {
     next := atomic.AddInt64(&lb.current, 1) % int64(len(lb.services))
     return lb.services[next]
 }
+
+## Next Steps
+
+- **[Unmanaged Units](../units/unmanaged/index.md)** - Integrate existing processes
+- **[Managed Units](../units/managed/index.md)** - Control application lifecycle
+- **[Integrated Units](../units/integrated/index.md)** - Deep gRPC integration
+
+---
+
+*You are here: System > **Master Process***
 ```

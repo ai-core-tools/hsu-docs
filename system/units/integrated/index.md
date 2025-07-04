@@ -4,23 +4,122 @@ This comprehensive guide walks you through creating an Integrated Unit process. 
 
 ## What is an Integrated Unit?
 
-An Integrated Unit is a process that:
-- **Implements Core HSU Interface**: Provides health checks, logging, and lifecycle management
-- **Exposes Business APIs**: Custom gRPC services for domain-specific functionality  
+An Integrated Unit is a process that represents the **highest level of HSU integration**, combining full lifecycle management with deep programmatic integration through gRPC APIs:
 
-It is highly-recommended (though optional) that Integrated Unit code should be:
-- **Repository Portable**: Work seamlessly across different repository structures
-- **Integrated with HSU Make System**: Use standardized HSU make system to build
+- **Complete Lifecycle Management**: Full start, stop, restart, and monitoring control by the master process
+- **Core HSU Interface**: Standardized gRPC services for health checks, logging, and graceful shutdown
+- **Business API Integration**: Custom gRPC services for domain-specific functionality and business logic
+- **Multi-Language Support**: Can be implemented in any language supporting gRPC (Go, Python, Rust, Java, etc.)
+
+Integrated units are ideal for **custom microservices** that need sophisticated orchestration, API-level coordination, and seamless integration with other HSU components.
+
+## Architecture Integration
+
+```
+┌─────────────────┐    gRPC APIs     ┌─────────────────┐
+│   Master        │◄────────────────►│   Integrated    │
+│   Process       │  • Core HSU API  │   Unit          │
+│                 │  • Business API  │   (Deep gRPC)   │
+│                 │  • Health Checks │                 │
+│                 │  • Lifecycle     │                 │
+└─────────────────┘                  └─────────────────┘
+```
+
+The master process communicates with integrated units through **generated gRPC client stubs**:
+- **Core HSU API**: Health checks, graceful shutdown, logging configuration
+- **Business API**: Custom domain-specific operations and data processing
+- **Lifecycle Management**: Start, stop, restart with coordination through gRPC
+- **Service Discovery**: Dynamic registration and discovery of business services
 
 ## Implementing Core HSU Interface
 
-...
+Every integrated unit must implement the standardized Core HSU Interface, which provides essential orchestration capabilities:
+
+### Core HSU Service Definition
+
+```protobuf
+// Core HSU Interface - must be implemented by all integrated units
+service CoreHSUService {
+    // Health and status
+    rpc Ping(PingRequest) returns PingResponse
+    rpc GetStatus(GetStatusRequest) returns (GetStatusResponse);
+    
+    // Lifecycle management
+    rpc PrepareShutdown(PrepareShutdownRequest) returns (PrepareShutdownResponse);
+    rpc Shutdown(ShutdownRequest) returns (ShutdownResponse);
+    
+    // Configuration and metrics
+    rpc UpdateConfiguration(UpdateConfigurationRequest) returns (UpdateConfiguratoinResponse);
+    rpc GetMetrics(GetMetricsRequest) returns (GetMetricsResponse);
+}
+```
 
 **Complete Reference:** [Core API Reference](../../core/reference.md)
 
 ## Exposing Business APIs
 
-...
+Beyond the Core HSU Interface, integrated units expose custom gRPC services for domain-specific functionality:
+
+### Business API Design
+
+```protobuf
+// Example: Data Processing Service
+service DataProcessingService {
+    // Batch operations
+    rpc ProcessBatch(ProcessBatchRequest) returns (ProcessBatchResponse);
+    rpc GetProcessingStatus(GetProcessingStatusRequest) returns (GetProcessingStatusResponse);
+    
+    // Stream processing
+    rpc ProcessStream(stream ProcessStreamRequest) returns (stream ProcessStreamResponse);
+    
+    // Configuration
+    rpc UpdateProcessingConfig(UpdateProcessingConfigRequest) returns (UpdateProcessingConfigResponse);
+}
+
+message ProcessBatchRequest {
+    repeated DataItem items = 1;
+    ProcessingOptions options = 2;
+    string batch_id = 3;
+}
+
+message ProcessBatchResponse {
+    string batch_id = 1;
+    ProcessingStatus status = 2;
+    repeated ProcessedItem results = 3;
+}
+```
+
+### Client Integration
+
+The master process uses generated client stubs to interact with business APIs:
+
+```go
+// Master process using integrated unit business API
+func (m *HSUMaster) ProcessDataBatch(items []DataItem) error {
+    // Get client for data processing service
+    client, err := m.getServiceClient("data-processor")
+    if err != nil {
+        return err
+    }
+    
+    // Call business API
+    response, err := client.ProcessBatch(context.Background(), &proto.ProcessBatchRequest{
+        Items: items,
+        Options: &proto.ProcessingOptions{
+            Priority: proto.Priority_HIGH,
+            Timeout: 300,
+        },
+        BatchId: generateBatchID(),
+    })
+    
+    if err != nil {
+        return err
+    }
+    
+    m.logger.Infof("Batch processed: %s, status: %s", response.BatchId, response.Status)
+    return nil
+}
+```
 
 **Detailed Guide:** [Protocol Buffers Guide](../../../api/protocol-buffers.md)
 
@@ -270,3 +369,15 @@ Examples and tutorials listed below cover all the three repository approaches st
 - **[`hsu-example3-srv-py/`](https://github.com/core-tools/hsu-example3-srv-py/)** - Python microservice implementation
 
 **Tutorial:** [Multi-Repository Go Implementation](multi-repo-go.md) or [Multi-Repository Python Implementation](multi-repo-python.md)
+
+## Related Reading
+
+- **[Master Process Guide](../../master/index.md)** - Implement master process to orchestrate your integrated units
+- **[Unmanaged Units](../unmanaged/index.md)** - Integrate existing processes without modification
+- **[Managed Units](../managed/index.md)** - Full lifecycle control of custom processes
+- **[HSU Core Reference](../../core/reference.md)** - Available library functions and APIs
+- **[HSU Make System](../../make/index.md)** - Integrate HSU Make System
+
+---
+
+*You are here: System > Units > **Integrated Units***

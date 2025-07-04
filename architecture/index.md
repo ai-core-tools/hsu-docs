@@ -116,3 +116,11 @@ Complex systems often combine multiple HSU types:
 - 🚧 Planned/In development
 - ⚠️ Partial implementation or workarounds available
 - ❌ Not supported
+
+## Next Steps
+
+- **[Master Process Guide](../system/master/index.md)** - Start implementing your HSU master process
+
+---
+
+*You are here: **Architecture** > Deep Dive*

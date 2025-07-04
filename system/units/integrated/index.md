@@ -13,6 +13,10 @@ An Integrated Unit is a process that represents the **highest level of HSU integ
 
 Integrated units are ideal for **custom microservices** that need sophisticated orchestration, API-level coordination, and seamless integration with other HSU components.
 
+It is highly-recommended (though optional) that Integrated Unit code should be:
+- **Repository Portable**: Work seamlessly across different repository structures
+- **Integrated with HSU Make System**: Use standardized HSU make system to build
+
 ## Architecture Integration
 
 ```

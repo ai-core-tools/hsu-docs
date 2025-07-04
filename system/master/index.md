@@ -577,6 +577,7 @@ func (lb *LoadBalancer) GetNext() ServiceInfo {
     next := atomic.AddInt64(&lb.current, 1) % int64(len(lb.services))
     return lb.services[next]
 }
+```
 
 ## Next Steps
 
@@ -587,4 +588,4 @@ func (lb *LoadBalancer) GetNext() ServiceInfo {
 ---
 
 *You are here: System > **Master Process***
-```
+
